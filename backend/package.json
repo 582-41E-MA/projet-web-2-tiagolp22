@@ -25,10 +25,12 @@
     },
     "dependencies": {
         "@inertiajs/inertia-react": "^0.8.1",
+        "@inertiajs/inertia-vue3": "^0.6.0",
         "@inertiajs/progress": "^0.2.7",
         "@inertiajs/react": "^1.2.0",
         "@vitejs/plugin-react": "^4.3.1",
         "react-dom": "^18.3.1",
+        "react-router-dom": "^6.24.0",
         "react-slick": "^0.30.2",
         "slick-carousel": "^1.8.1"
     }
