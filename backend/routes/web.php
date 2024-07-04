@@ -44,11 +44,12 @@ Route::post('/login', [AuthController::class, 'userLogin'])->name('login.userLog
 
 // Route logout
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth:sanctum');
+Route::resource('/voitures', VoitureController::class);
 
 // Routes authentifiées
 Route::middleware([EnsureFrontendRequestsAreStateful::class, 'auth:sanctum'])->group(function () {
     // Routes pour le VoituresController
-    Route::resource('/voitures', VoitureController::class)->except(['index', 'show']);
+  
 
     // Routes pour le UtilisateursController
     Route::resource('/utilisateurs', UtilisateurController::class);

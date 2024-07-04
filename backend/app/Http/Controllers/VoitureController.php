@@ -11,14 +11,15 @@ class VoitureController extends Controller
     public function index()
     {
         $voitures = Voiture::all();
-        return Inertia::render('Catalog', [
+
+        return Inertia::render('Voiture/Voiture', [
             'voitures' => $voitures,
         ]);
     }
 
     public function create()
     {
-        return Inertia::render('Voitures/VoituresCreate/VoituresCreate');
+        return Inertia::render('Voiture/VoitureCreate/VoitureCreate');
     }
 
     public function store(Request $request)
@@ -32,13 +33,13 @@ class VoitureController extends Controller
     public function show($id)
     {
         $voiture = Voiture::findOrFail($id);
-        return Inertia::render('Voitures/VoitureShow/VoitureShow', ['voiture' => $voiture]);
+        return Inertia::render('Voiture/VoitureShow/VoitureShow', ['voiture' => $voiture]);
     }
 
     public function edit($id)
     {
         $voiture = Voiture::findOrFail($id);
-        return Inertia::render('Voitures/VoitureEdit/VoitureEdit', ['voiture' => $voiture]);
+        return Inertia::render('Voiture/VoitureEdit/VoitureEdit', ['voiture' => $voiture]);
     }
 
     public function update(Request $request, $id)
