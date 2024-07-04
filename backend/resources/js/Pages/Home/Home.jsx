@@ -42,22 +42,22 @@ function Home() {
       <div className="wrapper">
         <div className="container">
           <div className="carousel">
-            <h2 className='Nouveautes'>Nouveautes</h2>
+            <h2 className='Nouveautes'>{t('home.new_arrivals')}</h2>
             <Slider {...settings}>
               <div className="slide">
                 <img src="https://via.placeholder.com/150" alt="Voiture" />
                 <h3>Voiture 1</h3>
-                <p>Description de la voiture 1.</p>
+                <p>{t('home.car_description')}</p>
               </div>
               <div className="slide">
                 <img src="https://via.placeholder.com/150" alt="Voiture" />
                 <h3>Voiture 2</h3>
-                <p>Description de la voiture 2.</p>
+                <p>{t('home.car_description')}</p>
               </div>
               <div className="slide">
                 <img src="https://via.placeholder.com/150" alt="Voiture" />
                 <h3>Voiture 3</h3>
-                <p>Description de la voiture 3.</p>
+                <p>{t('home.car_description')}</p>
               </div>
             </Slider>
           </div>
