@@ -2,55 +2,59 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Ville;
+use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class VilleController extends Controller
 {
-    
     public function index()
     {
         $villes = Ville::all();
-        return response()->json($villes);
+
+        return Inertia::render('Ville/Ville', [
+            'villes' => $villes,
+        ]);
     }
 
+    public function create()
+    {
+        return Inertia::render('Ville/VilleCreate/VilleCreate');
+    }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validated();
+
+        $ville = Ville::create($validated);
+        return redirect()->route('villes.index')->with('success', 'Ville created successfully.');
+    }
 
     public function show($id)
     {
         $ville = Ville::findOrFail($id);
-        return response()->json($ville);
+        return Inertia::render('Ville/VilleShow/VilleShow', ['ville' => $ville]);
     }
 
-
-    public function store(Request $request)
+    public function edit($id)
     {
-        $request->validate([
-            'nome' => 'required|string|max:255',
-        ]);
-
-        $ville = Ville::create($request->all());
-        return response()->json($ville, 201);
+        $ville = Ville::findOrFail($id);
+        return Inertia::render('Ville/VilleEdit/VilleEdit', ['ville' => $ville]);
     }
-
 
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'nome' => 'required|string|max:255',
-        ]);
+        $validated = $request->validated();
 
         $ville = Ville::findOrFail($id);
-        $ville->update($request->all());
-
-        return response()->json($ville);
+        $ville->update($validated);
+        return redirect()->route('villes.index');
     }
-
 
     public function destroy($id)
     {
         $ville = Ville::findOrFail($id);
         $ville->delete();
-
-        return response()->json(null, 204);
+        return redirect()->route('villes.index');
     }
 }

@@ -11,54 +11,50 @@ class PaysController extends Controller
     public function index()
     {
         $pays = Pays::all();
-        return Inertia::render('Pays/PaysIndex', ['pays' => $pays]);
+
+        return Inertia::render('Pays/Pays', [
+            'pays' => $pays,
+        ]);
     }
 
     public function create()
     {
-        return Inertia::render('Pays/PaysCreate');
+        return Inertia::render('Pays/PaysCreate/PaysCreate');
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'nom_pays' => 'required|json',
-        ]);
+        $validated = $request->validated();
 
-        Pays::create($request->all());
-
+        $pays = Pays::create($validated);
         return redirect()->route('pays.index')->with('success', 'Pays created successfully.');
     }
 
     public function show($id)
     {
-        $pay = Pays::findOrFail($id);
-        return Inertia::render('Pays/PaysShow', ['pay' => $pay]);
+        $pays = Pays::findOrFail($id);
+        return Inertia::render('Pays/PaysShow/PaysShow', ['pays' => $pays]);
     }
 
     public function edit($id)
     {
-        $pay = Pays::findOrFail($id);
-        return Inertia::render('Pays/PaysEdit', ['pay' => $pay]);
+        $pays = Pays::findOrFail($id);
+        return Inertia::render('Pays/PaysEdit/PaysEdit', ['pays' => $pays]);
     }
 
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'nom_pays' => 'required|json',
-        ]);
+        $validated = $request->validated();
 
-        $pay = Pays::findOrFail($id);
-        $pay->update($request->all());
-
-        return redirect()->route('pays.index')->with('success', 'Pays updated successfully.');
+        $pays = Pays::findOrFail($id);
+        $pays->update($validated);
+        return redirect()->route('pays.index');
     }
 
     public function destroy($id)
     {
-        $pay = Pays::findOrFail($id);
-        $pay->delete();
-
-        return redirect()->route('pays.index')->with('success', 'Pays deleted successfully.');
+        $pays = Pays::findOrFail($id);
+        $pays->delete();
+        return redirect()->route('pays.index');
     }
 }

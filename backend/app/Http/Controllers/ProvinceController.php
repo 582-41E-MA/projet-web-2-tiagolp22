@@ -10,57 +10,51 @@ class ProvinceController extends Controller
 {
     public function index()
     {
-        $province = Province::all();
-        return Inertia::render('Province/ProvinceIndex', ['province' => $province]);
+        $provinces = Province::all();
+
+        return Inertia::render('Province/Province', [
+            'provinces' => $provinces,
+        ]);
     }
 
     public function create()
     {
-        return Inertia::render('Province/ProvinceCreate');
+        return Inertia::render('Province/ProvinceCreate/ProvinceCreate');
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'nom_province' => 'required|string|max:50',
-            'pays_id' => 'required|integer|exists:pays,id_pays',
-        ]);
+        $validated = $request->validated();
 
-        Province::create($request->all());
-
-        return redirect()->route('province.index')->with('success', 'Province created successfully.');
+        $province = Province::create($validated);
+        return redirect()->route('provinces.index')->with('success', 'Province created successfully.');
     }
 
     public function show($id)
     {
         $province = Province::findOrFail($id);
-        return Inertia::render('Province/ProvinceShow', ['province' => $province]);
+        return Inertia::render('Province/ProvinceShow/ProvinceShow', ['province' => $province]);
     }
 
     public function edit($id)
     {
         $province = Province::findOrFail($id);
-        return Inertia::render('Province/ProvinceEdit', ['province' => $province]);
+        return Inertia::render('Province/ProvinceEdit/ProvinceEdit', ['province' => $province]);
     }
 
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'nom_province' => 'required|string|max:50',
-            'pays_id' => 'required|integer|exists:pays,id_pays',
-        ]);
+        $validated = $request->validated();
 
         $province = Province::findOrFail($id);
-        $province->update($request->all());
-
-        return redirect()->route('province.index')->with('success', 'Province updated successfully.');
+        $province->update($validated);
+        return redirect()->route('provinces.index');
     }
 
     public function destroy($id)
     {
         $province = Province::findOrFail($id);
         $province->delete();
-
-        return redirect()->route('province.index')->with('success', 'Province deleted successfully.');
+        return redirect()->route('provinces.index');
     }
 }
