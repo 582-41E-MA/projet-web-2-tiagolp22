@@ -5,6 +5,9 @@ use App\Http\Controllers\VoitureController;
 use App\Http\Controllers\UtilisateurController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ConstructeurController;
+use App\Http\Controllers\TransmissionController;
+use App\Http\Controllers\StatusController;
 use Inertia\Inertia;
 use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
 
@@ -52,3 +55,5 @@ Route::middleware([EnsureFrontendRequestsAreStateful::class, 'auth:sanctum'])->g
 });
 
 Route::resource('constructeurs', ConstructeurController::class);
+Route::resource('transmissions', TransmissionController::class);
+Route::resource('status', StatusController::class);
