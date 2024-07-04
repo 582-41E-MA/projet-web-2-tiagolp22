@@ -64,19 +64,23 @@ class Utilisateur extends Authenticatable
         'derniere_connexion' => 'datetime',
     ];
 
-    /**
-     * Get the privileges that belong to the user.
-     */
-    public function privilege()
+    public function ville()
     {
-        return $this->belongsTo(Privilege::class, 'privileges_id');
+        return $this->belongsTo(Ville::class, 'villes_id_ville', 'id_ville');
     }
 
-    /**
-     * Get the city that belongs to the user.
-     */
-    public function city()
+    public function privilege()
     {
-        return $this->belongsTo(Ville::class, 'villes_id_ville');
+        return $this->belongsTo(Privilege::class, 'privileges_id', 'id_privilege');
+    }
+
+    public function commandes()
+    {
+        return $this->hasMany(Commande::class, 'id_utilisateur', 'id_utilisateur');
+    }
+
+    public function journalDeBord()
+    {
+        return $this->hasMany(JournalDeBord::class, 'utilisateur_id', 'id_utilisateur');
     }
 }
