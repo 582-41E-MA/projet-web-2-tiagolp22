@@ -5,42 +5,55 @@ namespace App\Http\Controllers;
 use App\Models\Voiture;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+
 class VoitureController extends Controller
 {
     public function index()
     {
         $voitures = Voiture::all();
-        return Inertia::render('Catalog', [
+        return Inertia::render('Voitures/VoituresIndex', [
             'voitures' => $voitures,
         ]);
-    } 
+    }
+
+    public function create()
+    {
+        return Inertia::render('Voitures/VoituresCreate/VoituresCreate');
+    }
+
     public function store(Request $request)
     {
-        //dd('dans function store');
-        $validated = $request->validated(); 
+        $validated = $request->validated();
+
         $voiture = Voiture::create($validated);
-        return response()->json($voiture, 201);
+        return redirect()->route('voitures.index')->with('success', 'Voiture created successfully.');
     }
 
     public function show($id)
     {
-        //dd('dans function show :) ' . $id);
         $voiture = Voiture::findOrFail($id);
-        return response()->json($voiture);
+        return Inertia::render('Voitures/VoitureShow/VoitureShow', ['voiture' => $voiture]);
+    }
+
+    public function edit($id)
+    {
+        $voiture = Voiture::findOrFail($id);
+        return Inertia::render('Voitures/VoitureEdit/VoitureEdit', ['voiture' => $voiture]);
     }
 
     public function update(Request $request, $id)
-    {     
-        //dd('dans function update');
-        $validated = $request->validated(); 
+    {
+        $validated = $request->validated();
+
         $voiture = Voiture::findOrFail($id);
         $voiture->update($validated);
-        return response()->json($voiture, 200);
+        return redirect()->route('voitures.index');
     }
+
     public function destroy($id)
     {
         $voiture = Voiture::findOrFail($id);
         $voiture->delete();
-        return response()->json(null, 204);
+        return redirect()->route('voitures.index');
     }
 }
