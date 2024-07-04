@@ -31,5 +31,10 @@ class Voiture extends Model
     protected $primaryKey = 'id_voiture';
     public $incrementing = false;
     protected $keyType = 'string';
-    
+
+    public function modele()
+    {
+        return $this->belongsTo(Modele::class, 'modele_id', 'id_modele');
+    }
+
 }
