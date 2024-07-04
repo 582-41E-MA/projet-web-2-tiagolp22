@@ -22,11 +22,11 @@ class Province extends Model
 
     public function villes()
     {
-        return $this->hasMany(Villes::class, 'province_id', 'id_province');
+        return $this->hasMany(Ville::class, 'province_id', 'id_province');
     }
 
     public function taxes()
     {
-        return $this->hasMany(Taxes::class, 'provinces_id_province', 'id_province');
+        return $this->hasMany(Taxe::class, 'provinces_id_province', 'id_province');
     }
 }
