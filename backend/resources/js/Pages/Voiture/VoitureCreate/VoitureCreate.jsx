@@ -24,7 +24,7 @@ const VoitureCreate = () => {
         kilometrage: '',
         description: '',
         etat_vehicule: '',
-        commandes_id_commande: '',
+        commandes_id_commande: null,
     });
 
     // State pour stocker les options des selects
@@ -38,11 +38,11 @@ const VoitureCreate = () => {
     const fetchOptions = async () => {
         try {
             const [modelesResponse, transmissionsResponse, groupesResponse, carburantsResponse, carrosseriesResponse] = await Promise.all([
-                axios.get('/api/modeles'),
-                axios.get('/api/transmissions'),
-                axios.get('/api/groupes_motopropulseur'),
-                axios.get('/api/carburants'),
-                axios.get('/api/carrosseries'),
+            axios.get('http://127.0.0.1:8000/modeles'),
+                axios.get('http://127.0.0.1:8000/transmissions'),
+                axios.get('http://127.0.0.1:8000/groupes_motopropulseur'),
+                axios.get('http://127.0.0.1:8000/typecarburants'),
+                axios.get('http://127.0.0.1:8000/carrosseries'),
             ]);
 
             setModeles(modelesResponse.data);
@@ -99,16 +99,22 @@ const VoitureCreate = () => {
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="annee">{t('car_create.year')}</label>
-                        <input
-                            type="text"
-                            name="annee"
-                            id="annee"
-                            value={data.annee}
-                            onChange={(e) => setData('annee', e.target.value)}
-                        />
-                        {errors.annee && <span className="error">{errors.annee}</span>}
-                    </div>
+    <label htmlFor="annee">{t('car_create.year')}</label>
+    <select
+        name="annee"
+        id="annee"
+        value={data.annee}
+        onChange={(e) => setData('annee', e.target.value)}
+    >
+        <option value="">{t('select_option')}</option>
+        {Array.from({ length: 35 }, (_, index) => 1990 + index).map((year) => (
+            <option key={year} value={year}>
+                {year}
+            </option>
+        ))}
+    </select>
+    {errors.annee && <span className="error">{errors.annee}</span>}
+</div>
 
                     <div className="form-group">
                         <label htmlFor="date_arrivee">{t('car_create.arrival_date')}</label>
