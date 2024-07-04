@@ -231,7 +231,7 @@ const VoitureCreate = () => {
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="nombre_portes">{t('car_create.number_doors')}</label>
+                        <label htmlFor="nombre_portes">{t('car_create.number_of_doors')}</label>
                         <input
                             type="text"
                             name="nombre_portes"
@@ -243,7 +243,7 @@ const VoitureCreate = () => {
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="nombre_places">{t('car_create.number_seats')}</label>
+                        <label htmlFor="nombre_places">{t('car_create.number_of_seats')}</label>
                         <input
                             type="text"
                             name="nombre_places"
