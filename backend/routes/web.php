@@ -9,6 +9,10 @@ use App\Http\Controllers\ConstructeurController;
 use App\Http\Controllers\TransmissionController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\PrivilegeController;
+use App\Http\Controllers\TypeCarburantController;
+use App\Http\Controllers\ModeleController;
+use App\Http\Controllers\GroupeMotopropulseurController;
+use App\Http\Controllers\CarrosserieController;
 use Inertia\Inertia;
 use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
 
@@ -60,3 +64,7 @@ Route::resource('constructeurs', ConstructeurController::class);
 Route::resource('transmissions', TransmissionController::class);
 Route::resource('status', StatusController::class);
 Route::resource('privileges', PrivilegeController::class);
+Route::resource('typecarburants', TypeCarburantController::class);
+Route::resource('modeles', ModeleController::class);
+Route::resource('groupes_motopropulseur', GroupeMotopropulseurController::class);
+Route::resource('carrosseries', CarrosserieController::class);

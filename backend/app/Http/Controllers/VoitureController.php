@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Voiture;
+use App\Models\TypeCarburant;
+use App\Models\Modele;
+use App\Models\Transmission;
+use App\Models\GroupeMotopropulseur;
+use App\Models\Carrosserie;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -19,7 +24,20 @@ class VoitureController extends Controller
 
     public function create()
     {
-        return Inertia::render('Voiture/VoitureCreate/VoitureCreate');
+        // Buscar dados relacionados para os selects
+        $typesCarburant = TypeCarburant::all();
+       $modeles = Modele::all();
+        $transmissions = Transmission::all();
+        $groupesMotopropulseur = GroupeMotopropulseur::all();
+        $carrosseries = Carrosserie::all();
+
+        return Inertia::render('Voiture/VoitureCreate/VoitureCreate', [
+            'typesCarburant' => $typesCarburant,
+            'modeles' => $modeles,
+            'transmissions' => $transmissions,
+            'groupesMotopropulseur' => $groupesMotopropulseur,
+            'carrosseries' => $carrosseries,
+        ]);
     }
 
     public function store(Request $request)

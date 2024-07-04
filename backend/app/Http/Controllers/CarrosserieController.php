@@ -12,9 +12,7 @@ class CarrosserieController extends Controller
     {
         $carrosseries = Carrosserie::all();
 
-        return Inertia::render('Carrosserie/Carrosserie', [
-            'carrosseries' => $carrosseries,
-        ]);
+        return response()->json($carrosseries);
     }
 
     public function create()
