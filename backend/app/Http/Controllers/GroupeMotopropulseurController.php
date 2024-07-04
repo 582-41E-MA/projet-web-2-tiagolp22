@@ -12,9 +12,7 @@ class GroupeMotopropulseurController extends Controller
     {
         $groupeMotopropulseurs = GroupeMotopropulseur::all();
 
-        return Inertia::render('GroupeMotopropulseur/GroupeMotopropulseur', [
-            'groupeMotopropulseurs' => $groupeMotopropulseurs,
-        ]);
+        return response()->json($groupeMotopropulseurs);
     }
 
     public function create()

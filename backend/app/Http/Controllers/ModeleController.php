@@ -11,10 +11,7 @@ class ModeleController extends Controller
     public function index()
     {
         $modeles = Modele::all();
-
-        return Inertia::render('Modele/Modele', [
-            'modeles' => $modeles,
-        ]);
+        return response()->json($modeles);
     }
 
     public function create()

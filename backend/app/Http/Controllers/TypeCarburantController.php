@@ -12,9 +12,7 @@ class TypeCarburantController extends Controller
     {
         $typeCarburants = TypeCarburant::all();
 
-        return Inertia::render('TypeCarburant/TypeCarburant', [
-            'typeCarburants' => $typeCarburants,
-        ]);
+        return response()->json($typeCarburants);
     }
 
     public function create()

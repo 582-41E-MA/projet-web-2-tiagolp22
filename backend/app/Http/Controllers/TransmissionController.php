@@ -11,7 +11,7 @@ class TransmissionController extends Controller
     public function index()
     {
         $transmissions = Transmission::all();
-        return Inertia::render('Transmissions/TransmissionsIndex', ['transmissions' => $transmissions]);
+        return response()->json($transmissions);
     }
 
     public function create()
