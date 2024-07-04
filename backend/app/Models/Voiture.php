@@ -9,6 +9,14 @@ class Voiture extends Model
 {
     use HasFactory;
 
+    protected $table = 'voitures'; 
+
+    protected $primaryKey = 'id_voiture'; 
+
+    public $incrementing = true; 
+
+    protected $keyType = 'int'; 
+
     protected $fillable = [
         'modele_id',
         'annee',
@@ -28,13 +36,38 @@ class Voiture extends Model
         'commandes_id_commande',
     ];
 
-    protected $primaryKey = 'id_voiture';
-    public $incrementing = false;
-    protected $keyType = 'string';
+    protected $casts = [
+        'couleur' => 'json', 
+        'etat_vehicule' => 'json',
+    ];
 
     public function modele()
     {
         return $this->belongsTo(Modele::class, 'modele_id', 'id_modele');
     }
 
+    public function transmission()
+    {
+        return $this->belongsTo(Transmission::class, 'type_transmission_id', 'id_transmission');
+    }
+
+    public function groupeMotopropulseur()
+    {
+        return $this->belongsTo(GroupeMotopropulseur::class, 'groupe_motopropulseur_id', 'id_groupe_motopropulseur');
+    }
+
+    public function typeCarburant()
+    {
+        return $this->belongsTo(TypeCarburant::class, 'type_carburant_id', 'id_type_carburant');
+    }
+
+    public function carrosserie()
+    {
+        return $this->belongsTo(Carrosserie::class, 'carrosserie_id', 'id_carrosserie');
+    }
+
+    public function commande()
+    {
+        return $this->belongsTo(Commande::class, 'commandes_id_commande', 'id_commande');
+    }
 }
