@@ -44,6 +44,6 @@ class Commande extends Model
 
     public function taxes()
     {
-        return $this->belongsToMany(Taxes::class, 'commandes_has_taxes', 'commandes_id_commande', 'taxes_id');
+        return $this->belongsToMany(Taxe::class, 'commandes_has_taxes', 'commandes_id_commande', 'taxes_id');
     }
 }
