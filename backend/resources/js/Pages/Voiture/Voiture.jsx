@@ -18,7 +18,7 @@ function Voiture({ voitures }) {
           <div className="cars-grid">
             {voitures.map((voiture, index) => (
               <div key={index} className="car">
-                <img src={voiture.image || '../../../img/default_car.jpg'} alt={voiture.modele.nom_modele} />
+                <img src={voiture.image || '../../../img/car/default_car.png'} alt={voiture.modele.nom_modele} />
                 <h3>{voiture.annee} {voiture.modele.nom_modele}</h3>
                 <p>{voiture.description}</p>
                 <InertiaLink href={`/voitures/${voiture.id_voiture}`} className="details-button">En savoir plus</InertiaLink>
