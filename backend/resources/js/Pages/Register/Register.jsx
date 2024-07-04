@@ -1,5 +1,4 @@
 import React from 'react';
-import './Register.css';
 import { useForm } from '@inertiajs/inertia-react';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
@@ -39,7 +38,7 @@ const Register = () => {
     return (
         <>
             <Header />
-            <div className="register-form">
+            <div className="form-container">
                 <img className='logo_formulaire' src="../../img/logo/logo.png" alt="Logo" />
                 <h3 className='h3'>{t('register.title')}</h3>
                 <p>{t('register.subtitle')}</p>
