@@ -11,10 +11,12 @@
 /* ELEMENTS */
 @import url(./4-elements/typographies.css);
 
+
 /* OBJECTS */
 @import url(./5-objects/wrapper.css);
 
 /* COMPONENTS */
+@import url(./6-components/form.css);
 
 /* UTILITIES */
 
