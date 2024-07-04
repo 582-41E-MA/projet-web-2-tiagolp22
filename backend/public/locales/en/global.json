@@ -7,6 +7,10 @@
         "login": "Login",
         "register": "Register"
     },
+    "home": {
+        "new_arrivals": "New Arrivals",
+        "car_description": "Description of the car."
+    },
     "login": {
         "title": "Login",
         "email": "Email",

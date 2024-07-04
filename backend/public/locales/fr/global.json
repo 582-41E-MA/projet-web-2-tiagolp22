@@ -6,6 +6,9 @@
         "contact": "Nous contacter",
         "login": "Connexion",
         "register": "Inscription"
+    },  "home": {
+        "new_arrivals": "Nouveautés",
+        "car_description": "Description du véhicule."
     },
     "login": {
         "title": "Connexion",
