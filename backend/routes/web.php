@@ -50,3 +50,5 @@ Route::middleware([EnsureFrontendRequestsAreStateful::class, 'auth:sanctum'])->g
     // Routes pour le UtilisateursController
     Route::resource('/utilisateurs', UtilisateurController::class);
 });
+
+Route::resource('constructeurs', ConstructeurController::class);
