@@ -31,6 +31,25 @@
         "username": "Nom d'utilisateur",
         "password": "Mot de passe",
         "register_button": "S'inscrire"
+    },"car_create": {
+        "title": "Créer une voiture",
+        "model": "Modèle",
+        "year": "Année",
+        "arrival_date": "Date d'arrivée",
+        "purchase_price": "Prix d'achat",
+        "sale_price": "Prix de vente",
+        "color": "Couleur",
+        "transmission_type": "Type de transmission",
+        "powertrain_group": "Groupe motopropulseur",
+        "fuel_type": "Type de carburant",
+        "body_type": "Type de carrosserie",
+        "number_of_doors": "Nombre de portes",
+        "number_of_seats": "Nombre de places",
+        "mileage": "Kilométrage",
+        "description": "Description",
+        "vehicle_condition": "État du véhicule",
+        "order_id": "ID de commande",
+        "submit_button": "Soumettre"
     },
     "footer": {
         "search": "Rechercher",

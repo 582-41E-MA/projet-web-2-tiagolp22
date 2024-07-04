@@ -32,7 +32,26 @@
         "password": "Password",
         "register_button": "Register"
     },
-
+    "car_create": {
+        "title": "Create Car",
+        "model": "Model",
+        "year": "Year",
+        "arrival_date": "Arrival Date",
+        "purchase_price": "Purchase Price",
+        "sale_price": "Sale Price",
+        "color": "Color",
+        "transmission_type": "Transmission Type",
+        "powertrain_group": "Powertrain Group",
+        "fuel_type": "Fuel Type",
+        "body_type": "Body Type",
+        "number_of_doors": "Number of Doors",
+        "number_of_seats": "Number of Seats",
+        "mileage": "Mileage",
+        "description": "Description",
+        "vehicle_condition": "Vehicle Condition",
+        "order_id": "Order ID",
+        "submit_button": "Submit"
+    },
     "footer": {
         "search": "Search",
         "suv": "SUVs",
