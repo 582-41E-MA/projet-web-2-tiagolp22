@@ -1,3 +1,4 @@
+# .github/workflows/tests.yml
 name: Laravel Test
 
 on: [push, pull_request]
@@ -31,14 +32,19 @@ jobs:
         ini-values: post_max_size=256M, upload_max_filesize=256M, max_execution_time=300
         coverage: xdebug
 
+    - name: Navigate to backend directory
+      run: cd backend
+
     - name: Install Composer dependencies
-      run: composer install --prefer-dist --no-progress --no-suggest
+      run: composer install --prefer-dist --no-progress
+      working-directory: ./backend
 
     - name: Create .env file
       run: |
         cp .env.example .env
         php artisan key:generate
         php artisan config:cache
+      working-directory: ./backend
 
     - name: Run migrations
       env:
@@ -49,6 +55,7 @@ jobs:
         DB_USERNAME: root
         DB_PASSWORD: password
       run: php artisan migrate --force
+      working-directory: ./backend
 
     - name: Run Tests
       env:
@@ -59,3 +66,4 @@ jobs:
         DB_USERNAME: root
         DB_PASSWORD: password
       run: php artisan test
+      working-directory: ./backend
