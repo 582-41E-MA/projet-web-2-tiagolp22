@@ -35,6 +35,7 @@
         "password": "Mot de passe",
         "register_button": "S'inscrire"
     },"car_create": {
+        "select_option":"Sélectionner",
         "title": "Créer une voiture",
         "model": "Modèle",
         "year": "Année",
@@ -44,6 +45,7 @@
         "color": "Couleur",
         "transmission_type": "Type de transmission",
         "powertrain_group": "Groupe motopropulseur",
+        
         "fuel_type": "Type de carburant",
         "body_type": "Type de carrosserie",
         "number_of_doors": "Nombre de portes",

@@ -37,6 +37,7 @@
         "register_button": "Register"
     },
     "car_create": {
+        "select_option":"Select",
         "title": "Create Car",
         "model": "Model",
         "year": "Year",

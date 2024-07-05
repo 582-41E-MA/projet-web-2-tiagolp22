@@ -4,7 +4,7 @@ body {
     margin: 0;
     padding: 0;
 }
-.h3{
+h3{
     color: #0056b3;
 }
 
@@ -57,7 +57,8 @@ body {
 .form-container input[type="text"],
 .form-container input[type="email"],
 .form-container input[type="password"],
-.date-select select {
+.date-select select,
+.form-select {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
@@ -66,14 +67,9 @@ body {
     box-sizing: border-box;
 }
 
-.date-select {
-    display: flex;
-    justify-content: space-between;
-}
 
-.date-select select {
-    width: 32%;
-}
+
+
 
 .form-container button {
     padding: 10px;
@@ -90,14 +86,51 @@ body {
 .form-container button:hover {
     background-color: #0056b3;
 }
+.form-select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 16px;
+    box-sizing: border-box;
+    background-color: #fff;
+    color: #555;
+    appearance: none; /* For modern browsers */
+    -webkit-appearance: none; /* For Safari */
+    -moz-appearance: none; /* For Firefox */
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%204%205%27%3E%3Cpath%20fill%3D%27%23555%27%20d%3D%27M2%200L0%202h4zM2%205L0%203h4z%27/%3E%3C/svg%3E');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px 6px;
+}
 
+input[type="text"]:focus,
+input[type="date"]:focus,
+.form-textarea:focus,
+.form-select:focus,
+.form-textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+
+.form-option {
+    padding: 10px;
+    color: #333;
+    background-color: #fff;
+}
+
+
+.form-select option:hover {
+    background-color: #f0f0f0;
+}
 .form-container .error {
     color: red;
     font-size: 14px;
     margin-top: -10px;
     margin-bottom: 10px;
 }
-.date_naissance{
+.date{
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
@@ -106,6 +139,24 @@ body {
     box-sizing: border-box;
 
 }
+.form-textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 16px;
+    box-sizing: border-box;
+    background-color: #fff;
+    color: #555;
+    resize: vertical; /* Allows vertical resizing */
+    min-height: 100px; /* Sets a minimum height */
+}
+
+.form-textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
 
 @media (max-width: 768px) {
     .form-container {
@@ -121,7 +172,8 @@ body {
     .form-container input[type="text"],
     .form-container input[type="email"],
     .form-container input[type="password"],
-    .date-select select {
+    .date-select select,
+    .form-select {
         font-size: 14px;
     }
 
@@ -137,5 +189,18 @@ body {
     .date-select select {
         width: 100%;
         margin-bottom: 10px;
+    }
+    .form-select {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .form-select option {
+        font-size: 14px;
+        padding: 8px;
+    }
+    .form-textarea {
+        font-size: 14px;
+        padding: 8px;
     }
 }
