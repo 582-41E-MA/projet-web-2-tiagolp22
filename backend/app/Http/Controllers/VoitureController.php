@@ -10,6 +10,7 @@ use App\Models\GroupeMotopropulseur;
 use App\Models\Carrosserie;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Http\Requests\VoitureRequest;
 
 class VoitureController extends Controller
 {
@@ -40,12 +41,12 @@ class VoitureController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(VoitureRequest  $request)
     {
         $validated = $request->validated();
 
         $voiture = Voiture::create($validated);
-        return redirect()->route('voitures.index')->with('success', 'Voiture created successfully.');
+        return redirect()->route('voitures.index');
     }
 
     public function show($id)
