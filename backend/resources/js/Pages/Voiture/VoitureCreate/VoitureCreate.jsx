@@ -78,19 +78,21 @@ const VoitureCreate = () => {
         <>
             <Header />
             <div className="form-container">
+            <img className='logo_formulaire' src="../../../img/logo/logo.png" alt="Logo" />
                 <h3>{t('car_create.title')}</h3>
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
                         <label htmlFor="modele_id">{t('car_create.model')}</label>
                         <select
+                        className="form-select"
                             name="modele_id"
                             id="modele_id"
                             value={data.modele_id}
                             onChange={(e) => setData('modele_id', e.target.value)}
                         >
-                            <option value="">{t('select_option')}</option>
+                            <option value="">{t('car_create.select_option')}</option>
                             {modeles.map((modele) => (
-                                <option key={modele.id} value={modele.id}>
+                                <option className="form-option" key={modele.id} value={modele.id}>
                                     {modele.nom_modele}
                                 </option>
                             ))}
@@ -101,14 +103,15 @@ const VoitureCreate = () => {
                     <div className="form-group">
     <label htmlFor="annee">{t('car_create.year')}</label>
     <select
+    className="form-select"
         name="annee"
         id="annee"
         value={data.annee}
         onChange={(e) => setData('annee', e.target.value)}
     >
-        <option value="">{t('select_option')}</option>
+        <option className="form-option" value="">{t('car_create.select_option')}</option>
         {Array.from({ length: 35 }, (_, index) => 1990 + index).map((year) => (
-            <option key={year} value={year}>
+            <option className="form-option" key={year} value={year}>
                 {year}
             </option>
         ))}
@@ -119,6 +122,7 @@ const VoitureCreate = () => {
                     <div className="form-group">
                         <label htmlFor="date_arrivee">{t('car_create.arrival_date')}</label>
                         <input
+                            className='date'
                             type="date"
                             name="date_arrivee"
                             id="date_arrivee"
@@ -167,14 +171,17 @@ const VoitureCreate = () => {
                     <div className="form-group">
                         <label htmlFor="type_transmission_id">{t('car_create.transmission_type')}</label>
                         <select
+                        className="form-select"
                             name="type_transmission_id"
                             id="type_transmission_id"
                             value={data.type_transmission_id}
                             onChange={(e) => setData('type_transmission_id', e.target.value)}
                         >
-                            <option value="">{t('select_option')}</option>
+                            <option value="">{t('car_create.select_option')}</option>
                             {transmissions.map((transmission) => (
-                              <option key={transmission.id} value={transmission.id}>
+
+                              <option  className="form-option" key={transmission.id} value={transmission.id}>
+
                               {i18n.language === 'en' ?
                                   JSON.parse(transmission.type_transmission).en :
                                   JSON.parse(transmission.type_transmission).fr
@@ -188,12 +195,13 @@ const VoitureCreate = () => {
                     <div className="form-group">
                         <label htmlFor="groupe_motopropulseur_id">{t('car_create.powertrain_group')}</label>
                         <select
+                        className="form-select"
                             name="groupe_motopropulseur_id"
                             id="groupe_motopropulseur_id"
                             value={data.groupe_motopropulseur_id}
                             onChange={(e) => setData('groupe_motopropulseur_id', e.target.value)}
                         >
-                            <option value="">{t('select_option')}</option>
+                            <option className="form-option" value="">{t('car_create.select_option')}</option>
                             {groupesMotopropulseur.map((groupe) => (
                               <option key={groupe.id} value={groupe.id}>
                               {i18n.language === 'en' ?
@@ -209,17 +217,22 @@ const VoitureCreate = () => {
                     <div className="form-group">
                         <label htmlFor="type_carburant_id">{t('car_create.fuel_type')}</label>
                         <select
+                        className="form-select"
                             name="type_carburant_id"
                             id="type_carburant_id"
                             value={data.type_carburant_id}
                             onChange={(e) => setData('type_carburant_id', e.target.value)}
                         >
-                        <option value="">{t('select_option')}</option>
+
+                        <option value="">{t('car_create.select_option')}</option>
+
                             {carburants.map((carburant) => {
                                 console.log(carburant)
                             return (
                                 
-                                <option key={carburant.id} value={carburant.id}>
+
+                                <option className="form-option" key={carburant.id} value={carburant.id}>
+
                                 {i18n.language === 'en' ?
                                     JSON.parse(carburant.type_carburant).en :
                                     JSON.parse(carburant.type_carburant).fr
@@ -233,26 +246,25 @@ const VoitureCreate = () => {
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="carrosserie_id">{t('car_create.body_type')}</label>
-                        <select
-                            name="carrosserie_id"
-                            id="carrosserie_id"
-                            value={data.carrosserie_id}
-                            onChange={(e) => setData('carrosserie_id', e.target.value)}
-                        >
-                            <option value="">{t('select_option')}</option>
-                            {carrosseries.map((carrosserie) => (
-                              <option key={carrosserie.id} value={carrosserie.id}>
-                              {i18n.language === 'en' ?
-                                  JSON.parse(carrosserie.type_carrosserie).en :
-                                  JSON.parse(carrosserie.type_carrosserie).fr
-                              }
-                          </option>
-                          
-                            ))}
-                        </select>
-                        {errors.carrosserie_id && <span className="error">{errors.carrosserie_id}</span>}
-                    </div>
+
+    <label htmlFor="carrosserie_id">{t('car_create.body_type')}</label>
+    <select
+        className="form-select"
+        name="carrosserie_id"
+        id="carrosserie_id"
+        value={data.carrosserie_id}
+        onChange={(e) => setData('carrosserie_id', e.target.value)}
+    >
+        <option value="">{t('car_create.select_option')}</option>
+        {carrosseries.map((carrosserie) => (
+            <option className="form-option" key={carrosserie.id} value={carrosserie.id}>
+                {i18n.language === 'en' ? JSON.parse(carrosserie.type_carrosserie).en : JSON.parse(carrosserie.type_carrosserie).fr}
+            </option>
+        ))}
+    </select>
+    {errors.carrosserie_id && <span className="error">{errors.carrosserie_id}</span>}
+</div>
+
 
                     <div className="form-group">
                         <label htmlFor="nombre_portes">{t('car_create.number_of_doors')}</label>
@@ -293,6 +305,7 @@ const VoitureCreate = () => {
                     <div className="form-group">
                         <label htmlFor="description">{t('car_create.description')}</label>
                         <textarea
+                         className="form-textarea"
                             name="description"
                             id="description"
                             value={data.description}
