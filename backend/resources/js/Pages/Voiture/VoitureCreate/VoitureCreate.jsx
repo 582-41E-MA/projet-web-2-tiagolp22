@@ -7,7 +7,7 @@ import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 
 const VoitureCreate = () => {
-    const { t } = useTranslation();
+  const { t, i18n } = useTranslation(); // Uso de useTranslation para obter t e i18n
     const { data, setData, post, processing, errors } = useForm({
         modele_id: '',
         annee: '',
@@ -62,7 +62,7 @@ const VoitureCreate = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        post('/voitures/store', {
+        post('/voitures', {
             data,
             onSuccess: () => {
                 console.log('Voiture créée avec succès!');
@@ -174,9 +174,12 @@ const VoitureCreate = () => {
                         >
                             <option value="">{t('select_option')}</option>
                             {transmissions.map((transmission) => (
-                                <option key={transmission.id} value={transmission.id}>
-                                    {transmission.type_transmission}
-                                </option>
+                              <option key={transmission.id} value={transmission.id}>
+                              {i18n.language === 'en' ?
+                                  JSON.parse(transmission.type_transmission).en :
+                                  JSON.parse(transmission.type_transmission).fr
+                              }
+                          </option>
                             ))}
                         </select>
                         {errors.type_transmission_id && <span className="error">{errors.type_transmission_id}</span>}
@@ -192,9 +195,12 @@ const VoitureCreate = () => {
                         >
                             <option value="">{t('select_option')}</option>
                             {groupesMotopropulseur.map((groupe) => (
-                                <option key={groupe.id} value={groupe.id}>
-                                    {groupe.type_groupe_motopropulseur}
-                                </option>
+                              <option key={groupe.id} value={groupe.id}>
+                              {i18n.language === 'en' ?
+                                  JSON.parse(groupe.type_groupe_motopropulseur).en :
+                                  JSON.parse(groupe.type_groupe_motopropulseur).fr
+                              }
+                          </option>
                             ))}
                         </select>
                         {errors.groupe_motopropulseur_id && <span className="error">{errors.groupe_motopropulseur_id}</span>}
@@ -208,12 +214,20 @@ const VoitureCreate = () => {
                             value={data.type_carburant_id}
                             onChange={(e) => setData('type_carburant_id', e.target.value)}
                         >
-                            <option value="">{t('select_option')}</option>
-                            {carburants.map((carburant) => (
+                        <option value="">{t('select_option')}</option>
+                            {carburants.map((carburant) => {
+                                console.log(carburant)
+                            return (
+                                
                                 <option key={carburant.id} value={carburant.id}>
-                                    {carburant.type_carburant}
-                                </option>
-                            ))}
+                                {i18n.language === 'en' ?
+                                    JSON.parse(carburant.type_carburant).en :
+                                    JSON.parse(carburant.type_carburant).fr
+                                }
+                            </option>
+                            
+                            );
+})}
                         </select>
                         {errors.type_carburant_id && <span className="error">{errors.type_carburant_id}</span>}
                     </div>
@@ -228,9 +242,13 @@ const VoitureCreate = () => {
                         >
                             <option value="">{t('select_option')}</option>
                             {carrosseries.map((carrosserie) => (
-                                <option key={carrosserie.id} value={carrosserie.id}>
-                                    {carrosserie.type_carrosserie}
-                                </option>
+                              <option key={carrosserie.id} value={carrosserie.id}>
+                              {i18n.language === 'en' ?
+                                  JSON.parse(carrosserie.type_carrosserie).en :
+                                  JSON.parse(carrosserie.type_carrosserie).fr
+                              }
+                          </option>
+                          
                             ))}
                         </select>
                         {errors.carrosserie_id && <span className="error">{errors.carrosserie_id}</span>}
