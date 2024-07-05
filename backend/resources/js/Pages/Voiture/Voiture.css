@@ -1,35 +1,79 @@
 .container {
-    display: flex;
-  }
-  
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.filters-section {
+  width: 20%;
+  padding: 10px;
+}
+
+.cars-section {
+  width: 80%;
+  padding: 10px;
+}
+
+.cars-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.car {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+  transition: transform 0.3s ease; 
+}
+
+.car:hover {
+  transform: translateY(-10px); 
+}
+
+.car p {
+  color: grey; 
+}
+.titre_tuile{
+  color: black;
+}
+.car-title{
+  color: black;
+}
+.details-button {
+  display: inline-block;
+  padding: 10px;
+  background-color: yellow;
+  color: black;
+  text-decoration: none;
+  margin-top: 10px;
+}
+
+/* Media queries pour tablettes */
+@media (max-width: 768px) {
   .filters-section {
-    width: 20%;
-    padding: 10px;
+      width: 100%;
   }
-  
+
   .cars-section {
-    width: 80%;
-    padding: 10px;
+      width: 100%;
   }
-  
+
   .cars-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+      grid-template-columns: repeat(2, 1fr);
   }
-  
-  .car {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: center;
+}
+
+/* Media queries pour smartphones */
+@media (max-width: 480px) {
+  .filters-section {
+      width: 100%;
   }
-  
-  .details-button {
-    display: inline-block;
-    padding: 10px;
-    background-color: yellow;
-    color: black;
-    text-decoration: none;
-    margin-top: 10px;
+
+  .cars-section {
+      width: 100%;
   }
-  
+
+  .cars-grid {
+      grid-template-columns: 1fr;
+  }
+}
