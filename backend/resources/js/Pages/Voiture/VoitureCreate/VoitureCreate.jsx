@@ -179,7 +179,9 @@ const VoitureCreate = () => {
                         >
                             <option value="">{t('car_create.select_option')}</option>
                             {transmissions.map((transmission) => (
+
                               <option  className="form-option" key={transmission.id} value={transmission.id}>
+
                               {i18n.language === 'en' ?
                                   JSON.parse(transmission.type_transmission).en :
                                   JSON.parse(transmission.type_transmission).fr
@@ -221,12 +223,16 @@ const VoitureCreate = () => {
                             value={data.type_carburant_id}
                             onChange={(e) => setData('type_carburant_id', e.target.value)}
                         >
+
                         <option value="">{t('car_create.select_option')}</option>
+
                             {carburants.map((carburant) => {
                                 console.log(carburant)
                             return (
                                 
+
                                 <option className="form-option" key={carburant.id} value={carburant.id}>
+
                                 {i18n.language === 'en' ?
                                     JSON.parse(carburant.type_carburant).en :
                                     JSON.parse(carburant.type_carburant).fr
@@ -240,6 +246,7 @@ const VoitureCreate = () => {
                     </div>
 
                     <div className="form-group">
+
     <label htmlFor="carrosserie_id">{t('car_create.body_type')}</label>
     <select
         className="form-select"
