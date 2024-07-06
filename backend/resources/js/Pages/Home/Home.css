@@ -59,15 +59,14 @@
     padding: 10px 20px;
     border-radius: 0.25rem;
     color: #ffffff;
-    display: flex; 
-    align-items: center; 
+    display: flex; /* Para alinhar conteúdo verticalmente */
+    align-items: center; /* Para alinhar conteúdo verticalmente */
 }
 
-
 .flower-qc {
-    max-width: 30px; 
-    height: auto; 
-    
+    max-width: 30px; /* Ajuste o tamanho conforme necessário */
+    height: auto; /* Garante que a altura se ajuste automaticamente */
+    margin-left: 10px; /* Espaçamento à esquerda da flor, ajuste conforme necessário */
 }
 /* Styles pour la bannière */
 .banner {
@@ -165,6 +164,9 @@
     }
     .banner-footer {
         height:7vh;
+    }
+     .banner-footer p{
+        font-size: 0.6rem;
     }
    
     .flower-qc {
