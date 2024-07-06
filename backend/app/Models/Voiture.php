@@ -12,6 +12,8 @@ class Voiture extends Model
     protected $table = 'voitures'; 
 
     protected $primaryKey = 'id_voiture'; 
+    
+    public $timestamps = false;
 
     public $incrementing = true; 
 

@@ -41,12 +41,12 @@ class VoitureController extends Controller
         ]);
     }
 
-    public function store(VoitureRequest  $request)
+    public function store(VoitureRequest $request)
     {
         $validated = $request->validated();
 
         $voiture = Voiture::create($validated);
-        return redirect()->route('voitures.index');
+        return Inertia::location(route('voitures.index'));
     }
 
     public function show($id)

@@ -22,21 +22,21 @@ class VoitureRequest extends FormRequest
     public function rules()
     {
         return [
-            'modele_id' => ['required', 'exists:modeles,id_modele'],
+            'modele_id' => ['required'],
             'annee' => ['required', 'integer', 'min:1900', 'max:' . (date('Y') + 1)],
             'date_arrivee' => ['required', 'date'],
             'prix_achat' => ['required', 'numeric', 'min:0'],
             'prix_vente' => ['required', 'numeric', 'min:0'],
-            'couleur' => ['required', 'json'],
-            'type_transmission_id' => ['required', 'exists:transmissions,id_transmission'],
-            'groupe_motopropulseur_id' => ['required', 'exists:groupesmotopropulseurs,id_groupe_motopropulseur'],
-            'type_carburant_id' => ['required', 'exists:typescarburant,id_type_carburant'],
-            'carrosserie_id' => ['required', 'exists:carrosseries,id_carrosserie'],
+            'couleur' => ['required'],
+            'type_transmission_id' => ['required'],
+            'groupe_motopropulseur_id' => ['required'],
+            'type_carburant_id' => ['required'],
+            'carrosserie_id' => ['required'],
             'nombre_portes' => ['required', 'integer', 'min:1'],
             'nombre_places' => ['required', 'integer', 'min:1'],
             'kilometrage' => ['required', 'integer', 'min:0'],
             'description' => ['nullable', 'string'],
-            'etat_vehicule' => ['required', 'json'],
+            'etat_vehicule' => ['required'],
         ];
     }
 }
