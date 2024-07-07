@@ -1,9 +1,10 @@
 import './Voiture.css';
 import React from 'react';
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
+import Header from '../Components/Header/Header';
+import Footer from '../Components/Footer/Footer';
 import Filters from '../Filtres/Filtres'; 
 import { InertiaLink } from '@inertiajs/inertia-react';
+import { Link } from '@inertiajs/react';
 
 function Voiture({ voitures }) {
   return (
@@ -27,7 +28,7 @@ function Voiture({ voitures }) {
                   />
                   <h3 className="car-title">{voiture.annee} {voiture.modele.nom_modele}</h3>
                   <p>{voiture.description}</p>
-                  <InertiaLink href={`/voitures/${voiture.id_voiture}`} className="details-button">En savoir plus</InertiaLink>
+                  <Link href={`/voitures/${voiture.id_voiture}`} className="details-button">En savoir plus</Link>
                 </div>
               </InertiaLink>
             ))}

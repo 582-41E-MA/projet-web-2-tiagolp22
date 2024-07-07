@@ -34,7 +34,7 @@
         "username": "Nom d'utilisateur",
         "password": "Mot de passe",
         "register_button": "S'inscrire"
-    },"car_create": {
+    },"car": {
         "select_option":"Sélectionner",
         "title": "Créer une voiture",
         "model": "Modèle",
@@ -55,6 +55,10 @@
         "vehicle_condition": "État du véhicule",
         "order_id": "ID de commande",
         "submit_button": "Soumettre"
+    },
+    "car_show": {
+        "general_info":"Infos general",
+        "back": "Retour"
     },
     "footer": {
         "search": "Rechercher",

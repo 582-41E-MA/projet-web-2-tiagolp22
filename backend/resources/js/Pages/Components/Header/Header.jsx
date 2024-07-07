@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './Header.css';
 import { Link } from '@inertiajs/react';
-import LoginModal from '../Login/LoginModal';
+import LoginModal from '../../Login/LoginModal';
 import { useTranslation } from 'react-i18next';
 
 function Header() {
