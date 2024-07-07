@@ -10,20 +10,19 @@ a {
 
 
 h1 {
-    font-size: max(50px, 6vw);
+    font-size: max(40px, 4.8vw); 
     font-weight: 100;
     letter-spacing: .03em;
 }
 
 h2 {
-    font-size: max(32px, 3.25vw);
+    font-size: max(25.6px, 2.6vw); 
     font-weight: 200;
-    letter-spacing: .01em;
     letter-spacing: .015em;
 }
 
 h3 {
-    font-size: max(22px, 2.5vw);
+    font-size: max(17.6px, 2vw); 
     font-weight: 100;
 }
 

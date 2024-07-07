@@ -68,11 +68,11 @@ const VoitureCreate = ({
                     src="../../../img/logo/logo.png"
                     alt="Logo"
                 />
-                <h3>{t("car_create.title")}</h3>
+                <h3>{t("car.title")}</h3>
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
                         <label htmlFor="modele_id">
-                            {t("car_create.model")}
+                            {t("car.model")}
                         </label>
                         <select
                             className="form-select"
@@ -85,7 +85,7 @@ const VoitureCreate = ({
                             }}
                         >
                             <option value="">
-                                {t("car_create.select_option")}
+                                {t("car.select_option")}
                             </option>
                             {modeles.map((modele) => (
                                 <option
@@ -103,7 +103,7 @@ const VoitureCreate = ({
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="annee">{t("car_create.year")}</label>
+                        <label htmlFor="annee">{t("car.year")}</label>
                         <select
                             className="form-select"
                             name="annee"
@@ -112,7 +112,7 @@ const VoitureCreate = ({
                             onChange={(e) => setData("annee", e.target.value)}
                         >
                             <option className="form-option" value="">
-                                {t("car_create.select_option")}
+                                {t("car.select_option")}
                             </option>
                             {Array.from(
                                 { length: 35 },
@@ -134,7 +134,7 @@ const VoitureCreate = ({
 
                     <div className="form-group">
                         <label htmlFor="date_arrivee">
-                            {t("car_create.arrival_date")}
+                            {t("car.arrival_date")}
                         </label>
                         <input
                             className="date"
@@ -153,7 +153,7 @@ const VoitureCreate = ({
 
                     <div className="form-group">
                         <label htmlFor="prix_achat">
-                            {t("car_create.purchase_price")}
+                            {t("car.purchase_price")}
                         </label>
                         <input
                             type="text"
@@ -171,7 +171,7 @@ const VoitureCreate = ({
 
                     <div className="form-group">
                         <label htmlFor="prix_vente">
-                            {t("car_create.sale_price")}
+                            {t("car.sale_price")}
                         </label>
                         <input
                             type="text"
@@ -188,7 +188,7 @@ const VoitureCreate = ({
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="couleur">{t("car_create.color")}</label>
+                        <label htmlFor="couleur">{t("car.color")}</label>
                         <input
                             type="text"
                             name="couleur"
@@ -208,7 +208,7 @@ const VoitureCreate = ({
 
                     <div className="form-group">
                         <label htmlFor="type_transmission_id">
-                            {t("car_create.transmission_type")}
+                            {t("car.transmission_type")}
                         </label>
                         <div className="form-group">
                             <select
@@ -226,7 +226,7 @@ const VoitureCreate = ({
                                 }}
                             >
                                 <option value="">
-                                    {t("car_create.select_option")}
+                                    {t("car.select_option")}
                                 </option>
                                 {transmissions.map((transmission) => (
                                     <option
@@ -260,7 +260,7 @@ const VoitureCreate = ({
 
                     <div className="form-group">
                         <label htmlFor="groupe_motopropulseur_id">
-                            {t("car_create.powertrain_group")}
+                            {t("car.powertrain_group")}
                         </label>
                         <select
                             className="form-select"
@@ -276,7 +276,7 @@ const VoitureCreate = ({
                             }}
                         >
                             <option className="form-option" value="">
-                                {t("car_create.select_option")}
+                                {t("car.select_option")}
                             </option>
                             {groupesMotopropulseur.map((groupe) => (
                                 <option
@@ -302,7 +302,7 @@ const VoitureCreate = ({
 
                     <div className="form-group">
                         <label htmlFor="type_carburant_id">
-                            {t("car_create.fuel_type")}
+                            {t("car.fuel_type")}
                         </label>
                         <select
                             className="form-select"
@@ -318,7 +318,7 @@ const VoitureCreate = ({
                             }}
                         >
                             <option value="">
-                                {t("car_create.select_option")}
+                                {t("car.select_option")}
                             </option>
                             {typesCarburant.map((carburant) => (
                                 <option
@@ -342,7 +342,7 @@ const VoitureCreate = ({
 
                     <div className="form-group">
                         <label htmlFor="carrosserie_id">
-                            {t("car_create.body_type")}
+                            {t("car.body_type")}
                         </label>
                         <select
                             className="form-select"
@@ -358,7 +358,7 @@ const VoitureCreate = ({
                             }}
                         >
                             <option value="">
-                                {t("car_create.select_option")}
+                                {t("car.select_option")}
                             </option>
                             {carrosseries.map((carrosserie) => (
                                 <option
@@ -385,7 +385,7 @@ const VoitureCreate = ({
 
                     <div className="form-group">
                         <label htmlFor="nombre_portes">
-                            {t("car_create.number_of_doors")}
+                            {t("car.number_of_doors")}
                         </label>
                         <input
                             type="text"
@@ -405,7 +405,7 @@ const VoitureCreate = ({
 
                     <div className="form-group">
                         <label htmlFor="nombre_places">
-                            {t("car_create.number_of_seats")}
+                            {t("car.number_of_seats")}
                         </label>
                         <input
                             type="text"
@@ -425,7 +425,7 @@ const VoitureCreate = ({
 
                     <div className="form-group">
                         <label htmlFor="kilometrage">
-                            {t("car_create.mileage")}
+                            {t("car.mileage")}
                         </label>
                         <input
                             type="text"
@@ -443,7 +443,7 @@ const VoitureCreate = ({
 
                     <div className="form-group">
                         <label htmlFor="description">
-                            {t("car_create.description")}
+                            {t("car.description")}
                         </label>
                         <textarea
                             className="form-textarea"
@@ -482,7 +482,7 @@ const VoitureCreate = ({
 
                     <div className="form-group">
                         <label htmlFor="commandes_id_commande">
-                            {t("car_create.order_id")}
+                            {t("car.order_id")}
                         </label>
                         <input
                             type="text"
@@ -501,7 +501,7 @@ const VoitureCreate = ({
                     </div>
 
                     <button type="submit" disabled={processing}>
-                        {t("car_create.submit_button")}
+                        {t("car.submit_button")}
                     </button>
                 </form>
             </div>

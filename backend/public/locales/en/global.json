@@ -36,7 +36,7 @@
         "password": "Password",
         "register_button": "Register"
     },
-    "car_create": {
+    "car": {
         "select_option":"Select",
         "title": "Create Car",
         "model": "Model",
@@ -56,6 +56,10 @@
         "vehicle_condition": "Vehicle Condition",
         "order_id": "Order ID",
         "submit_button": "Submit"
+    },
+    "car_show": {
+      "general_info":"General infos",
+        "back": "Back"
     },
     "footer": {
         "search": "Search",
