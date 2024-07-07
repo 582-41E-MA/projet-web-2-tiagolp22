@@ -2,8 +2,8 @@ import React from "react";
 import { InertiaLink } from "@inertiajs/inertia-react";
 import { Link } from "@inertiajs/react";
 import { useTranslation } from "react-i18next";
-import Header from "../../Header/Header";
-import Footer from "../../Footer/Footer";
+import Header from "../../Components/Header/Header";
+import Footer from "../../Components/Footer/Footer";
 import "./VoitureShow.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
