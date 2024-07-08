@@ -23,31 +23,50 @@ class VoitureController extends Controller
             'voitures' => $voitures,
         ]);
     }
-
-    public function create()
+    public function filter(Request $request)
     {
-        // Buscar dados relacionados para os selects
-        $typesCarburant = TypeCarburant::all();
-       $modeles = Modele::all();
-        $transmissions = Transmission::all();
-        $groupesMotopropulseur = GroupeMotopropulseur::all();
-        $carrosseries = Carrosserie::all();
-
-        return Inertia::render('Voiture/VoitureCreate/VoitureCreate', [
-            'typesCarburant' => $typesCarburant,
-            'modeles' => $modeles,
-            'transmissions' => $transmissions,
-            'groupesMotopropulseur' => $groupesMotopropulseur,
-            'carrosseries' => $carrosseries,
-        ]);
-    }
-
-    public function store(VoitureRequest $request)
-    {
-        $validated = $request->validated();
-
-        $voiture = Voiture::create($validated);
-        return Inertia::location(route('voitures.index'));
+        $query = Voiture::query();
+    
+        if ($request->filled('etat')) {
+            $query->where('etat_vehicule', $request->input('etat'));
+        }
+    
+        if ($request->filled('constructeur')) {
+            $query->whereHas('modele.constructeur', function ($q) use ($request) {
+                $q->where('nom_constructeur', $request->input('constructeur'));
+            });
+        }
+    
+        if ($request->filled('modele')) {
+            $query->whereHas('modele', function ($q) use ($request) {
+                $q->where('nom_modele', $request->input('modele'));
+            });
+        }
+    
+        if ($request->filled('annee')) {
+            $query->where('annee', $request->input('annee'));
+        }
+    
+        if ($request->filled('prix_max')) {
+            $query->where('prix_vente', '<=', $request->input('prix_max'));
+        }
+    
+        if ($request->filled('couleur')) {
+            // Utilisez whereJsonContains pour filtrer par une valeur spécifique dans l'objet JSON
+            $query->whereJsonContains('couleur->fr', $request->input('couleur'));
+        }
+    
+        if ($request->filled('nombre_places')) {
+            $query->where('nombre_places', $request->input('nombre_places'));
+        }
+    
+        if ($request->filled('nombre_portes')) {
+            $query->where('nombre_portes', $request->input('nombre_portes'));
+        }
+    
+        $voitures = $query->with('modele.constructeur')->get();
+    
+        return response()->json($voitures);
     }
 
     public function show($id)
