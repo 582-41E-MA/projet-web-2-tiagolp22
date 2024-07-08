@@ -1,7 +1,175 @@
-
-.carousel {
-    padding:var(--space-medium) 0;
+/* Styles pour la bannière */
+.banner {
+    position: relative;
+    height: 550px;
+    overflow: hidden;
 }
-.Nouveautes{
-    text-align: center;
+
+.banner p, .banner h1 {
+    color: #ffffff;
+}
+
+.banner-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.banner-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(0, -70%);
+    text-align: right;
+}
+
+.banner-content h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+}
+
+.banner-content p {
+    font-size: 1.5rem;
+    max-width: 720px;
+    margin: 0 auto 1.5rem;
+}
+
+.btn {
+    display: inline-block;
+    background-color: #3490dc;
+    padding: 0.75rem 1.5rem;
+    text-decoration: none;
+    border-radius: 0.25rem;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #2779bd;
+}
+
+.banner-footer {
+    width: 27vw;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: var(--color-primary);
+    padding: 10px 20px;
+    border-radius: 0.25rem;
+    color: #ffffff;
+    display: flex; /* Para alinhar conteúdo verticalmente */
+    align-items: center; /* Para alinhar conteúdo verticalmente */
+}
+
+.flower-qc {
+    max-width: 30px; /* Ajuste o tamanho conforme necessário */
+    height: auto; /* Garante que a altura se ajuste automaticamente */
+    margin-left: 10px; /* Espaçamento à esquerda da flor, ajuste conforme necessário */
+}
+/* Styles pour la bannière */
+.banner {
+    position: relative;
+    height: 550px; 
+    overflow: hidden;
+}
+
+.banner p, .banner h1 {
+    color: #ffffff; 
+}
+
+.banner-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+}
+
+.banner-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(0, -70%);
+    text-align: right; 
+}
+
+.banner-content h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+}
+
+.banner-content p {
+    font-size: 1.5rem;
+    max-width: 720px;
+    margin: 0 auto 1.5rem;
+}
+
+.btn {
+    display: inline-block;
+    background-color: #3490dc;
+    padding: 0.75rem 1.5rem;
+    text-decoration: none;
+    border-radius: 0.25rem;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #2779bd;
+}
+
+.banner-footer {
+    width: 27vw; 
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: var(--color-primary);
+    padding: 10px 20px;
+    border-radius: 0.25rem;
+    color: #ffffff; 
+    display: flex; 
+    align-items: center; 
+}
+
+.flower-qc {
+    max-width: 30px; 
+    height: auto; 
+}
+
+@media (max-width: 1300px) {
+   
+    .banner-content p {
+        font-size: 1rem; 
+    }
+}
+/* Media Query para Tablets (768px) */
+@media (max-width: 768px) {
+   
+    
+    .banner-content p {
+        font-size: 1rem; 
+    }
+}
+
+
+@media (max-width: 430px) {
+    .banner-content h1 {
+        font-size: 2rem; 
+    }
+    
+    .banner-content p {
+        font-size: 1rem; 
+    }
+    .banner-footer {
+        height:7vh;
+    }
+     .banner-footer p{
+        font-size: 0.6rem;
+    }
+   
+    .flower-qc {
+        display: none; 
+    }
 }

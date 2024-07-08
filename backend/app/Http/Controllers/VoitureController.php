@@ -8,6 +8,7 @@ use App\Models\Modele;
 use App\Models\Transmission;
 use App\Models\GroupeMotopropulseur;
 use App\Models\Carrosserie;
+
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Http\Requests\VoitureRequest;
@@ -41,19 +42,19 @@ class VoitureController extends Controller
         ]);
     }
 
-    public function store(VoitureRequest  $request)
+    public function store(VoitureRequest $request)
     {
         $validated = $request->validated();
 
         $voiture = Voiture::create($validated);
-        return redirect()->route('voitures.index');
+        return Inertia::location(route('voitures.index'));
     }
 
     public function show($id)
-    {
-        $voiture = Voiture::findOrFail($id);
-        return Inertia::render('Voiture/VoitureShow/VoitureShow', ['voiture' => $voiture]);
-    }
+{
+    $voiture = Voiture::with('modele', 'typeCarburant', 'transmission', 'groupeMotopropulseur', 'carrosserie')->findOrFail($id);
+    return Inertia::render('Voiture/VoitureShow/VoitureShow', ['voiture' => $voiture]);
+}
 
     public function edit($id)
     {

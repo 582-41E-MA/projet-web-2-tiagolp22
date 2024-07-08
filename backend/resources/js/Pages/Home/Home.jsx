@@ -1,5 +1,6 @@
 import React from 'react';
 import Slider from 'react-slick';
+import { Link } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
 import { InertiaLink } from '@inertiajs/inertia-react';
 import './Home.css';
@@ -38,7 +39,19 @@ function Home() {
   return (
     <>
       <Header />
-      <img className="banner" src="../../../img/banner/banner.jpg" alt="bannière" />
+      <div className="banner">
+            <img src="../../../img/banner/banner.jpg" alt="Image de fond du banner" className="banner-image" />
+            <div className="banner-content wrapper">
+                <h1>Les Meilleurs Voitures d'Occasion</h1>
+                <p>Découvrez des voitures d'occasion de qualité à des prix imbattables. Quebecar, transparence et service personnalisé pour votre confiance. </p>
+                  <Link href="/voitures" className="btn">{t('header.catalogue')}</Link>
+            </div>
+            <div className="banner-footer">
+                <p>Nous sommes fiers d'être Québécois</p>
+                <img src="../../../img/icones/flower.png" alt="flower qc" className="flower-qc" />
+            </div>
+        </div>
+      <img className="banner"  alt="bannière" />
       <div className="wrapper">
         <div className="container">
           <div className="carousel">

@@ -23,12 +23,13 @@ class AuthController extends Controller
     public function register(CreateUtilisateurRequest $request)
     {
         $validated = $request->validated();
-
+    
         $validated['mot_de_passe'] = Hash::make($validated['mot_de_passe']);
-
+    
         $utilisateur = Utilisateur::create($validated);
-
-        return Inertia::location(route('login.index'));
+    
+        return Inertia::location(route('Accueil'));
+      
     }
     
     
