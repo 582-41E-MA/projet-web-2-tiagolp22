@@ -13,58 +13,39 @@ use App\Http\Controllers\TypeCarburantController;
 use App\Http\Controllers\ModeleController;
 use App\Http\Controllers\GroupeMotopropulseurController;
 use App\Http\Controllers\CarrosserieController;
-use Inertia\Inertia;
+
 use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-*/
+use App\Http\Middleware\CheckPrivilege;
+use Inertia\Inertia;
 
-// Route public 
 Route::get('/', [HomeController::class, 'index'])->name('Accueil');
 Route::get('/voitures', [VoitureController::class, 'index'])->name('voitures.index');
-// Routes pour les pages statiques 
-Route::get('/contact', function () {
-    return inertia('Contact'); 
-})->name('contact');
 
-Route::get('/about', function () {
-    return inertia('About'); 
-})->name('about');
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('/profile', [UtilisateurController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile', [UtilisateurController::class, 'update'])->name('profile.update');
+    Route::get('/contact', function () { return inertia('Contact'); })->name('contact');
 
-Route::get('/about', function () {
-    return inertia('About'); 
-})->name('about');
+    Route::middleware(CheckPrivilege::class . ':1,2')->group(function () {
+        Route::resource('/voitures', VoitureController::class)->except(['index', 'show']);
+    });
 
-//Inscription
-Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register'); //afficher form d'inscription
-Route::post('/register', [AuthController::class, 'register']);//inscription d'un utilisateur
+    Route::middleware(CheckPrivilege::class . ':1')->group(function () {
+        Route::resource('/utilisateurs', UtilisateurController::class);
+        Route::get('/voitures/{id}/edit', [VoitureController::class, 'edit'])->name('voitures.edit');
+        Route::put('/voitures/{id}', [VoitureController::class, 'update'])->name('voitures.update');
+        Route::get('/about', function () { return inertia('About'); })->name('about');
+    });
 
-//login
-Route::get('/login', [AuthController::class, 'index'])->name('login.index'); //afficher form
-Route::post('/login', [AuthController::class, 'userLogin'])->name('login.userLogin'); // fonctionalité login
-
-// Route logout
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth:sanctum');
-Route::resource('/voitures', VoitureController::class);
-
-// Routes authentifiées
-Route::middleware([EnsureFrontendRequestsAreStateful::class, 'auth:sanctum'])->group(function () {
-    // Routes pour le VoituresController
-  
-
-    // Routes pour le UtilisateursController
-    Route::resource('/utilisateurs', UtilisateurController::class);
+    Route::middleware(CheckPrivilege::class . ':1,2')->group(function () {
+        Route::post('/voitures/{id}/buy', [VoitureController::class, 'buy'])->name('voitures.buy');
+    });
 });
 
-Route::resource('constructeurs', ConstructeurController::class);
-Route::resource('transmissions', TransmissionController::class);
-Route::resource('status', StatusController::class);
-Route::resource('privileges', PrivilegeController::class);
-Route::resource('typecarburants', TypeCarburantController::class);
-Route::resource('modeles', ModeleController::class);
-Route::resource('groupes_motopropulseur', GroupeMotopropulseurController::class);
-Route::resource('carrosseries', CarrosserieController::class);
+Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register');
+Route::post('/register', [AuthController::class, 'register']);
+Route::get('/login', [AuthController::class, 'index'])->name('login.index');
+Route::post('/login', [AuthController::class, 'userLogin'])->name('login.userLogin');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth:sanctum');
+
