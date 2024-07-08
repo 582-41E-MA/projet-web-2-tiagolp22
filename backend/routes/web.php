@@ -59,6 +59,8 @@ Route::middleware([EnsureFrontendRequestsAreStateful::class, 'auth:sanctum'])->g
     // Routes pour le UtilisateursController
     Route::resource('/utilisateurs', UtilisateurController::class);
 });
+Route::get('/api/voitures/filter', [VoitureController::class, 'filter'])->name('voitures.filter');
+
 
 Route::resource('constructeurs', ConstructeurController::class);
 Route::resource('transmissions', TransmissionController::class);
