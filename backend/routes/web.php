@@ -42,6 +42,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/voitures/{id}/buy', [VoitureController::class, 'buy'])->name('voitures.buy');
     });
 });
+Route::get('/api/voitures/filter', [VoitureController::class, 'filter'])->name('voitures.filter');
+
 
 Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
