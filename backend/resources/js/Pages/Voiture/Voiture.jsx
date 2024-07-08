@@ -34,14 +34,8 @@ function Voiture({ voitures: initialVoitures }) {
                     alt={voiture.modele.nom_modele} 
                   />
                   <h3 className="car-title">{voiture.annee} {voiture.modele.nom_modele}</h3>
-                  <p>
-                    {voiture.description 
-                      ? JSON.parse(voiture.description)[i18n.language] 
-                      : t('car_show.no_description')}
-                  </p>
-                  <InertiaLink href={`/voitures/${voiture.id_voiture}`} className="details-button">
-                    {t('car_show.more_info')}
-                  </InertiaLink>
+                  <p>{voiture.description}</p>
+                  <Link href={`/voitures/${voiture.id_voiture}`} className="details-button">En savoir plus</Link>
                 </div>
               </InertiaLink>
             ))}
