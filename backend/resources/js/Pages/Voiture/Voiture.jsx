@@ -6,8 +6,13 @@ import { InertiaLink } from '@inertiajs/inertia-react';
 import { useTranslation } from 'react-i18next';
 import './Voiture.css';
 
-function Voiture({ voitures }) {
+function Voiture({ voitures: initialVoitures }) {
   const { t, i18n } = useTranslation();
+  const [voitures, setVoitures] = useState(initialVoitures);
+
+  const handleFilter = (filteredVoitures) => {
+    setVoitures(filteredVoitures);
+  };
 
   return (
     <>
@@ -15,7 +20,7 @@ function Voiture({ voitures }) {
       <img className="banner_catalog" src="../../../img/banner/banner_catalog.jpg" alt="bannière" />
       <div className="container">
         <div className="filters-section">
-          <Filters />
+          <Filters onFilter={handleFilter} />
         </div>
         <div className="cars-section">
           <div className="cars-grid">
@@ -35,7 +40,7 @@ function Voiture({ voitures }) {
                       : t('car_show.no_description')}
                   </p>
                   <InertiaLink href={`/voitures/${voiture.id_voiture}`} className="details-button">
-                    More info
+                    more info
                   </InertiaLink>
                 </div>
               </InertiaLink>
