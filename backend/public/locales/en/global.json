@@ -75,7 +75,13 @@
         "team": "Team",
         "contact_us": "Contact Us",
         "rights_reserved": "All rights reserved.",
-        "test": "test"
+        "test": "test",
+        "car_show": {
+            "more_info": "More info",
+            "no_description": "No description available.",
+            "general_info": "General information",
+            "back": "Back"
+          }
     }
     
 }
