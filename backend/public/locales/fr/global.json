@@ -34,7 +34,7 @@
         "username": "Nom d'utilisateur",
         "password": "Mot de passe",
         "register_button": "S'inscrire"
-    },"car": {
+    },"car_create": {
         "select_option":"Sélectionner",
         "title": "Créer une voiture",
         "model": "Modèle",
@@ -56,10 +56,6 @@
         "order_id": "ID de commande",
         "submit_button": "Soumettre"
     },
-    "car_show": {
-        "general_info":"Infos general",
-        "back": "Retour"
-    },
     "footer": {
         "search": "Rechercher",
         "suv": "VUS",
@@ -73,6 +69,12 @@
         "our_story": "Notre histoire",
         "team": "Équipe",
         "contact_us": "Nous contacter",
-        "rights_reserved": "Tous droits réservés."
+        "rights_reserved": "Tous droits réservés.",
+        "car_show": {
+            "more_info": "En savoir plus",
+            "no_description": "Aucune description disponible.",
+            "general_info": "Infos générales",
+            "back": "Retour"
+          }
     }
 }
