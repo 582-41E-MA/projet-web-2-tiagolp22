@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';  
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Filters from '../Filtres/Filtres'; 
@@ -40,7 +40,7 @@ function Voiture({ voitures: initialVoitures }) {
                       : t('car_show.no_description')}
                   </p>
                   <InertiaLink href={`/voitures/${voiture.id_voiture}`} className="details-button">
-                    more info
+                    {t('car_show.more_info')}
                   </InertiaLink>
                 </div>
               </InertiaLink>
