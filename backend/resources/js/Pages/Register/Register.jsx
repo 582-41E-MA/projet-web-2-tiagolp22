@@ -1,7 +1,7 @@
 import React from 'react';
 import { useForm } from '@inertiajs/inertia-react';
-import Header from '../Components/Header/Header';
-import Footer from '../Components/Footer/Footer';
+import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
 import { useTranslation } from 'react-i18next';
 
 const Register = () => {

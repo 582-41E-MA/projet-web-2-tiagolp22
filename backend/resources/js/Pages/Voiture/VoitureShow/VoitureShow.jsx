@@ -2,8 +2,9 @@ import React from "react";
 import { InertiaLink } from "@inertiajs/inertia-react";
 import { Link } from "@inertiajs/react";
 import { useTranslation } from "react-i18next";
-import Header from "../../Components/Header/Header";
-import Footer from "../../Components/Footer/Footer";
+import Header from "../../Header/Header";
+import Footer from "../../Footer/Footer";
+import DetailItem from "../DetailItem/DetailItem";
 import "./VoitureShow.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -20,7 +21,7 @@ import {
     faExclamationCircle,
     faCarSide,
 } from "@fortawesome/free-solid-svg-icons";
-import DetailItem from "../../Components/Voiture/DetailItem/DetailItem";
+
 
 const VoitureShow = ({ voiture }) => {
     const { t, i18n } = useTranslation();

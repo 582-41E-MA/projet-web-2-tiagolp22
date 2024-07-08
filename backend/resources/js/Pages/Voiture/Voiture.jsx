@@ -1,7 +1,7 @@
 import './Voiture.css';
 import React from 'react';
-import Header from '../Components/Header/Header';
-import Footer from '../Components/Footer/Footer';
+import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
 import Filters from '../Filtres/Filtres'; 
 import { InertiaLink } from '@inertiajs/inertia-react';
 import { Link } from '@inertiajs/react';
