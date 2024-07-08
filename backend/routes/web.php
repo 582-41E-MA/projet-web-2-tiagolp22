@@ -21,6 +21,9 @@ use Inertia\Inertia;
 
 Route::get('/', [HomeController::class, 'index'])->name('Accueil');
 Route::get('/voitures', [VoitureController::class, 'index'])->name('voitures.index');
+Route::get('/voitures/{id}', [VoitureController::class, 'show'])->name('voitures.show');
+Route::resource('/voitures', VoitureController::class)->except(['index', 'show']);
+
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/profile', [UtilisateurController::class, 'edit'])->name('profile.edit');
