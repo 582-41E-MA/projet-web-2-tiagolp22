@@ -41,6 +41,7 @@ class Voiture extends Model
     protected $casts = [
         'couleur' => 'json', 
         'etat_vehicule' => 'json',
+        'description' => 'json',
     ];
 
     public function modele()

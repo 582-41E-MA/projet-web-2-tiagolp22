@@ -35,7 +35,7 @@ class VoitureRequest extends FormRequest
             'nombre_portes' => ['required', 'integer', 'min:1'],
             'nombre_places' => ['required', 'integer', 'min:1'],
             'kilometrage' => ['required', 'integer', 'min:0'],
-            'description' => ['nullable', 'string'],
+            'description' => ['nullable'],
             'etat_vehicule' => ['required'],
         ];
     }

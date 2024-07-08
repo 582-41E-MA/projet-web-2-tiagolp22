@@ -31,7 +31,10 @@ const VoitureCreate = ({
         nombre_portes: "",
         nombre_places: "",
         kilometrage: "",
-        description: "",
+        description:  {
+            en: "",
+            fr: "",
+        },
         etat_vehicule: {
             en: "",
             fr: "",
@@ -39,13 +42,14 @@ const VoitureCreate = ({
         commandes_id_commande: null,
     });
 
+ 
     const handleSubmit = (e) => {
         e.preventDefault();
-
         const formattedData = {
             ...data,
             couleur: JSON.stringify(data.couleur),
             etat_vehicule: JSON.stringify(data.etat_vehicule),
+            description: JSON.stringify(data.description),
         };
         console.log(formattedData);
         post("/voitures", {
@@ -449,10 +453,13 @@ const VoitureCreate = ({
                             className="form-textarea"
                             name="description"
                             id="description"
-                            value={data.description}
-                            onChange={(e) =>
-                                setData("description", e.target.value)
-                            }
+                            value={data.description[i18n.language]}
+                            onChange={(e) => {
+                                setData("description", {
+                                    ...data.description,
+                                    [i18n.language]: e.target.value,
+                                });
+                            }}
                         />
                         {errors.description && (
                             <span className="error">{errors.description}</span>
