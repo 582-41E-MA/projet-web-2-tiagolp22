@@ -1,91 +1,93 @@
 import React, { useState } from 'react';
 import './Filtres.css';
 import { useTranslation } from 'react-i18next';
+import axios from 'axios';
 
+function Filters({ onFilter }) {
+  const { t } = useTranslation();
+  const [filters, setFilters] = useState({
+    etat: '',
+    constructeur: '',
+    modele: '',
+    annee: '',
+    prix_max: '',
+    couleur: '',
+    nombre_places: '',
+    nombre_portes: '',
+  });
 
-function Filters() {
-  const [showLocationInput, setShowLocationInput] = useState(false);
-  const [location, setLocation] = useState('H1W3L5');
-  const [state, setState] = useState('Neuf');
-  const [brand, setBrand] = useState('Honda');
-  const [model, setModel] = useState('Civic');
-  const [year, setYear] = useState('2013');
-  const [price, setPrice] = useState('5000');
+  const handleChange = (e) => {
+    setFilters({
+      ...filters,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const applyFilters = () => {
+    axios.get('/api/voitures/filter', { params: filters })
+      .then(response => {
+        onFilter(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching filtered cars', error);
+      });
+  };
 
   return (
     <div className="filters-container">
-      <h3>Filtres</h3>
-      <table className="filters-table">
-        <tbody>
-          <tr>
-            <td>Localisation</td>
-            <td onClick={() => setShowLocationInput(!showLocationInput)}>
-              {showLocationInput ? (
-                <input 
-                  type="text" 
-                  value={location} 
-                  onChange={(e) => setLocation(e.target.value)}
-                  onBlur={() => setShowLocationInput(false)}
-                  autoFocus
-                />
-              ) : (
-                location
-              )}
-            </td>
-          </tr>
-          <tr>
-            <td>État</td>
-            <td>
-              <select value={state} onChange={(e) => setState(e.target.value)}>
-                <option value="Neuf">Neuf</option>
-                <option value="Occasion">Occasion</option>
-              </select>
-            </td>
-          </tr>
-          <tr>
-            <td>Marque</td>
-            <td>
-              <select value={brand} onChange={(e) => setBrand(e.target.value)}>
-                <option value="Honda">Honda</option>
-                <option value="Toyota">Toyota</option>
-                <option value="Ford">Ford</option>
-                {/* Ajoutez d'autres marques ici */}
-              </select>
-            </td>
-          </tr>
-          <tr>
-            <td>Modèle</td>
-            <td>
-              <select value={model} onChange={(e) => setModel(e.target.value)}>
-                <option value="Civic">Civic</option>
-                <option value="Accord">Accord</option>
-                {/* Ajoutez d'autres modèles ici */}
-              </select>
-            </td>
-          </tr>
-          <tr>
-            <td>Année</td>
-            <td>
-              <select value={year} onChange={(e) => setYear(e.target.value)}>
-                {Array.from({ length: 2024 - 1990 + 1 }, (_, i) => 2024 - i).map(year => (
-                  <option key={year} value={year}>{year}</option>
-                ))}
-              </select>
-            </td>
-          </tr>
-          <tr>
-            <td>Prix</td>
-            <td>
-              <input 
-                type="number" 
-                value={price} 
-                onChange={(e) => setPrice(e.target.value)}
-                min="0"
-              />
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <h3>{t('filters.filtres')}</h3>
+      <div>
+        <label>{t('filters.État')}</label>
+        <select name="etat" value={filters.etat} onChange={handleChange}>
+          <option value="">{t('filters.Tous')}</option>
+          <option value="Neuf">{t('filters.Neuf')}</option>
+          <option value="Occasion">{t('filters.Occasion')}</option>
+        </select>
+      </div>
+      <div>
+        <label>{t('filters.Constructeur')}</label>
+        <input name="constructeur" type="text" value={filters.constructeur} onChange={handleChange} />
+      </div>
+      <div>
+        <label>{t('filters.Modèle')}</label>
+        <input name="modele" type="text" value={filters.modele} onChange={handleChange} />
+      </div>
+      <div>
+        <label>{t('filters.Année')}</label>
+        <input name="annee" type="number" value={filters.annee} onChange={handleChange} />
+      </div>
+      <div>
+        <label>{t('filters.Prix maximum')}</label>
+        <input name="prix_max" type="number" value={filters.prix_max} onChange={handleChange} />
+      </div>
+      <div>
+        <label>{t('filters.Couleur')}</label>
+        <select name="couleur" value={filters.couleur} onChange={handleChange}>
+          <option value="">{t('filters.Toutes')}</option>
+          <option value="Blanc">{t('filters.Blanc')}</option>
+          <option value="Noir">{t('filters.Noir')}</option>
+          <option value="Rouge">{t('filters.Rouge')}</option>
+        </select>
+      </div>
+      <div>
+        <label>{t('filters.Nombre de places')}</label>
+        <select name="nombre_places" value={filters.nombre_places} onChange={handleChange}>
+          <option value="">{t('filters.Toutes')}</option>
+          <option value="2">{t('filters.2')}</option>
+          <option value="4">{t('filters.4')}</option>
+          <option value="5">{t('filters.5')}</option>
+        </select>
+      </div>
+      <div>
+        <label>{t('filters.Nombre de portes')}</label>
+        <select name="nombre_portes" value={filters.nombre_portes} onChange={handleChange}>
+          <option value="">{t('filters.Toutes')}</option>
+          <option value="2">{t('filters.2')}</option>
+          <option value="3">{t('filters.3')}</option>
+          <option value="4">{t('filters.4')}</option>
+        </select>
+      </div>
+      <button onClick={applyFilters}>{t('filters.Appliquer filtres')}</button>
     </div>
   );
 }
