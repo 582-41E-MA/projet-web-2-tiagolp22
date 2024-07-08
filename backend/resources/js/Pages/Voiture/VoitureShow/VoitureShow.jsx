@@ -26,6 +26,7 @@ import {
 const VoitureShow = ({ voiture }) => {
     const { t, i18n } = useTranslation();
 
+    // Fonction pour obtenir la traduction correcte en fonction de la langue actuelle
     const getTranslation = (data) => {
         if (typeof data === "string") {
             const parsedData = JSON.parse(data);
@@ -128,7 +129,7 @@ const VoitureShow = ({ voiture }) => {
                     </div>
                     <h3>{t("car.description")}</h3>
                     <p className="description-paragraph">
-                        {voiture.description}
+                    {getTranslation(voiture.description)}
                     </p>
                 </div>
                 <Link href="/voitures" className="back-button">

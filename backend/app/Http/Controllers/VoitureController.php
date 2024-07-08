@@ -68,12 +68,24 @@ class VoitureController extends Controller
     
         return response()->json($voitures);
     }
+    public function store(VoitureRequest $request)
+    {
+        $validated = $request->validated();
+ // Convertendo os campos JSON para strings simples
+ $validated['couleur'] = json_encode($validated['couleur']);
+ $validated['description'] = json_encode($validated['description']);
+ $validated['etat_vehicule'] = json_encode($validated['etat_vehicule']);
+        $voiture = Voiture::create($validated);
+        return Inertia::location(route('voitures.index'));
+    }
+
 
     public function show($id)
-{
-    $voiture = Voiture::with('modele', 'typeCarburant', 'transmission', 'groupeMotopropulseur', 'carrosserie')->findOrFail($id);
-    return Inertia::render('Voiture/VoitureShow/VoitureShow', ['voiture' => $voiture]);
-}
+    {
+        $voiture = Voiture::with('modele', 'typeCarburant', 'transmission', 'groupeMotopropulseur', 'carrosserie')->findOrFail($id);
+
+        return Inertia::render('Voiture/VoitureShow/VoitureShow', ['voiture' => $voiture]);
+    }
 
     public function edit($id)
     {
@@ -86,6 +98,12 @@ class VoitureController extends Controller
         $validated = $request->validated();
 
         $voiture = Voiture::findOrFail($id);
+
+        // Convertendo os campos JSON para strings simples
+        $validated['couleur'] = json_encode($validated['couleur']);
+        $validated['description'] = json_encode($validated['description']);
+        $validated['etat_vehicule'] = json_encode($validated['etat_vehicule']);
+
         $voiture->update($validated);
         return redirect()->route('voitures.index');
     }
