@@ -9,8 +9,6 @@ use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use App\Http\Requests\CreateUtilisateurRequest;
 
-
-
 class AuthController extends Controller
 {
     public function index()
@@ -38,44 +36,33 @@ class AuthController extends Controller
     }
 
     public function userLogin(Request $request)
-    {
-        $request->validate([
-            'courriel' => 'required|email',
-            'mot_de_passe' => 'required',
-        ]);
+{
+    $request->validate([
+        'courriel' => 'required|email',
+        'mot_de_passe' => 'required',
+    ]);
 
-        $loginUtilisateur = Utilisateur::where('courriel', $request->courriel)->first();
+    $loginUtilisateur = Utilisateur::where('courriel', $request->courriel)->first();
 
-        if (!$loginUtilisateur) {
-            return Inertia::location(route('login.index'));
-        }
-
-        if (Hash::check($request->mot_de_passe, $loginUtilisateur->mot_de_passe)) {
-            $token = $loginUtilisateur->createToken('mytoken')->plainTextToken;
-
-            Auth::login($loginUtilisateur);
-
-
-            return response()->json([
-                'props' => [
-                    'token' => $token,
-                ],
-                'location' => route('Accueil')
-            ]);
-
-        } else {
-            return Inertia::location(route('login.index'));
-        }
+    if (!$loginUtilisateur) {
+        return Inertia::location(route('login.index'));
     }
 
-    public function logout(Request $request)
+    if (Hash::check($request->mot_de_passe, $loginUtilisateur->mot_de_passe)) {
+        $token = $loginUtilisateur->createToken('mytoken')->plainTextToken;
+
+        Auth::login($loginUtilisateur);
+
+        return Inertia::location(route('Accueil'));
+            // ->with(['token' => $token]);
+    } else {
+        return Inertia::location(route('login.index'));
+    }
+}
+
+
+public function logout(Request $request)
     {
-        $user = Auth::user();
-
-        if ($user) {
-            $user->tokens()->delete();
-        }
-
         Auth::logout();
 
         $request->session()->invalidate();
@@ -84,3 +71,4 @@ class AuthController extends Controller
         return Inertia::location(route('Accueil'));
     }
 }
+

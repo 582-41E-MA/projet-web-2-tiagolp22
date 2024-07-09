@@ -15,6 +15,13 @@ function LoginModal({ onClose }) {
       onError: (error) => {
         setErrors(error);
       },
+      onSuccess: (page) => {
+        const token = page.props.token;
+        if (token) {
+          localStorage.setItem('auth_token', token);
+        }
+        onClose();
+      }
     });
   };
 
