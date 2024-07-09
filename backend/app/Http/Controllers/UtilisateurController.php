@@ -5,16 +5,16 @@ use App\Http\Requests\CreateUtilisateurRequest;
 use App\Http\Requests\UpdateUtilisateurRequest;
 use App\Models\Utilisateur;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth; // Certifique-se de adicionar esta linha
+use Illuminate\Support\Facades\Auth;
 
 class UtilisateurController extends Controller
 {
     public function index()
     {
-        
+
         // $utilisateurs = Utilisateur::all();
         // return response()->json($utilisateurs);
-        
+
         return inertia('Utilisateurs/Index', [
             'utilisateurs' => Utilisateur::all()
         ]);
