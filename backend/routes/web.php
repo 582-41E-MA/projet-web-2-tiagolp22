@@ -20,16 +20,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/profile', [UtilisateurController::class, 'edit'])->name('profile.edit');
     Route::put('/profile', [UtilisateurController::class, 'update'])->name('profile.update');
 
-
-    Route::middleware(CheckPrivilege::class . ':1,2')->group(function () {
-        Route::resource('/voitures', VoitureController::class)->except(['index', 'show']);
-    });
-
     Route::middleware(CheckPrivilege::class . ':1')->group(function () {
-        Route::resource('/utilisateurs', UtilisateurController::class);
+        Route::resource('/voitures', VoitureController::class)->except(['index', 'show']);
+        Route::get('/voitures/create', [VoitureController::class, 'create'])->name('voitures.create');
+        Route::post('/voitures', [VoitureController::class, 'store'])->name('voitures.store');
         Route::get('/voitures/{id}/edit', [VoitureController::class, 'edit'])->name('voitures.edit');
         Route::put('/voitures/{id}', [VoitureController::class, 'update'])->name('voitures.update');
-
     });
 
     Route::middleware(CheckPrivilege::class . ':2')->group(function () {
@@ -37,7 +33,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     });
 });
 
-
+// Routes accessibles à tous les utilisateurs
 Route::get('/', [HomeController::class, 'index'])->name('Accueil');
 Route::get('/voitures', [VoitureController::class, 'index'])->name('voitures.index');
 Route::get('/voitures/{id}', [VoitureController::class, 'show'])->name('voitures.show');
