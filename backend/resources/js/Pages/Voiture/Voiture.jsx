@@ -1,8 +1,8 @@
-import React, { useState } from 'react';  
+import React, { useState } from 'react';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
-import Filters from '../Filtres/Filtres'; 
-import { InertiaLink } from '@inertiajs/inertia-react';
+import Filters from '../Filtres/Filtres';
+import { Link } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
 import './Voiture.css';
 
@@ -25,19 +25,27 @@ function Voiture({ voitures: initialVoitures }) {
         <div className="cars-section">
           <div className="cars-grid">
             {voitures.map((voiture, index) => (
-              <InertiaLink key={index} href={`/voitures/${voiture.id_voiture}`} className="car-link">
-                <div className="car">
-                  <img 
-                    src={voiture.photos && voiture.photos.length > 0 
-                          ? voiture.photos[0].url_photo 
-                          : '../../../img/car/default_car.png'} 
-                    alt={voiture.modele.nom_modele} 
-                  />
-                  <h3 className="car-title">{voiture.annee} {voiture.modele.nom_modele}</h3>
-                  <p>{voiture.description}</p>
-                  <Link href={`/voitures/${voiture.id_voiture}`} className="details-button">En savoir plus</Link>
-                </div>
-              </InertiaLink>
+              <div key={index} className="car-link">
+                <Link href={`/voitures/${voiture.id_voiture}`} className="car-link">
+                  <div className="car">
+                    <img
+                      src={voiture.photos && voiture.photos.length > 0
+                            ? voiture.photos[0].url_photo
+                            : '../../../img/car/default_car.png'}
+                      alt={voiture.modele.nom_modele}
+                    />
+                    <h3 className="car-title">{voiture.annee} {voiture.modele.nom_modele}</h3>
+                    <p>
+                      {voiture.description
+                        ? JSON.parse(voiture.description)[i18n.language]
+                        : t('car_show.no_description')}
+                    </p>
+                    <button className="details-button">
+                      {t('car_show.more_info')}
+                    </button>
+                  </div>
+                </Link>
+              </div>
             ))}
           </div>
         </div>
