@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use App\Http\Requests\CreateUtilisateurRequest;
 
+
+
 class AuthController extends Controller
 {
     public function index()
