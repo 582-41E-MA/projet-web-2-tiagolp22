@@ -1,26 +1,19 @@
 <?php
-
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
 
 class CheckPrivilege
 {
-    public function handle(Request $request, Closure $next, ...$privileges): Response
+    public function handle($request, Closure $next, ...$privileges)
     {
-        if (!Auth::check()) {
-            return redirect()->route('login.index');
-        }
+        $user = Auth::user();
 
-        $utilisateurPrivilege = Auth::user()->privilege->id_privilege;
-
-        if (in_array($utilisateurPrivilege, $privileges)) {
+        if ($user && in_array($user->privileges_id, $privileges)) {
             return $next($request);
         }
 
-        return redirect()->route('Accueil')->with('error', 'Vous n\'avez pas les privilèges nécessaires pour accéder à cette page.');
+        return redirect('/')->with('error', 'Access denied.');
     }
 }
