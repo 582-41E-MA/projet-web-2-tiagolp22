@@ -98,6 +98,18 @@ class VoitureController extends Controller
         ]);
     }
 
+
+    public function store(VoitureRequest $request)
+    {
+        $validated = $request->validated();
+        $validated['couleur'] = json_encode($validated['couleur']);
+        $validated['description'] = json_encode($validated['description']);
+        $validated['etat_vehicule'] = json_encode($validated['etat_vehicule']);
+        $voiture = Voiture::create($validated);
+        return Inertia::location(route('voitures.index'));
+    }
+
+
     public function show($id)
     {
         $voiture = Voiture::with('modele', 'typeCarburant', 'transmission', 'groupeMotopropulseur', 'carrosserie')->findOrFail($id);
@@ -115,6 +127,10 @@ class VoitureController extends Controller
     {
         $validated = $request->validated();
         $voiture = Voiture::findOrFail($id);
+        $validated['couleur'] = json_encode($validated['couleur']);
+        $validated['description'] = json_encode($validated['description']);
+        $validated['etat_vehicule'] = json_encode($validated['etat_vehicule']);
+
         $voiture->update($validated);
         return redirect()->route('voitures.index');
     }
