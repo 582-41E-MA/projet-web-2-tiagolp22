@@ -1,0 +1,58 @@
+.voiture-edit-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+  }
+  
+  .voiture-edit-title {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .voiture-edit-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 600px;
+  }
+  
+  .voiture-edit-form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+  }
+  
+  .voiture-edit-form-group label {
+    margin-bottom: 5px;
+  }
+  
+  .voiture-edit-form-group input,
+  .voiture-edit-form-group select,
+  .voiture-edit-form-group textarea {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .voiture-edit-form-group .error {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+  }
+  
+  .voiture-edit-submit-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .voiture-edit-submit-button:hover {
+    background-color: #0056b3;
+  }
+  

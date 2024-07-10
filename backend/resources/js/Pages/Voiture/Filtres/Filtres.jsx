@@ -16,16 +16,7 @@ function Filters({ onFilter }) {
         nombre_portes: "",
     });
     const [options, setOptions] = useState({
-        colors: [""].concat([
-            "White",
-            "Black",
-            "Red",
-            "Blue",
-            "Green",
-            "Yellow",
-            "Silver",
-            "Grey",
-        ]),
+        colors: [""],
         modeles: [],
         constructeurs: [],
     });
@@ -37,9 +28,9 @@ function Filters({ onFilter }) {
                 const { colors, modeles, constructeurs } =
                     response.data.filters;
                 setOptions({
-                    colors: options.colors.concat(colors),
-                    modeles: [""].concat(modeles),
-                    constructeurs: [""].concat(constructeurs),
+                    colors: ["", ...colors],
+                    modeles: ["", ...modeles],
+                    constructeurs: ["", ...constructeurs],
                 });
             })
             .catch((error) => {
@@ -75,9 +66,9 @@ function Filters({ onFilter }) {
                     value={filters.etat}
                     onChange={handleChange}
                 >
-                    <option value="">{t("filters.Tous")}</option>
-                    <option value="Neuf">{t("filters.Neuf")}</option>
-                    <option value="Occasion">{t("filters.Occasion")}</option>
+                    <option key="" value="">{t("filters.Tous")}</option>
+                    <option key="Neuf" value="Neuf">{t("filters.Neuf")}</option>
+                    <option key="Occasion" value="Occasion">{t("filters.Occasion")}</option>
                 </select>
             </div>
             <div>
@@ -87,8 +78,8 @@ function Filters({ onFilter }) {
                     value={filters.constructeur}
                     onChange={handleChange}
                 >
-                    {options.constructeurs.map((constructeur) => (
-                        <option key={constructeur} value={constructeur}>
+                    {options.constructeurs.map((constructeur, index) => (
+                        <option key={index} value={constructeur}>
                             {constructeur}
                         </option>
                     ))}
@@ -101,8 +92,8 @@ function Filters({ onFilter }) {
                     value={filters.modele}
                     onChange={handleChange}
                 >
-                    {options.modeles.map((modele) => (
-                        <option key={modele} value={modele}>
+                    {options.modeles.map((modele, index) => (
+                        <option key={index} value={modele}>
                             {modele}
                         </option>
                     ))}
@@ -133,8 +124,8 @@ function Filters({ onFilter }) {
                     value={filters.couleur}
                     onChange={handleChange}
                 >
-                    {options.colors.map((color) => (
-                        <option key={color} value={color}>
+                    {options.colors.map((color, index) => (
+                        <option key={index} value={color}>
                             {color}
                         </option>
                     ))}
@@ -147,10 +138,10 @@ function Filters({ onFilter }) {
                     value={filters.nombre_places}
                     onChange={handleChange}
                 >
-                    <option value="">{t("filters.Toutes")}</option>
-                    <option value="2">{t("filters.2")}</option>
-                    <option value="4">{t("filters.4")}</option>
-                    <option value="5">{t("filters.5")}</option>
+                    <option key="" value="">{t("filters.Toutes")}</option>
+                    <option key="2" value="2">{t("filters.2")}</option>
+                    <option key="4" value="4">{t("filters.4")}</option>
+                    <option key="5" value="5">{t("filters.5")}</option>
                 </select>
             </div>
             <div>
@@ -160,10 +151,10 @@ function Filters({ onFilter }) {
                     value={filters.nombre_portes}
                     onChange={handleChange}
                 >
-                    <option value="">{t("filters.Toutes")}</option>
-                    <option value="2">{t("filters.2")}</option>
-                    <option value="3">{t("filters.3")}</option>
-                    <option value="4">{t("filters.4")}</option>
+                    <option key="" value="">{t("filters.Toutes")}</option>
+                    <option key="2" value="2">{t("filters.2")}</option>
+                    <option key="3" value="3">{t("filters.3")}</option>
+                    <option key="4" value="4">{t("filters.4")}</option>
                 </select>
             </div>
             <button onClick={applyFilters}>
