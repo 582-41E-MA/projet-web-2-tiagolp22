@@ -23,9 +23,9 @@
     "no_account": "Don't have an account?",
     "create_account": "Create an account"
   },
-  "user": {
+  "register": {
     "title": "Create your account",
-    "title_profile": "Welcome to your account",
+    "subtitle": "Quickly access all your saved information from any device, at any time.",
     "first_name": "First Name",
     "last_name": "Last Name",
     "birthdate": "Date of Birth",
@@ -36,12 +36,12 @@
     "email": "Email",
     "username": "Username",
     "password": "Password",
-    "register_button": "Register",
-    "last_connection": "Last Connection"
+    "register_button": "Register"
   },
   "car": {
     "select_option": "Select",
-    "title": "Create a Car",
+    "title": "Create Car",
+    "edit_title": "Edit Car {{id}}",
     "model": "Model",
     "year": "Year",
     "arrival_date": "Arrival Date",
@@ -77,6 +77,12 @@
       "photos_required": "Please select at least 2 photos."
     }
   },
+  "car_show": {
+    "general_info": "General Info",
+    "back": "Back",
+    "more_info": "More Info",
+    "no_description": "No description available."
+  },
   "footer": {
     "search": "Search",
     "suv": "SUVs",
@@ -90,13 +96,8 @@
     "our_story": "Our Story",
     "team": "Team",
     "contact_us": "Contact Us",
-    "rights_reserved": "All rights reserved."
-  },
-  "car_show": {
-    "more_info": "More Info",
-    "no_description": "No description available.",
-    "general_info": "General Info",
-    "back": "Back"
+    "rights_reserved": "All rights reserved.",
+    "test": "test"
   },
   "filters": {
     "filters": "Filters",
