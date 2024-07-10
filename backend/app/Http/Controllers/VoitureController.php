@@ -24,8 +24,7 @@ class VoitureController extends Controller
             'voitures' => $voitures,
         ]);
     }
-
-    public function create()
+    public function filter(Request $request)
     {
         $typesCarburant = TypeCarburant::all();
         $modeles = Modele::all();

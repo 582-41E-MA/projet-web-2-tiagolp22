@@ -14,12 +14,21 @@ function Voiture({ voitures: initialVoitures }) {
     setVoitures(filteredVoitures);
   };
 
+function Voiture({ voitures: initialVoitures }) {
+  const { t, i18n } = useTranslation();
+  const [voitures, setVoitures] = useState(initialVoitures);
+
+  const handleFilter = (filteredVoitures) => {
+    setVoitures(filteredVoitures);
+  };
+
   return (
     <>
       <Header />
       <img className="banner_catalog" src="../../../img/banner/banner_catalog.jpg" alt="bannière" />
       <div className="container">
         <div className="filters-section">
+          <Filters onFilter={handleFilter} />
           <Filters onFilter={handleFilter} />
         </div>
         <div className="cars-section">
