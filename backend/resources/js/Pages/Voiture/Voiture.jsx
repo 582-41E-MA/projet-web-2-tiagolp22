@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import Filters from "./Filtres/Filtres";
@@ -6,16 +7,27 @@ import { Link } from "@inertiajs/react";
 import { useTranslation } from "react-i18next";
 import "./Voiture.css";
 
-function Voiture({ voitures: initialVoitures }) {
+function Voiture({ voitures: initialVoitures, privilege_id }) {
     const { t, i18n } = useTranslation();
     const [voitures, setVoitures] = useState(initialVoitures);
 
     useEffect(() => {
-        setVoitures(initialVoitures);
-    }, [initialVoitures]);
+        console.log("Privilege ID:", privilege_id);
+    }, [privilege_id]);
 
     const handleFilter = (filteredVoitures) => {
         setVoitures(filteredVoitures);
+    };
+
+    const handleDelete = async (id) => {
+        if (window.confirm(t("confirm_delete"))) {
+            try {
+                await axios.delete(`/voitures/${id}`);
+                setVoitures(voitures.filter(voiture => voiture.id_voiture !== id));
+            } catch (error) {
+                console.error("Erreur lors de la suppression de la voiture:", error);
+            }
+        }
     };
 
     return (
@@ -26,7 +38,7 @@ function Voiture({ voitures: initialVoitures }) {
                 src="/img/banner/banner_catalog.jpg"
                 alt="bannière"
             />
-            <div className="container">
+            <div className="voiture-container">
                 <div className="filters-section">
                     <Filters onFilter={handleFilter} />
                 </div>
@@ -64,6 +76,22 @@ function Voiture({ voitures: initialVoitures }) {
                                         </button>
                                     </div>
                                 </Link>
+                                {privilege_id === 1 && (
+                                    <div className="admin-actions">
+                                        <Link
+                                            href={`/voitures/${voiture.id_voiture}/edit`}
+                                            className="edit-button"
+                                        >
+                                            {t("edit")}
+                                        </Link>
+                                        <button
+                                            onClick={() => handleDelete(voiture.id_voiture)}
+                                            className="delete-button"
+                                        >
+                                            {t("delete")}
+                                        </button>
+                                    </div>
+                                )}
                             </div>
                         ))}
                     </div>
