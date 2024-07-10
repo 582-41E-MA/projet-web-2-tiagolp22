@@ -14,7 +14,7 @@ const VoitureCreate = ({
     carrosseries,
 }) => {
     const { t, i18n } = useTranslation();
-    const { data, setData, post, processing, errors } = useForm({
+    const { data, setData, post, processing, errors, setError, clearErrors } = useForm({
         modele_id: "",
         annee: "",
         date_arrivee: "",
@@ -56,10 +56,39 @@ const VoitureCreate = ({
         }));
         setThumbnails([...thumbnails, ...newThumbnails]);
     };
+    const validateFields = () => {
+        const newErrors = {};
 
+        if (!data.modele_id) newErrors.modele_id = t("car.errors.model_required");
+        if (!data.annee || data.annee < 1900 || data.annee > new Date().getFullYear() + 1)
+            newErrors.annee = t("car.errors.year_invalid");
+        if (!data.date_arrivee) newErrors.date_arrivee = t("car.errors.arrival_date_required");
+        if (!data.prix_achat || isNaN(data.prix_achat) || data.prix_achat < 0)
+            newErrors.prix_achat = t("car.errors.purchase_price_invalid");
+        if (!data.prix_vente || isNaN(data.prix_vente) || data.prix_vente < 0)
+            newErrors.prix_vente = t("car.errors.sale_price_invalid");
+        if (!data.couleur[i18n.language]) newErrors.couleur = t("car.errors.color_required");
+        if (!data.type_transmission_id) newErrors.type_transmission_id = t("car.errors.transmission_type_required");
+        if (!data.groupe_motopropulseur_id) newErrors.groupe_motopropulseur_id = t("car.errors.powertrain_group_required");
+        if (!data.type_carburant_id) newErrors.type_carburant_id = t("car.errors.fuel_type_required");
+        if (!data.carrosserie_id) newErrors.carrosserie_id = t("car.errors.body_type_required");
+        if (!data.nombre_portes || isNaN(data.nombre_portes) || data.nombre_portes < 1)
+            newErrors.nombre_portes = t("car.errors.number_of_doors_invalid");
+        if (!data.nombre_places || isNaN(data.nombre_places) || data.nombre_places < 1)
+            newErrors.nombre_places = t("car.errors.number_of_seats_invalid");
+        if (!data.kilometrage || isNaN(data.kilometrage) || data.kilometrage < 0)
+            newErrors.kilometrage = t("car.errors.mileage_invalid");
+        if (!data.etat_vehicule[i18n.language]) newErrors.etat_vehicule = t("car.errors.vehicle_state_required");
+
+        if (data.photos.length >= 2) {
+            newErrors.photos = t("car.errors.photos_required");
+        }
+
+        return newErrors;
+    };
     const handleSubmit = (e) => {
         e.preventDefault();
-       
+        clearErrors();
 
         const formData = new FormData();
         Object.keys(data).forEach((key) => {
@@ -71,6 +100,18 @@ const VoitureCreate = ({
                 formData.append(key, data[key]);
             }
         });
+
+        
+        const validationErrors = validateFields();
+
+        if (Object.keys(validationErrors).length > 0) {
+            Object.keys(validationErrors).forEach(field => {
+                setError(field, validationErrors[field]);
+            });
+
+            return;
+
+        }
 
         post("/voitures", {
             data: formData,
@@ -296,12 +337,6 @@ const VoitureCreate = ({
                                 </span>
                             )}
                         </div>
-
-                        {errors.type_transmission_id && (
-                            <span className="error">
-                                {errors.type_transmission_id}
-                            </span>
-                        )}
                     </div>
 
                     <div className="form-group">
