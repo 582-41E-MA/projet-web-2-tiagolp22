@@ -9,15 +9,15 @@ class Voiture extends Model
 {
     use HasFactory;
 
-    protected $table = 'voitures'; 
+    protected $table = 'voitures';
 
-    protected $primaryKey = 'id_voiture'; 
-    
+    protected $primaryKey = 'id_voiture';
+
     public $timestamps = false;
 
-    public $incrementing = true; 
+    public $incrementing = true;
 
-    protected $keyType = 'int'; 
+    protected $keyType = 'int';
 
     protected $fillable = [
         'modele_id',
@@ -39,7 +39,7 @@ class Voiture extends Model
     ];
 
     protected $casts = [
-        'couleur' => 'json', 
+        'couleur' => 'json',
         'etat_vehicule' => 'json',
         'description' => 'json',
     ];
@@ -72,5 +72,9 @@ class Voiture extends Model
     public function commande()
     {
         return $this->belongsTo(Commande::class, 'commandes_id_commande', 'id_commande');
+    }
+    public function photos()
+    {
+        return $this->hasMany(Photo::class, 'voitures_id_voiture', 'id_voiture');
     }
 }

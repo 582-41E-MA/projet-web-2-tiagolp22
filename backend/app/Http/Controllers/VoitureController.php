@@ -9,10 +9,11 @@ use App\Models\Transmission;
 use App\Models\GroupeMotopropulseur;
 use App\Models\Carrosserie;
 use App\Models\Constructeur;
-
+use App\Models\Photo;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Http\Requests\VoitureRequest;
+use Illuminate\Support\Facades\Storage;
 
 class VoitureController extends Controller
 {
@@ -20,10 +21,17 @@ class VoitureController extends Controller
     {
         $voitures = Voiture::with('modele')->get();
 
+
+        foreach ($voitures as $voiture) {
+            $photo = Photo::where('voitures_id_voiture', $voiture->id_voiture)->first();
+            $voiture->photo_url = $photo ? asset(Storage::url($photo->photos)) : null;
+        }
+
         return Inertia::render('Voiture/Voiture', [
             'voitures' => $voitures,
         ]);
     }
+
 
     public function create(Request $request)
     {
@@ -106,20 +114,37 @@ class VoitureController extends Controller
         $validated['description'] = json_encode($validated['description']);
         $validated['etat_vehicule'] = json_encode($validated['etat_vehicule']);
         $voiture = Voiture::create($validated);
+
+        if ($request->hasFile('photos') && count($request->file('photos')) >= 2) {
+            foreach ($request->file('photos') as $index => $file) {
+                $path = $file->store('public/photos');
+                $photo = Photo::create([
+                    'voitures_id_voiture' => $voiture->id_voiture,
+                    'photos' => $path,
+                    'ordre' => $index,
+                ]);
+            }
+
+            return Inertia::location(route('voitures.index'));
+        }
         return Inertia::location(route('voitures.index'));
+
     }
-
-
     public function show($id)
     {
-        $voiture = Voiture::with('modele', 'typeCarburant', 'transmission', 'groupeMotopropulseur', 'carrosserie')->findOrFail($id);
+        $voiture = Voiture::with(['modele', 'typeCarburant', 'transmission', 'groupeMotopropulseur', 'carrosserie', 'photos'])->findOrFail($id);
 
-        return Inertia::render('Voiture/VoitureShow/VoitureShow', ['voiture' => $voiture]);
+        return Inertia::render('Voiture/VoitureShow/VoitureShow', [
+            'voiture' => $voiture,
+            'photos' => $voiture->photos,
+        ]);
     }
+
 
     public function edit($id)
     {
         $voiture = Voiture::findOrFail($id);
+
         return Inertia::render('Voiture/VoitureEdit/VoitureEdit', ['voiture' => $voiture]);
     }
 
@@ -141,4 +166,5 @@ class VoitureController extends Controller
         $voiture->delete();
         return redirect()->route('voitures.index');
     }
+
 }

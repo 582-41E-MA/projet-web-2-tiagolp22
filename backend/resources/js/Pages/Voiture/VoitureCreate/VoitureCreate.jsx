@@ -4,6 +4,7 @@ import Header from "../../Header/Header";
 import Footer from "../../Footer/Footer";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
+import "./VoitureCreate.css";
 
 const VoitureCreate = ({
     typesCarburant,
@@ -13,7 +14,6 @@ const VoitureCreate = ({
     carrosseries,
 }) => {
     const { t, i18n } = useTranslation();
-
     const { data, setData, post, processing, errors } = useForm({
         modele_id: "",
         annee: "",
@@ -31,7 +31,7 @@ const VoitureCreate = ({
         nombre_portes: "",
         nombre_places: "",
         kilometrage: "",
-        description:  {
+        description: {
             en: "",
             fr: "",
         },
@@ -40,22 +40,45 @@ const VoitureCreate = ({
             fr: "",
         },
         commandes_id_commande: null,
+        photos: [],
     });
 
- 
+    const [thumbnails, setThumbnails] = useState([]);
+
+    const handleFileChange = (e) => {
+        const files = Array.from(e.target.files);
+        setData("photos", files);
+
+        // miniatures
+        const newThumbnails = files.map((file) => ({
+            id: URL.createObjectURL(file),
+            file,
+        }));
+        setThumbnails([...thumbnails, ...newThumbnails]);
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        const formattedData = {
-            ...data,
-            couleur: JSON.stringify(data.couleur),
-            etat_vehicule: JSON.stringify(data.etat_vehicule),
-            description: JSON.stringify(data.description),
-        };
-        console.log(formattedData);
+       
+
+        const formData = new FormData();
+        Object.keys(data).forEach((key) => {
+            if (key === "photos") {
+                data.photos.forEach((file, index) => {
+                    formData.append(`photos[${index}]`, file);
+                });
+            } else {
+                formData.append(key, data[key]);
+            }
+        });
+
         post("/voitures", {
-            data: formattedData,
+            data: formData,
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
             onSuccess: () => {
-                console.log("Voiture créée avec succès!");
+                console.log("Voiture criada com sucesso!");
             },
             onError: (errors) => {
                 console.error("Error", errors);
@@ -75,9 +98,30 @@ const VoitureCreate = ({
                 <h3>{t("car.title")}</h3>
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
-                        <label htmlFor="modele_id">
-                            {t("car.model")}
-                        </label>
+                        <label htmlFor="photos">{t("car.photos")}</label>
+                        <input
+                            type="file"
+                            name="photos"
+                            id="photos"
+                            multiple
+                            onChange={handleFileChange}
+                        />
+                        {errors.photos && (
+                            <span className="error">{errors.photos}</span>
+                        )}
+                    </div>
+                    <div className="thumbnails-container">
+                        {thumbnails.map((thumbnail, index) => (
+                            <div key={index} className="thumbnail">
+                                <img
+                                    src={thumbnail.id}
+                                    alt={`Thumbnail ${index}`}
+                                />
+                            </div>
+                        ))}
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="modele_id">{t("car.model")}</label>
                         <select
                             className="form-select"
                             name="modele_id"
@@ -88,9 +132,7 @@ const VoitureCreate = ({
                                 setData("modele_id", selectedModelId);
                             }}
                         >
-                            <option value="">
-                                {t("car.select_option")}
-                            </option>
+                            <option value="">{t("car.select_option")}</option>
                             {modeles.map((modele) => (
                                 <option
                                     className="form-option"
@@ -321,9 +363,7 @@ const VoitureCreate = ({
                                 );
                             }}
                         >
-                            <option value="">
-                                {t("car.select_option")}
-                            </option>
+                            <option value="">{t("car.select_option")}</option>
                             {typesCarburant.map((carburant) => (
                                 <option
                                     key={carburant.id}
@@ -361,9 +401,7 @@ const VoitureCreate = ({
                                 );
                             }}
                         >
-                            <option value="">
-                                {t("car.select_option")}
-                            </option>
+                            <option value="">{t("car.select_option")}</option>
                             {carrosseries.map((carrosserie) => (
                                 <option
                                     className="form-option"
@@ -428,9 +466,7 @@ const VoitureCreate = ({
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="kilometrage">
-                            {t("car.mileage")}
-                        </label>
+                        <label htmlFor="kilometrage">{t("car.mileage")}</label>
                         <input
                             type="text"
                             name="kilometrage"

@@ -9,9 +9,11 @@ class Photo extends Model
 {
     use HasFactory;
 
-    protected $table = 'photos';
-    protected $primaryKey = 'id_photo';
-    protected $fillable = ['voitures_id_voiture', 'url_photo'];
+    protected $table = 'photo';
+    protected $primaryKey = 'id';
+    public $timestamps = false; 
+
+    protected $fillable = ['voitures_id_voiture', 'photos', 'ordre'];
 
     public function voiture()
     {
