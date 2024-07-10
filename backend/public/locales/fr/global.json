@@ -58,7 +58,24 @@
       "description": "Description",
       "vehicle_condition": "État du véhicule",
       "order_id": "ID de commande",
-      "submit_button": "Soumettre"
+      "submit_button": "Soumettre",
+        "errors": {
+          "model_required": "Modèle requis.",
+          "year_invalid": "Année invalide. Veuillez entrer une année valide entre 1900 et l'année en cours.",
+          "arrival_date_required": "Date d'arrivée requise.",
+          "purchase_price_invalid": "Prix d'achat invalide. Veuillez entrer un nombre valide supérieur ou égal à 0.",
+          "sale_price_invalid": "Prix de vente invalide. Veuillez entrer un nombre valide supérieur ou égal à 0.",
+          "color_required": "Couleur requise.",
+          "transmission_type_required": "Type de transmission requis.",
+          "powertrain_group_required": "Groupe motopropulseur requis.",
+          "fuel_type_required": "Type de carburant requis.",
+          "body_type_required": "Type de carrosserie requis.",
+          "number_of_doors_invalid": "Nombre de portes invalide. Veuillez entrer un nombre valide supérieur ou égal à 1.",
+          "number_of_seats_invalid": "Nombre de places invalide. Veuillez entrer un nombre valide supérieur ou égal à 1.",
+          "mileage_invalid": "Kilométrage invalide. Veuillez entrer un nombre valide supérieur ou égal à 0.",
+          "vehicle_state_required": "État du véhicule requis.",
+          "photos_required": "Veuillez sélectionner au moins 2 photos."
+    }
     },
     "footer": {
       "search": "Rechercher",
