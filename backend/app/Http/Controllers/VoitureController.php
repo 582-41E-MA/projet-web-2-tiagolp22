@@ -17,9 +17,10 @@ use Illuminate\Support\Facades\Storage;
 
 class VoitureController extends Controller
 {
-    public function index()
-    {
-        $voitures = Voiture::with('modele')->get();
+public function index()
+{
+    $voitures = Voiture::with('modele')->get();
+    $privilege_id = auth()->user()->privileges_id;
 
 
         foreach ($voitures as $voiture) {
@@ -27,10 +28,12 @@ class VoitureController extends Controller
             $voiture->photo_url = $photo ? asset(Storage::url($photo->photos)) : null;
         }
 
-        return Inertia::render('Voiture/Voiture', [
-            'voitures' => $voitures,
-        ]);
-    }
+
+    return Inertia::render('Voiture/Voiture', [
+        'voitures' => $voitures,
+        'privilege_id' => $privilege_id,
+    ]);
+}
 
 
     public function create(Request $request)
