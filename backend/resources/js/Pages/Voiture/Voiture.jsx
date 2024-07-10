@@ -41,7 +41,7 @@ function Voiture({ voitures: initialVoitures }) {
                         : t('car_show.no_description')}
                     </p>
                     <button className="details-button">
-                      {t('car_show.more_info')}
+                      Plus d'info
                     </button>
                   </div>
                 </Link>
