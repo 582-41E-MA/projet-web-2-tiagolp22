@@ -27,6 +27,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/voitures', [VoitureController::class, 'store'])->name('voitures.store');
         Route::get('/voitures/{id}/edit', [VoitureController::class, 'edit'])->name('voitures.edit');
         Route::put('/voitures/{id}', [VoitureController::class, 'update'])->name('voitures.update');
+        Route::delete('/voitures/{id}', [VoitureController::class, 'destroy']);
     });
 
     Route::middleware(CheckPrivilege::class . ':2')->group(function () {
