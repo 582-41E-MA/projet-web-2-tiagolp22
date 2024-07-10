@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import Header from "../Header/Header";
-import Footer from "../Footer/Footer";
-import Filters from "../Filtres/Filtres";
-import { Link } from "@inertiajs/react";
-import { useTranslation } from "react-i18next";
-import "./Voiture.css";
+import React, { useState } from 'react';
+import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
+import Filters from './Filtres/Filtres';
+import { Link } from '@inertiajs/react';
+import { useTranslation } from 'react-i18next';
+import './Voiture.css';
 
 function Voiture({ voitures: initialVoitures }) {
     const { t, i18n } = useTranslation();

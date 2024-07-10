@@ -5,7 +5,9 @@
       "about": "About",
       "contact": "Contact Us",
       "login": "Login",
-      "register": "Register"
+      "register": "Register",
+      "logout":"Logout",
+      "profile":"Profile"
     },
     "home": {
       "new_arrivals": "New Arrivals",
@@ -21,21 +23,22 @@
       "no_account": "No account?",
       "create_account": "Create an account"
     },
-    "register": {
-      "title": "Create your account",
-      "subtitle": "Quickly access all your saved information from any device, at any time.",
-      "first_name": "First Name",
-      "last_name": "Last Name",
-      "birthdate": "Date of Birth",
-      "address": "Address",
-      "postal_code": "Postal Code",
-      "phone": "Phone Number",
-      "mobile": "Mobile Number",
-      "email": "Email",
-      "username": "Username",
-      "password": "Password",
-      "register_button": "Register"
-    },
+    "user": {
+    "title": "Create your account",
+    "title_profile": "Welcome to your count",
+    "first_name": "First Name",
+    "last_name": "Last Name",
+    "birthdate": "Date of Birth",
+    "address": "Address",
+    "postal_code": "Postal Code",
+    "phone": "Phone Number",
+    "mobile": "Mobile Number",
+    "email": "Email",
+    "username": "Username",
+    "password": "Password",
+    "register_button": "Register",
+    "last_connection": "Last Connection"
+  },
     "car": {
       "select_option":"Select",
       "title": "Create Car",

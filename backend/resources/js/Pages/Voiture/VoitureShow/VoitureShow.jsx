@@ -4,7 +4,7 @@ import { Link } from "@inertiajs/react";
 import { useTranslation } from "react-i18next";
 import Header from "../../Header/Header";
 import Footer from "../../Footer/Footer";
-import DetailItem from "../DetailItem/DetailItem";
+import DetailItem from "./DetailItem/DetailItem";
 import "./VoitureShow.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

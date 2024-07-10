@@ -17,8 +17,9 @@ use App\Http\Middleware\CheckPrivilege;
 use Inertia\Inertia;
 
 Route::middleware(['auth:sanctum'])->group(function () {
-    Route::get('/profile', [UtilisateurController::class, 'edit'])->name('profile.edit');
-    Route::put('/profile', [UtilisateurController::class, 'update'])->name('profile.update');
+    Route::get('/user/profile/{id}', [UtilisateurController::class, 'show'])->name('user.profile');
+    Route::put('/user/profile/{id}', [UtilisateurController::class, 'update'])->name('user.update');
+
 
     Route::middleware(CheckPrivilege::class . ':1')->group(function () {
         Route::resource('/voitures', VoitureController::class)->except(['index', 'show']);

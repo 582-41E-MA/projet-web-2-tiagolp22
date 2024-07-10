@@ -1,7 +1,7 @@
 import React from 'react';
 import { useForm } from '@inertiajs/inertia-react';
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
+import Header from '../../Header/Header';
+import Footer from '../../Footer/Footer';
 import { useTranslation } from 'react-i18next';
 
 const Register = () => {
@@ -40,11 +40,11 @@ const Register = () => {
             <Header />
             <div className="form-container">
                 <img className='logo_formulaire' src="../../img/logo/logo.png" alt="Logo" />
-                <h3 className='h3'>{t('register.title')}</h3>
-                <p>{t('register.subtitle')}</p>
+                <h3 className='h3'>{t('user.title')}</h3>
+                <p>{t('user.subtitle')}</p>
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
-                        <label htmlFor="prenom">{t('register.first_name')}</label>
+                        <label htmlFor="prenom">{t('user.first_name')}</label>
                         <input
                             type="text"
                             name="prenom"
@@ -55,7 +55,7 @@ const Register = () => {
                         {errors.prenom && <span className="error">{errors.prenom}</span>}
                     </div>
                     <div className="form-group">
-                        <label htmlFor="nom">{t('register.last_name')}</label>
+                        <label htmlFor="nom">{t('user.last_name')}</label>
                         <input
                             type="text"
                             name="nom"
@@ -66,7 +66,7 @@ const Register = () => {
                         {errors.nom && <span className="error">{errors.nom}</span>}
                     </div>
                     <div className="form-group">
-                        <label htmlFor="date_naissance">{t('register.birthdate')}</label>
+                        <label htmlFor="date_naissance">{t('user.birthdate')}</label>
                         <input
                             type="date"
                             className='date'
@@ -78,7 +78,7 @@ const Register = () => {
                         {errors.date_naissance && <span className="error">{errors.date_naissance}</span>}
                     </div>
                     <div className="form-group">
-                        <label htmlFor="adresse">{t('register.address')}</label>
+                        <label htmlFor="adresse">{t('user.address')}</label>
                         <input
                             type="text"
                             name="adresse"
@@ -89,7 +89,7 @@ const Register = () => {
                         {errors.adresse && <span className="error">{errors.adresse}</span>}
                     </div>
                     <div className="form-group">
-                        <label htmlFor="code_postal">{t('register.postal_code')}</label>
+                        <label htmlFor="code_postal">{t('user.postal_code')}</label>
                         <input
                             type="text"
                             name="code_postal"
@@ -100,7 +100,7 @@ const Register = () => {
                         {errors.code_postal && <span className="error">{errors.code_postal}</span>}
                     </div>
                     <div className="form-group">
-                        <label htmlFor="numero_telephone">{t('register.phone')}</label>
+                        <label htmlFor="numero_telephone">{t('user.phone')}</label>
                         <input
                             type="text"
                             name="numero_telephone"
@@ -111,7 +111,7 @@ const Register = () => {
                         {errors.numero_telephone && <span className="error">{errors.numero_telephone}</span>}
                     </div>
                     <div className="form-group">
-                        <label htmlFor="numero_portable">{t('register.mobile')}</label>
+                        <label htmlFor="numero_portable">{t('user.mobile')}</label>
                         <input
                             type="text"
                             name="numero_portable"
@@ -122,7 +122,7 @@ const Register = () => {
                         {errors.numero_portable && <span className="error">{errors.numero_portable}</span>}
                     </div>
                     <div className="form-group">
-                        <label htmlFor="courriel">{t('register.email')}</label>
+                        <label htmlFor="courriel">{t('user.email')}</label>
                         <input
                             type="email"
                             name="courriel"
@@ -133,7 +133,7 @@ const Register = () => {
                         {errors.courriel && <span className="error">{errors.courriel}</span>}
                     </div>
                     <div className="form-group">
-                        <label htmlFor="nom_utilisateur">{t('register.username')}</label>
+                        <label htmlFor="nom_utilisateur">{t('user.username')}</label>
                         <input
                             type="text"
                             name="nom_utilisateur"
@@ -144,7 +144,7 @@ const Register = () => {
                         {errors.nom_utilisateur && <span className="error">{errors.nom_utilisateur}</span>}
                     </div>
                     <div className="form-group">
-                        <label htmlFor="mot_de_passe">{t('register.password')}</label>
+                        <label htmlFor="mot_de_passe">{t('user.password')}</label>
                         <input
                             type="password"
                             name="mot_de_passe"
@@ -155,7 +155,7 @@ const Register = () => {
                         {errors.mot_de_passe && <span className="error">{errors.mot_de_passe}</span>}
                     </div>
                     <button type="submit" disabled={processing}>
-                        {t('register.register_button')}
+                        {t('user.register_button')}
                     </button>
                 </form>
             </div>

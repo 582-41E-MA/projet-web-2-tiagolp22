@@ -22,7 +22,7 @@ class UtilisateurController extends Controller
 
     public function create()
     {
-        return inertia('Utilisateurs/Create');
+        return inertia('User/Profile');
     }
 
     public function store(CreateUtilisateurRequest $request)
@@ -39,7 +39,7 @@ class UtilisateurController extends Controller
     public function show($id)
     {
         $utilisateur = Utilisateur::findOrFail($id);
-        return inertia('Utilisateurs/Show', [
+        return inertia('User/Profile', [
             'utilisateur' => $utilisateur
         ]);
     }
@@ -54,17 +54,20 @@ class UtilisateurController extends Controller
 
     public function update(UpdateUtilisateurRequest $request, $id)
     {
+        dd('entrou'); // Isso deve aparecer se a função estiver sendo chamada corretamente
+    
         $validated = $request->validated();
-
+    
         $utilisateur = Utilisateur::findOrFail($id);
         $utilisateur->fill($validated);
         if ($request->filled('mot_de_passe')) {
             $utilisateur->mot_de_passe = Hash::make($validated['mot_de_passe']);
         }
         $utilisateur->save();
-
+    
         return redirect()->route('utilisateurs.index')->with('success', 'Utilisateur mis à jour avec succès.');
     }
+    
 
     public function destroy($id)
     {

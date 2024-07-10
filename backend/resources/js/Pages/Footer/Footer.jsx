@@ -2,7 +2,7 @@ import React from "react";
 import { InertiaLink } from "@inertiajs/inertia-react";
 import "./Footer.css";
 import { useTranslation } from "react-i18next";
-import MapComponent from "../MapComponent/MapComponent";
+import MapComponent from "./MapComponent/MapComponent";
 
 function Footer() {
     const { t } = useTranslation();

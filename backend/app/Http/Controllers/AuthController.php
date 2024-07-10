@@ -13,12 +13,12 @@ class AuthController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Login');
+        return Inertia::render('User/Login');
     }
 
     public function showRegistrationForm()
     {
-        return inertia('Register');
+        return inertia('User/Register');
     }
 
     public function register(CreateUtilisateurRequest $request)

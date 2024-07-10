@@ -1,23 +1,21 @@
 import React, { useState } from 'react';
 import { Link, usePage } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
-import LoginModal from '../Login/LoginModal';
+import LoginModal from '../User/Login/LoginModal';
 import './Header.css';
 import { Inertia } from '@inertiajs/inertia';
 
 function Header() {
   const { t, i18n } = useTranslation();
-  const { auth } = usePage().props;
+  const { auth } = usePage().props; 
   const [showModal, setShowModal] = useState(false);
-
   const handleLogout = () => {
     Inertia.post('/logout', {}, {
       onSuccess: () => {
-        
+       
       }
     });
   };
-
 
   const changeLanguage = (lang) => {
     i18n.changeLanguage(lang);
@@ -53,6 +51,7 @@ function Header() {
                   </button>
                   <div className="dropdown-content">
                     <button onClick={handleLogout} className="dropdown-button nav-link">{t('header.logout')}</button>
+                    <Link href={`/user/profile/${auth.user.id}`} className="nav-link">{t('header.profile')}</Link>
                   </div>
                 </div>
               ) : (
