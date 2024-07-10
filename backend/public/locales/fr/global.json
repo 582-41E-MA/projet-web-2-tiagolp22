@@ -5,7 +5,9 @@
       "about": "À propos",
       "contact": "Nous contacter",
       "login": "Connexion",
-      "register": "Inscription"
+      "register": "Inscription",
+      "logout":"Deconnexion",
+      "profile":"Profil"
     },
     "home": {
       "new_arrivals": "Nouveautés",
@@ -21,22 +23,23 @@
       "no_account": "Pas de compte?",
       "create_account": "Créer un compte"
     },
-    "register": {
-      "title": "Créer votre compte",
-      "subtitle": "Accédez rapidement à toutes vos informations enregistrées depuis n'importe quel appareil, à tout moment.",
-      "first_name": "Prénom",
-      "last_name": "Nom",
-      "birthdate": "Date de naissance",
-      "address": "Adresse",
-      "postal_code": "Code postal",
-      "phone": "Numéro de téléphone",
-      "mobile": "Numéro de portable",
-      "email": "Courriel",
-      "username": "Nom d'utilisateur",
-      "password": "Mot de passe",
-      "register_button": "S'inscrire"
-    },
-    "car_create": {
+ "user": {
+    "title": "Créer votre compte",
+    "title_profile": "Bienvenue a votre compte",
+    "first_name": "Prénom",
+    "last_name": "Nom",
+    "birthdate": "Date de naissance",
+    "address": "Adresse",
+    "postal_code": "Code postal",
+    "phone": "Numéro de téléphone",
+    "mobile": "Numéro de portable",
+    "email": "Courriel",
+    "username": "Nom d'utilisateur",
+    "password": "Mot de passe",
+    "register_button": "S'inscrire",
+    "last_connection": "Dernière connexion"
+  },
+    "car": {
       "select_option":"Sélectionner",
       "title": "Créer une voiture",
       "model": "Modèle",
