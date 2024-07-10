@@ -1,14 +1,18 @@
-import React, { useState } from 'react';
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
-import Filters from './Filtres/Filtres';
-import { Link } from '@inertiajs/react';
-import { useTranslation } from 'react-i18next';
-import './Voiture.css';
+import React, { useState, useEffect } from "react";
+import Header from "../Header/Header";
+import Footer from "../Footer/Footer";
+import Filters from "./Filtres/Filtres";
+import { Link } from "@inertiajs/react";
+import { useTranslation } from "react-i18next";
+import "./Voiture.css";
 
 function Voiture({ voitures: initialVoitures }) {
     const { t, i18n } = useTranslation();
     const [voitures, setVoitures] = useState(initialVoitures);
+
+    useEffect(() => {
+        setVoitures(initialVoitures);
+    }, [initialVoitures]);
 
     const handleFilter = (filteredVoitures) => {
         setVoitures(filteredVoitures);
@@ -19,7 +23,7 @@ function Voiture({ voitures: initialVoitures }) {
             <Header />
             <img
                 className="banner_catalog"
-                src="../../../img/banner/banner_catalog.jpg"
+                src="/img/banner/banner_catalog.jpg"
                 alt="bannière"
             />
             <div className="container">
@@ -37,13 +41,12 @@ function Voiture({ voitures: initialVoitures }) {
                                     <div className="car">
                                         <img
                                             src={
-                                                voiture.photos &&
-                                                voiture.photos.length > 0
-                                                    ? voiture.photos[0]
-                                                          .url_photo
+                                                voiture.photo_url
+                                                    ? voiture.photo_url
                                                     : "../../../img/car/default_car.png"
                                             }
                                             alt={voiture.modele.nom_modele}
+                                            className="car-photo"
                                         />
                                         <h3 className="car-title">
                                             {voiture.annee}{" "}
