@@ -134,11 +134,17 @@ class VoitureController extends Controller
     {
         $voiture = Voiture::with(['modele', 'typeCarburant', 'transmission', 'groupeMotopropulseur', 'carrosserie', 'photos'])->findOrFail($id);
 
+        $photos = $voiture->photos->map(function ($photo) {
+            $photo->photo_url = asset(Storage::url($photo->photos));
+            return $photo;
+        });
+    
         return Inertia::render('Voiture/VoitureShow/VoitureShow', [
             'voiture' => $voiture,
-            'photos' => $voiture->photos,
+            'photos' => $photos,
         ]);
     }
+    
 
 
     public function edit($id)
