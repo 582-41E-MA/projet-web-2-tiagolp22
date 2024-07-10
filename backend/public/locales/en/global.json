@@ -1,5 +1,5 @@
-{
 
+{
   "header": {
     "home": "Home",
     "catalogue": "Catalog",
@@ -9,10 +9,6 @@
     "register": "Register",
     "logout":"Logout",
     "profile":"Profile"
-  },
-  "home": {
-    "new_arrivals": "New Arrivals",
-    "car_description": "Description of the car."
   },
   "login": {
     "title": "Login",
@@ -39,17 +35,14 @@
   "password": "Password",
   "register_button": "Register"
 },
-
-"car": {
-  "select_option": "Select",
-  "title": "Create Car",
-  "model": "Model",
-  "year": "Year",
+  "home": {
+    "new_arrivals": "New Arrivals",
+    "car_description": "Vehicle Description."
+  },
   "car": {
-    "select_option":"Select",
-    "title": "Create Car",
+    "select_option": "Select",
+    "title": "Create a Car",
     "model": "Model",
-    "edit_title": "Edit Car {{id}}",
     "year": "Year",
     "arrival_date": "Arrival Date",
     "purchase_price": "Purchase Price",
@@ -67,7 +60,6 @@
     "order_id": "Order ID",
     "submit_button": "Submit",
       "errors": {
-
     "model_required": "Model is required.",
     "year_invalid": "Invalid year. Please enter a valid year between 1900 and the current year.",
     "arrival_date_required": "Arrival date is required.",
@@ -91,6 +83,14 @@
     "more_info": "More Info",
     "no_description": "No description available."
   },
+  "car_edit": {
+      "select_option":"Select",
+      "title": "Create Car",
+      "model": "Model",
+      "edit_title": "Edit Car {{id}}",
+      "logout": "Logout",
+      "profile": "Profile"
+    },
   "footer": {
     "search": "Search",
     "suv": "SUVs",
@@ -104,6 +104,7 @@
     "our_story": "Our Story",
     "team": "Team",
     "contact_us": "Contact Us",
+
     "rights_reserved": "All rights reserved.",
     "test": "test"
   },
@@ -130,5 +131,4 @@
     "3": "3",
     "Appliquer filtres": "Apply filters"
   }
-}
 }

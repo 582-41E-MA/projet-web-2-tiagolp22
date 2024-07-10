@@ -84,6 +84,7 @@ const VoitureCreate = ({
             newErrors.photos = t("car.errors.minimum_photos_required");
         } 
 
+
         return newErrors;
     };
     const handleSubmit = (e) => {
