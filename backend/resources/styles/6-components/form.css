@@ -110,7 +110,7 @@ input[type="date"]:focus,
 .form-select:focus,
 .form-textarea:focus {
     outline: none;
-    border-color: var(--color-primary);
+    border-color: var(--color-black);
 }
 
 
@@ -154,7 +154,7 @@ input[type="date"]:focus,
 
 .form-textarea:focus {
     outline: none;
-    border-color: var(--color-primary);
+    border-color: var(--color-black);
 }
 
 
