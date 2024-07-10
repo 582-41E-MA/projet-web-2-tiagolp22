@@ -9,20 +9,41 @@ function LoginModal({ onClose }) {
   const [errors, setErrors] = useState({});
   const { t } = useTranslation();
 
+  const validateForm = () => {
+    const newErrors = {};
+    if (!courriel) {
+      newErrors.courriel = t('errors.required');
+    } else if (!/\S+@\S+\.\S+/.test(courriel)) {
+      newErrors.courriel = t('errors.invalid_email');
+    }
+
+    if (!mot_de_passe) {
+      newErrors.mot_de_passe = t('errors.required');
+    } else if (mot_de_passe.length < 8) {
+      newErrors.mot_de_passe = t('errors.password_min_length');
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    Inertia.post('/login', { courriel, mot_de_passe }, {
-      onError: (error) => {
-        setErrors(error);
-      },
-      onSuccess: (page) => {
-        const token = page.props.token;
-        if (token) {
-          localStorage.setItem('auth_token', token);
+
+    if (validateForm()) {
+      Inertia.post('/login', { courriel, mot_de_passe }, {
+        onError: (error) => {
+          setErrors(error);
+        },
+        onSuccess: (page) => {
+          const token = page.props.token;
+          if (token) {
+            localStorage.setItem('auth_token', token);
+          }
+          onClose();
         }
-        onClose();
-      }
-    });
+      });
+    }
   };
 
   const handleGoogleLogin = () => {

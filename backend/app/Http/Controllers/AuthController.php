@@ -44,8 +44,8 @@ class AuthController extends Controller
 
     $loginUtilisateur = Utilisateur::where('courriel', $request->courriel)->first();
 
-    if (!$loginUtilisateur) {
-        return Inertia::location(route('login.index'));
+    if (!$loginUtilisateur || !Hash::check($request->mot_de_passe, $loginUtilisateur->mot_de_passe)) {
+        return response()->json(['message' => 'Ces informations de connexion ne correspondent pas.'], 401);
     }
 
     if (Hash::check($request->mot_de_passe, $loginUtilisateur->mot_de_passe)) {
