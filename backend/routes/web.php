@@ -32,6 +32,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/voitures/{id}/buy', [VoitureController::class, 'buy'])->name('voitures.buy');
     });
 });
+Route::get('/api/voitures/filter', [VoitureController::class, 'filter'])->name('voitures.filter');
+
 
 // Routes accessibles à tous les utilisateurs
 Route::get('/', [HomeController::class, 'index'])->name('Accueil');

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Filtres.css';
 import { useTranslation } from 'react-i18next';
+import axios from 'axios';
 import axios from 'axios';
 
 function Filters({ onFilter }) {
@@ -15,6 +16,26 @@ function Filters({ onFilter }) {
     nombre_places: '',
     nombre_portes: '',
   });
+  const [options, setOptions] = useState({
+    colors: [''].concat(['White', 'Black', 'Red', 'Blue', 'Green', 'Yellow', 'Silver', 'Grey']),
+    modeles: [],
+    constructeurs: [],
+  });
+
+  useEffect(() => {
+    axios.get('/api/voitures/filter')
+      .then(response => {
+        const { colors, modeles, constructeurs } = response.data.filters;
+        setOptions({
+          colors: options.colors.concat(colors),
+          modeles: [''].concat(modeles),
+          constructeurs: [''].concat(constructeurs),
+        });
+      })
+      .catch(error => {
+        console.error('Error fetching filter options', error);
+      });
+  }, []);
 
   const handleChange = (e) => {
     setFilters({
@@ -26,7 +47,7 @@ function Filters({ onFilter }) {
   const applyFilters = () => {
     axios.get('/api/voitures/filter', { params: filters })
       .then(response => {
-        onFilter(response.data);
+        onFilter(response.data.voitures);
       })
       .catch(error => {
         console.error('Error fetching filtered cars', error);
@@ -46,11 +67,19 @@ function Filters({ onFilter }) {
       </div>
       <div>
         <label>{t('filters.Constructeur')}</label>
-        <input name="constructeur" type="text" value={filters.constructeur} onChange={handleChange} />
+        <select name="constructeur" value={filters.constructeur} onChange={handleChange}>
+          {options.constructeurs.map(constructeur => (
+            <option key={constructeur} value={constructeur}>{constructeur}</option>
+          ))}
+        </select>
       </div>
       <div>
         <label>{t('filters.Modèle')}</label>
-        <input name="modele" type="text" value={filters.modele} onChange={handleChange} />
+        <select name="modele" value={filters.modele} onChange={handleChange}>
+          {options.modeles.map(modele => (
+            <option key={modele} value={modele}>{modele}</option>
+          ))}
+        </select>
       </div>
       <div>
         <label>{t('filters.Année')}</label>
@@ -63,11 +92,11 @@ function Filters({ onFilter }) {
       <div>
         <label>{t('filters.Couleur')}</label>
         <select name="couleur" value={filters.couleur} onChange={handleChange}>
-          <option value="">{t('filters.Toutes')}</option>
-          <option value="Blanc">{t('filters.Blanc')}</option>
-          <option value="Noir">{t('filters.Noir')}</option>
-          <option value="Rouge">{t('filters.Rouge')}</option>
+          {options.colors.map(color => (
+            <option key={color} value={color}>{color}</option>
+          ))}
         </select>
+
       </div>
       <div>
         <label>{t('filters.Nombre de places')}</label>
