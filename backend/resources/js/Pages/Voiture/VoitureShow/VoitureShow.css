@@ -1,33 +1,26 @@
-.banner-details{
+.banner-details {
     display: flex;
     align-items: center;
-    height: 20vh;
+    height: 14vh;
     background-color: var(--color-black);
-   justify-content: space-between;
+    justify-content: space-between;
 }
-.banner-details h2,h3{
+.banner-details h2,
+h3 {
     color: var(--color-white);
 }
 
-
-
-.voiture-show-banner {
-    width: 100%;
-    height: auto;
-    border-radius: 10px;
-    margin-bottom: 20px;
-}
 .details-box {
-    padding:var(--space-medium) 0 ;
+    padding: var(--space-medium) 0;
 }
-.details-box h3{
+.details-box h3 {
     margin-bottom: var(--space-xsmall);
 }
 .details-section {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
-    gap: 20px; 
-    padding:var(--space-xsmall) 0 ;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: var(--space-xsmall) 0;
 }
 
 .description-paragraph {
@@ -38,13 +31,10 @@
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-
-
-
 .back-button {
     display: inline-block;
     position: relative;
-    padding: 25px;
+    padding: 10px 30px;
     background-color: var(--color-secondary);
     color: var(--color-white);
     text-decoration: none;
@@ -54,10 +44,10 @@
 }
 
 .back-button::before {
-    content: '←';
+    content: " ←";
+    padding-left: 10px;
     display: inline-block;
     position: absolute;
-
     left: 0px;
     font-size: 16px;
     transition: transform 0.3s ease;
@@ -71,17 +61,31 @@
     background-color: var(--color-tertiary);
     color: var(--color-white);
 }
+.voiture-show-banner {
+    padding-top: 30px;
+}
+.voiture-show-banner .slick-slide img {
+    border-radius: 5px;
+    max-height: 60vh;
+    width: auto;
+    margin: 0 auto;
+}
+.voiture-show-banner .slick-slide {
+    transition: transform 0.3s ease;
+}
 
+.voiture-show-banner .slick-center {
+    transform: scale(1.2);
+}
 
-
-
+.voiture-show-banner .slick-slide:not(.slick-center) {
+    transform: scale(0.8);
+}
 
 @media screen and (max-width: 600px) {
     .details-section {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 3fr)); 
-
-        place-items: center; 
-        gap: var(--space-xsmall); 
+        grid-template-columns: repeat(auto-fit, minmax(200px, 3fr));
+        place-items: center;
+        gap: var(--space-xsmall);
     }
-  
 }

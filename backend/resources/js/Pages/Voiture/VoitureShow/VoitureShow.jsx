@@ -6,7 +6,9 @@ import Header from "../../Header/Header";
 import Footer from "../../Footer/Footer";
 import DetailItem from "./DetailItem/DetailItem";
 import "./VoitureShow.css";
-
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faGasPump,
@@ -22,11 +24,9 @@ import {
     faCarSide,
 } from "@fortawesome/free-solid-svg-icons";
 
-
-const VoitureShow = ({ voiture }) => {
+const VoitureShow = ({ voiture, photos }) => {
     const { t, i18n } = useTranslation();
 
-    // Fonction pour obtenir la traduction correcte en fonction de la langue actuelle
     const getTranslation = (data) => {
         if (typeof data === "string") {
             const parsedData = JSON.parse(data);
@@ -37,27 +37,51 @@ const VoitureShow = ({ voiture }) => {
         return "";
     };
 
+    const settings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        centerMode: true,
+        centerPadding: "25%",
+        responsive: [
+            {
+                breakpoint: 1000,
+                settings: {
+                    centerPadding: "10%",
+                },
+            },
+            {
+                breakpoint: 620,
+                settings: {
+                    centerMode: true,
+                    centerPadding: "0",
+                },
+            },
+        ],
+    };
     return (
         <>
             <Header />
             <div className="banner-details wrapper">
-            
                 <h2>
                     {voiture.modele.nom_modele} - {voiture.annee}
                 </h2>
                 <h2>{voiture.prix_vente} $</h2>
             </div>
             <div className="wrapper">
-                <div className="voiture-show">
-                    <img
-                        className="voiture-show-banner"
-                        src={
-                            voiture.photos && voiture.photos.length > 0
-                                ? voiture.photos[0].url_photo
-                                : "../../../../img/car/default_car.png"
-                        }
-                        alt={voiture.modele.nom_modele}
-                    />
+                <div className="voiture-show-banner">
+                    <Slider {...settings}>
+                        {photos.map((photo) => (
+                            <div key={photo.id} className="slider-item">
+                                <img
+                                    src={photo.photo_url}
+                                    alt={`Photo ${photo.id}`}
+                                />
+                            </div>
+                        ))}
+                    </Slider>
                 </div>
                 <div className="details-box">
                     <h2>{t("car_show.general_info")}</h2>
@@ -129,7 +153,7 @@ const VoitureShow = ({ voiture }) => {
                     </div>
                     <h3>{t("car.description")}</h3>
                     <p className="description-paragraph">
-                    {getTranslation(voiture.description)}
+                        {getTranslation(voiture.description)}
                     </p>
                 </div>
                 <Link href="/voitures" className="back-button">
