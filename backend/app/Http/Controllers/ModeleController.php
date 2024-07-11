@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Modele;
+use App\Models\Constructeur;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -10,21 +11,32 @@ class ModeleController extends Controller
 {
     public function index()
     {
-        $modeles = Modele::all();
-        return response()->json($modeles);
+        $modeles = Modele::with('constructeur')->get(); 
+        return Inertia::render('Modele/Modele', [
+            'modeles' => $modeles,
+        ]);
     }
+    
 
     public function create()
     {
-        return Inertia::render('Modele/ModeleCreate/ModeleCreate');
+        
+        $constructeurs = Constructeur::all(); 
+        return Inertia::render('Modele/ModeleCreate/ModeleCreate', [
+            'constructeurs' => $constructeurs
+        ]);
     }
 
     public function store(Request $request)
     {
-        $validated = $request->validated();
+        $validatedData = $request->validate([
+            'nom_modele' => 'required|string',
+            'constructeur_id' => 'required|integer',
+        ]);
 
-        $modele = Modele::create($validated);
-        return redirect()->route('modeles.index')->with('success', 'Modele created successfully.');
+        $modele = Modele::create($validatedData);
+
+        return redirect()->route('modeles.index')->with('success', 'Modèle créé avec succès.');
     }
 
     public function show($id)
@@ -52,6 +64,7 @@ class ModeleController extends Controller
     {
         $modele = Modele::findOrFail($id);
         $modele->delete();
-        return redirect()->route('modeles.index');
+
+        return response()->json(['message' => 'Modèle supprimé avec succès']);
     }
 }

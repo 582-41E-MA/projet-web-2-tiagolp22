@@ -52,6 +52,15 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/voitures', [VoitureController::class, 'store'])->name('voitures.store');
         Route::get('/voitures/{id}/edit', [VoitureController::class, 'edit'])->name('voitures.edit');
         Route::put('/voitures/{id}', [VoitureController::class, 'update'])->name('voitures.update');
+        //
+        Route::get('/modele', [ModeleController::class, 'index'])->name('modele.index');
+        Route::get('/modele/create', [ModeleController::class, 'create'])->name('modele.create');
+        Route::post('/modele', [ModeleController::class, 'store'])->name('modele.store');
+        Route::delete('/modele/{id}', [ModeleController::class, 'destroy'])->name('modele.destroy');
+
+
+
+
 
         // Gestion des clients
         // Route::resource('/clients', ClientController::class)->except(['destroy']);
@@ -91,3 +100,4 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::resource('/utilisateurs', UtilisateurController::class);
     });
 });
+

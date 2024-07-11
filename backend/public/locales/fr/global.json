@@ -9,10 +9,6 @@
     "logout": "Déconnexion",
     "profile": "Profil"
   },
-  "home": {
-    "new_arrivals": "Nouveautés",
-    "car_description": "Description du véhicule."
-  },
   "login": {
     "title": "Connexion",
     "email": "Email",
@@ -23,9 +19,9 @@
     "no_account": "Pas de compte?",
     "create_account": "Créer un compte"
   },
-  "register": {
+  "user": {
     "title": "Créer votre compte",
-    "subtitle": "Accédez rapidement à toutes vos informations enregistrées depuis n'importe quel appareil, à tout moment.",
+    "title_profile": "Bienvenue sur votre compte",
     "first_name": "Prénom",
     "last_name": "Nom",
     "birthdate": "Date de naissance",
@@ -38,10 +34,13 @@
     "password": "Mot de passe",
     "register_button": "S'inscrire"
   },
+  "home": {
+    "new_arrivals": "Nouveautés",
+    "car_description": "Description du véhicule."
+  },
   "car": {
     "select_option": "Sélectionner",
     "title": "Créer une voiture",
-    "edit_title": "Modifier la voiture {{id}}",
     "model": "Modèle",
     "year": "Année",
     "arrival_date": "Date d'arrivée",
@@ -120,5 +119,13 @@
     "Number of Doors": "Nombre de portes",
     "3": "3",
     "Apply Filters": "Appliquer les filtres"
+  },
+  "model": {
+    "create": "Créer un modèle",
+    "name": "Nom du modèle",
+    "manufacturer": "Constructeur",
+    "create_button": "Créer",
+    "index_title": "Liste des modèles",
+    "delete_button": "Supprimer"
   }
 }

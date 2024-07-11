@@ -12,6 +12,7 @@ class Modele extends Model
     protected $table = 'modeles';
     protected $primaryKey = 'id_modele';
     protected $fillable = ['nom_modele', 'constructeur_id'];
+    public $timestamps = false; 
 
     public function constructeur()
     {
