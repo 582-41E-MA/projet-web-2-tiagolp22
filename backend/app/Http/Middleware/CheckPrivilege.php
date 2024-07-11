@@ -10,10 +10,10 @@ class CheckPrivilege
     {
         $user = Auth::user();
 
-        if ($user && in_array($user->privileges_id, $privileges)) {
-            return $next($request);
+        if (!$user || !in_array($user->privileges_id, $privileges)) {
+            return redirect('/')->with('error', 'Accès refusé.');
         }
 
-        return redirect('/')->with('error', 'Access denied.');
+        return $next($request);
     }
 }
