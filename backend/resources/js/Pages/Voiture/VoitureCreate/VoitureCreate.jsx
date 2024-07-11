@@ -80,9 +80,11 @@ const VoitureCreate = ({
             newErrors.kilometrage = t("car.errors.mileage_invalid");
         if (!data.etat_vehicule[i18n.language]) newErrors.etat_vehicule = t("car.errors.vehicle_state_required");
 
+
         if (!data.photos || data.photos.length < 3) {
             newErrors.photos = t("car.errors.minimum_photos_required");
         } 
+
 
         return newErrors;
     };
