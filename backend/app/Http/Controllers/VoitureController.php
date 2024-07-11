@@ -118,7 +118,7 @@ public function index()
         $validated['etat_vehicule'] = json_encode($validated['etat_vehicule']);
         $voiture = Voiture::create($validated);
 
-        if ($request->hasFile('photos') && count($request->file('photos')) >= 2) {
+        if ($request->hasFile('photos') && count($request->file('photos')) >= 3) {
             foreach ($request->file('photos') as $index => $file) {
                 $path = $file->store('public/photos');
                 $photo = Photo::create([
