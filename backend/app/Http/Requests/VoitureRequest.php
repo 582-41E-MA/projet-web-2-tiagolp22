@@ -26,7 +26,7 @@ class VoitureRequest extends FormRequest
             'annee' => ['required', 'integer', 'min:1900', 'max:' . (date('Y') + 1)],
             'date_arrivee' => ['required', 'date'],
             'prix_achat' => ['required', 'numeric', 'min:0'],
-            'prix_vente' => ['required', 'numeric', 'min:0'],
+            'prix_vente' => ['nullable', 'numeric', 'min:0'],
             'couleur' => ['required'],
             'type_transmission_id' => ['required'],
             'groupe_motopropulseur_id' => ['required'],

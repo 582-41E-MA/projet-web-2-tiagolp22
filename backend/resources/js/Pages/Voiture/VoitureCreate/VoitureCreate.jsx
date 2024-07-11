@@ -65,8 +65,6 @@ const VoitureCreate = ({
         if (!data.date_arrivee) newErrors.date_arrivee = t("car.errors.arrival_date_required");
         if (!data.prix_achat || isNaN(data.prix_achat) || data.prix_achat < 0)
             newErrors.prix_achat = t("car.errors.purchase_price_invalid");
-        if (!data.prix_vente || isNaN(data.prix_vente) || data.prix_vente < 0)
-            newErrors.prix_vente = t("car.errors.sale_price_invalid");
         if (!data.couleur[i18n.language]) newErrors.couleur = t("car.errors.color_required");
         if (!data.type_transmission_id) newErrors.type_transmission_id = t("car.errors.transmission_type_required");
         if (!data.groupe_motopropulseur_id) newErrors.groupe_motopropulseur_id = t("car.errors.powertrain_group_required");
@@ -83,7 +81,7 @@ const VoitureCreate = ({
 
         if (!data.photos || data.photos.length < 3) {
             newErrors.photos = t("car.errors.minimum_photos_required");
-        } 
+        }
 
 
         return newErrors;
@@ -103,7 +101,7 @@ const VoitureCreate = ({
             }
         });
 
-        
+
         const validationErrors = validateFields();
 
         if (Object.keys(validationErrors).length > 0) {
