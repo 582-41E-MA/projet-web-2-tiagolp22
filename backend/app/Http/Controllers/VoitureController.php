@@ -17,10 +17,10 @@ use Illuminate\Support\Facades\Storage;
 
 class VoitureController extends Controller
 {
-public function index()
-{
-    $voitures = Voiture::with('modele')->get();
-    $privilege_id = auth()->user()->privileges_id;
+    public function index()
+    {
+        $voitures = Voiture::with('modele')->get();
+        $privilege_id = auth()->user()->privileges_id;
 
 
         foreach ($voitures as $voiture) {
@@ -29,11 +29,11 @@ public function index()
         }
 
 
-    return Inertia::render('Voiture/Voiture', [
-        'voitures' => $voitures,
-        'privilege_id' => $privilege_id,
-    ]);
-}
+        return Inertia::render('Voiture/Voiture', [
+            'voitures' => $voitures,
+            'privilege_id' => $privilege_id,
+        ]);
+    }
 
 
     public function create(Request $request)
@@ -113,9 +113,19 @@ public function index()
     public function store(VoitureRequest $request)
     {
         $validated = $request->validated();
+
+        $prixAchat = $validated['prix_achat'];
+        $prixVenteMinimum = $prixAchat * 1.25;
+
+        // 25% + if > prix_vente
+        if (!isset($validated['prix_vente']) || $validated['prix_vente'] < $prixVenteMinimum) {
+            $validated['prix_vente'] = $prixVenteMinimum;
+        }
+
         $validated['couleur'] = json_encode($validated['couleur']);
         $validated['description'] = json_encode($validated['description']);
         $validated['etat_vehicule'] = json_encode($validated['etat_vehicule']);
+
         $voiture = Voiture::create($validated);
 
         if ($request->hasFile('photos') && count($request->file('photos')) >= 3) {
@@ -127,12 +137,12 @@ public function index()
                     'ordre' => $index,
                 ]);
             }
-
-            return Inertia::location(route('voitures.index'));
         }
-        return Inertia::location(route('voitures.index'));
 
+        return Inertia::location(route('voitures.index'));
     }
+
+
     public function show($id)
     {
         $voiture = Voiture::with(['modele', 'typeCarburant', 'transmission', 'groupeMotopropulseur', 'carrosserie', 'photos'])->findOrFail($id);
@@ -141,13 +151,13 @@ public function index()
             $photo->photo_url = asset(Storage::url($photo->photos));
             return $photo;
         });
-    
+
         return Inertia::render('Voiture/VoitureShow/VoitureShow', [
             'voiture' => $voiture,
             'photos' => $photos,
         ]);
     }
-    
+
 
 
     public function edit($id)
@@ -175,5 +185,4 @@ public function index()
         $voiture->delete();
         return redirect()->route('voitures.index');
     }
-
 }
