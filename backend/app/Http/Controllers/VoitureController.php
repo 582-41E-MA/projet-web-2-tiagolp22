@@ -14,20 +14,19 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Http\Requests\VoitureRequest;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class VoitureController extends Controller
 {
     public function index()
     {
         $voitures = Voiture::with('modele')->get();
-        $privilege_id = auth()->user()->privileges_id;
-
+        $privilege_id = Auth::check() ? Auth::user()->privileges_id : null;
 
         foreach ($voitures as $voiture) {
             $photo = Photo::where('voitures_id_voiture', $voiture->id_voiture)->first();
             $voiture->photo_url = $photo ? asset(Storage::url($photo->photos)) : null;
         }
-
 
         return Inertia::render('Voiture/Voiture', [
             'voitures' => $voitures,
@@ -146,6 +145,7 @@ class VoitureController extends Controller
     public function show($id)
     {
         $voiture = Voiture::with(['modele', 'typeCarburant', 'transmission', 'groupeMotopropulseur', 'carrosserie', 'photos'])->findOrFail($id);
+        $privilege_id = Auth::check() ? Auth::user()->privileges_id : null;
 
         $photos = $voiture->photos->map(function ($photo) {
             $photo->photo_url = asset(Storage::url($photo->photos));
@@ -155,6 +155,7 @@ class VoitureController extends Controller
         return Inertia::render('Voiture/VoitureShow/VoitureShow', [
             'voiture' => $voiture,
             'photos' => $photos,
+            'privilege_id' => $privilege_id,
         ]);
     }
 
