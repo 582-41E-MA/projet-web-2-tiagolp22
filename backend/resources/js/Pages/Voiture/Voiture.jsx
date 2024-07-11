@@ -5,6 +5,7 @@ import Filters from "./Filtres/Filtres";
 import { Link } from "@inertiajs/react";
 import { useTranslation } from "react-i18next";
 import "./Voiture.css";
+import axios from "axios";
 
 function Voiture({ voitures: initialVoitures, privilege_id }) {
     const { t, i18n } = useTranslation();
@@ -75,7 +76,7 @@ function Voiture({ voitures: initialVoitures, privilege_id }) {
                                         </button>
                                     </div>
                                 </Link>
-                                {privilege_id === 1 && (
+                                {(privilege_id === 1 || privilege_id === 3) && (
                                     <div className="admin-actions">
                                         <Link
                                             href={`/voitures/${voiture.id_voiture}/edit`}
@@ -83,12 +84,14 @@ function Voiture({ voitures: initialVoitures, privilege_id }) {
                                         >
                                             {t("edit")}
                                         </Link>
-                                        <button
-                                            onClick={() => handleDelete(voiture.id_voiture)}
-                                            className="delete-button"
-                                        >
-                                            {t("delete")}
-                                        </button>
+                                        {privilege_id === 1 && (
+                                            <button
+                                                onClick={() => handleDelete(voiture.id_voiture)}
+                                                className="delete-button"
+                                            >
+                                                {t("delete")}
+                                            </button>
+                                        )}
                                     </div>
                                 )}
                             </div>
