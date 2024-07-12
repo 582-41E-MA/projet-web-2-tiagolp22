@@ -57,6 +57,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/modele/create', [ModeleController::class, 'create'])->name('modele.create');
         Route::post('/modele', [ModeleController::class, 'store'])->name('modele.store');
         Route::delete('/modele/{id}', [ModeleController::class, 'destroy'])->name('modele.destroy');
+        Route::get('/modeles/{id}/edit', [ModeleController::class, 'edit'])->name('modeles.edit');
+        Route::put('/modeles/{id}', [ModeleController::class, 'update'])->name('modeles.update');
+                
+
 
 
 
