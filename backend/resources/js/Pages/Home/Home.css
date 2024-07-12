@@ -138,6 +138,62 @@
     height: auto; 
 }
 
+
+  .carousel{
+   padding: var(--space-medium-large) 0; 
+  }
+
+  .carousel h2{
+    text-align: center; 
+    padding: var(--space-small) 0; 
+   }
+  
+  .slide {
+    padding: 0 var(--space-xsmall);
+    border-radius: 12px;
+    transition: transform 0.3s ease;
+    height: 300px; 
+    overflow: hidden; 
+}
+
+.slide img {
+    width: 100%;
+    height: auto; 
+}
+
+  
+  .slide:hover {
+    transform: translateY(-5px);
+  }
+ 
+  
+  
+
+  
+  .details-button {
+    display: inline-block;
+    margin: 0 20px 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+  }
+  
+  .details-button:hover {
+    background-color: #0056b3;
+  }
+  
+ 
+  
+  
+  
+  
+  
+
+
 @media (max-width: 1300px) {
    
     .banner-content p {
