@@ -18,6 +18,14 @@ use App\Http\Controllers\FactureController;
 use App\Http\Middleware\CheckPrivilege;
 use Inertia\Inertia;
 
+Route::get('/voitures', [VoitureController::class, 'index'])->name('voitures.index');
+Route::get('/voitures/create', [VoitureController::class, 'create'])->name('voitures.create');
+Route::post('/voitures', [VoitureController::class, 'store'])->name('voitures.store');
+Route::get('/voitures/{id}', [VoitureController::class, 'show'])->name('voitures.show');
+Route::get('/voitures/{id}/edit', [VoitureController::class, 'edit'])->name('voitures.edit');
+Route::put('/voitures/{id}', [VoitureController::class, 'update'])->name('voitures.update');
+Route::delete('/voitures/{id}', [VoitureController::class, 'destroy'])->name('voitures.destroy');
+
 // Routes publiques
 Route::get('/', [HomeController::class, 'index'])->name('Accueil');
 Route::get('/about', function () { return inertia('About'); })->name('about');
@@ -59,11 +67,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::delete('/modele/{id}', [ModeleController::class, 'destroy'])->name('modele.destroy');
         Route::get('/modeles/{id}/edit', [ModeleController::class, 'edit'])->name('modeles.edit');
         Route::put('/modeles/{id}', [ModeleController::class, 'update'])->name('modeles.update');
-                
-
-
-
-
 
 
         // Gestion des clients
