@@ -113,11 +113,7 @@
     "Black": "Black",
     "Red": "Red",
     "Number of Seats": "Number of Seats",
-    "2": "2",
-    "4": "4",
-    "5": "5",
     "Number of Doors": "Number of Doors",
-    "3": "3",
     "Apply Filters": "Apply Filters"
   },
   "model": {
@@ -126,6 +122,9 @@
     "manufacturer": "Manufacturer",
     "create_button": "Create",
     "index_title": "Model List",
-    "delete_button": "Delete"
+    "delete_button": "Delete",
+    "edit_button":"Edit",
+    "edit_title":"Edit Model",
+    "update_button":"update"
   }
 }
