@@ -25,8 +25,7 @@ function Filters({ onFilter }) {
         axios
             .get("/api/voitures/filter")
             .then((response) => {
-                const { colors, modeles, constructeurs } =
-                    response.data.filters;
+                const { colors, modeles, constructeurs } = response.data.filters;
                 setOptions({
                     colors: ["", ...colors],
                     modeles: ["", ...modeles],
@@ -58,21 +57,21 @@ function Filters({ onFilter }) {
 
     return (
         <div className="filters-container">
-            <h3>{t("filters.filtres")}</h3>
+            <h3>{t("filters.filters")}</h3>
             <div>
-                <label>{t("filters.État")}</label>
+                <label>{t("filters.condition")}</label>
                 <select
                     name="etat"
                     value={filters.etat}
                     onChange={handleChange}
                 >
-                    <option key="" value="">{t("filters.Tous")}</option>
-                    <option key="Neuf" value="Neuf">{t("filters.Neuf")}</option>
-                    <option key="Occasion" value="Occasion">{t("filters.Occasion")}</option>
+                    <option value="">{t("filters.All")}</option>
+                    <option value="Neuf">{t("filters.New")}</option>
+                    <option value="Occasion">{t("filters.Used")}</option>
                 </select>
             </div>
             <div>
-                <label>{t("filters.Constructeur")}</label>
+                <label>{t("filters.Manufacturer")}</label>
                 <select
                     name="constructeur"
                     value={filters.constructeur}
@@ -86,7 +85,7 @@ function Filters({ onFilter }) {
                 </select>
             </div>
             <div>
-                <label>{t("filters.Modèle")}</label>
+                <label>{t("filters.Model")}</label>
                 <select
                     name="modele"
                     value={filters.modele}
@@ -100,7 +99,7 @@ function Filters({ onFilter }) {
                 </select>
             </div>
             <div>
-                <label>{t("filters.Année")}</label>
+                <label>{t("filters.Year")}</label>
                 <input
                     name="annee"
                     type="number"
@@ -109,7 +108,7 @@ function Filters({ onFilter }) {
                 />
             </div>
             <div>
-                <label>{t("filters.Prix maximum")}</label>
+                <label>{t("filters.Maximum Price")}</label>
                 <input
                     name="prix_max"
                     type="number"
@@ -118,7 +117,7 @@ function Filters({ onFilter }) {
                 />
             </div>
             <div>
-                <label>{t("filters.Couleur")}</label>
+                <label>{t("filters.Color")}</label>
                 <select
                     name="couleur"
                     value={filters.couleur}
@@ -132,33 +131,33 @@ function Filters({ onFilter }) {
                 </select>
             </div>
             <div>
-                <label>{t("filters.Nombre de places")}</label>
+                <label>{t("filters.Number of Seats")}</label>
                 <select
                     name="nombre_places"
                     value={filters.nombre_places}
                     onChange={handleChange}
                 >
-                    <option key="" value="">{t("filters.Toutes")}</option>
-                    <option key="2" value="2">{t("filters.2")}</option>
-                    <option key="4" value="4">{t("filters.4")}</option>
-                    <option key="5" value="5">{t("filters.5")}</option>
+                    <option value="">{t("filters.All")}</option>
+                    <option value="2">2</option>
+                    <option value="4">5</option>
+                    <option value="5">5</option>
                 </select>
             </div>
             <div>
-                <label>{t("filters.Nombre de portes")}</label>
+                <label>{t("filters.Number of Doors")}</label>
                 <select
                     name="nombre_portes"
                     value={filters.nombre_portes}
                     onChange={handleChange}
                 >
-                    <option key="" value="">{t("filters.Toutes")}</option>
-                    <option key="2" value="2">{t("filters.2")}</option>
-                    <option key="3" value="3">{t("filters.3")}</option>
-                    <option key="4" value="4">{t("filters.4")}</option>
+                    <option value="">{t("filters.All")}</option>
+                    <option value="2">{t("filters.2")}</option>
+                    <option value="3">{t("filters.3")}</option>
+                    <option value="4">{t("filters.4")}</option>
                 </select>
             </div>
             <button onClick={applyFilters}>
-                {t("filters.Appliquer filtres")}
+                {t("filters.Apply Filters")}
             </button>
         </div>
     );

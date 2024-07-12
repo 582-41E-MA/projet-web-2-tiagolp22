@@ -53,11 +53,15 @@ class ModeleController extends Controller
 
     public function update(Request $request, $id)
     {
-        $validated = $request->validated();
-
+        $validated = $request->validate([
+            'nom_modele' => 'required|string|max:255',
+            'constructeur_id' => 'required|integer',
+        ]);
+    
         $modele = Modele::findOrFail($id);
         $modele->update($validated);
-        return redirect()->route('modeles.index');
+    
+        return redirect()->route('modeles.index')->with('success', 'Modèle mis à jour avec succès.');
     }
 
     public function destroy($id)

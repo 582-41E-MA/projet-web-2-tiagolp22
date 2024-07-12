@@ -113,11 +113,7 @@
     "Black": "Noir",
     "Red": "Rouge",
     "Number of Seats": "Nombre de places",
-    "2": "2",
-    "4": "4",
-    "5": "5",
     "Number of Doors": "Nombre de portes",
-    "3": "3",
     "Apply Filters": "Appliquer les filtres"
   },
   "model": {
@@ -126,6 +122,10 @@
     "manufacturer": "Constructeur",
     "create_button": "Créer",
     "index_title": "Liste des modèles",
-    "delete_button": "Supprimer"
+    "delete_button": "Supprimer",
+    "edit_button":"modifier",  
+    "edit_title":"Modifier le modele",
+    "update_button":"modifier"
+
   }
 }

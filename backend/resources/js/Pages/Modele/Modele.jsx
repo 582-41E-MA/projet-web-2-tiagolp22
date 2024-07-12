@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from '@inertiajs/inertia-react';
+import axios from 'axios';
+import { router } from '@inertiajs/react';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import './Modele.css';
@@ -17,6 +18,10 @@ const ModeleIndex = ({ modeles }) => {
         }
     };
 
+    const handleEdit = (id) => {
+        router.visit(`/modeles/${id}/edit`);
+    };
+
     return (
         <>
             <Header />
@@ -29,14 +34,22 @@ const ModeleIndex = ({ modeles }) => {
                                 <strong>{modele.nom_modele}</strong> - {modele.constructeur.nom_constructeur}
                             </div>
                             <div className="modele-actions">
-                                <button onClick={() => handleDelete(modele.id_modele)}>
+                                <button 
+                                    onClick={() => handleEdit(modele.id_modele)}
+                                    className="edit-button"
+                                >
+                                    {t('model.edit_button')}
+                                </button>
+                                <button 
+                                    onClick={() => handleDelete(modele.id_modele)}
+                                    className="delete-button"
+                                >
                                     {t('model.delete_button')}
                                 </button>
                             </div>
                         </div>
                     ))}
                 </div>
-
             </div>
             <Footer />
         </>
