@@ -62,8 +62,10 @@ function Voiture({ voitures: initialVoitures, privilege_id }) {
                                         />
                                         <h3 className="car-title">
                                             {voiture.annee}{" "}
+                                            {voiture.modele.constructeur.nom_constructeur}
+                                            {" "}
                                             {voiture.modele.nom_modele}
-                                        </h3>
+                                            </h3>
                                         <p>
                                             {voiture.description
                                                 ? JSON.parse(
