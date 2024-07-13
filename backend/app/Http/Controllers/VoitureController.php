@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Log;
 use App\Models\Voiture;
 use App\Models\TypeCarburant;
 use App\Models\Modele;
@@ -15,6 +16,7 @@ use Inertia\Inertia;
 use App\Http\Requests\VoitureRequest;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
 
 class VoitureController extends Controller
 {
@@ -108,7 +110,6 @@ class VoitureController extends Controller
         ]);
     }
 
-
     public function store(VoitureRequest $request)
     {
         $validated = $request->validated();
@@ -130,6 +131,14 @@ class VoitureController extends Controller
         if ($request->hasFile('photos') && count($request->file('photos')) >= 3) {
             foreach ($request->file('photos') as $index => $file) {
                 $path = $file->store('public/photos');
+
+                $originalSize = filesize($file->getPath());
+                ImageOptimizer::optimize(storage_path('app/' . $path));
+                $optimizedSize = filesize(storage_path('app/' . $path));
+                $compressionRatio = 100 - (($optimizedSize / $originalSize) * 100);
+                Log::info("Original: " . $originalSize . " bytes");
+                Log::info("Apres Optimizer " . $optimizedSize . " bytes");
+                Log::info("compressionRatio " . $compressionRatio . "%");
                 $photo = Photo::create([
                     'voitures_id_voiture' => $voiture->id_voiture,
                     'photos' => $path,
@@ -137,7 +146,6 @@ class VoitureController extends Controller
                 ]);
             }
         }
-
         return Inertia::location(route('voitures.index'));
     }
 
