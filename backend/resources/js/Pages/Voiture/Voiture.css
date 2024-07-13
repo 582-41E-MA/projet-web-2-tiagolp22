@@ -55,17 +55,16 @@
 }
 
 .car-title {
+  color: var(--color-black);
   text-align: center;
   margin-top: 10px;
 }
-.car-link:hover {
-  transform: scale(1.05);
-}
+
 
 .details-button {
   display: inline-block;
   padding: 8px;
-  background-color: #ffcc00;
+  background-color: var(--color-tertiary);
   color: black;
   text-decoration: none;
   margin-top: 10px;
@@ -82,7 +81,7 @@
 
 .admin-actions {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
   margin-top: 10px;
 }
 
@@ -111,6 +110,7 @@
 
 .edit-button:hover {
   background-color: #0056b3;
+  color: white;
 }
 
 .delete-button {
