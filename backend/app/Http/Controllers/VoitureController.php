@@ -44,6 +44,7 @@ class VoitureController extends Controller
         $transmissions = Transmission::all();
         $groupesMotopropulseur = GroupeMotopropulseur::all();
         $carrosseries = Carrosserie::all();
+        $privilege_id = Auth::check() ? Auth::user()->privileges_id : null;
 
         return Inertia::render('Voiture/VoitureCreate/VoitureCreate', [
             'typesCarburant' => $typesCarburant,
@@ -51,6 +52,7 @@ class VoitureController extends Controller
             'transmissions' => $transmissions,
             'groupesMotopropulseur' => $groupesMotopropulseur,
             'carrosseries' => $carrosseries,
+            'privilege_id' => $privilege_id,
         ]);
     }
 
@@ -113,15 +115,6 @@ class VoitureController extends Controller
     public function store(VoitureRequest $request)
     {
         $validated = $request->validated();
-
-        $prixAchat = $validated['prix_achat'];
-        $prixVenteMinimum = $prixAchat * 1.25;
-
-        // 25% + if > prix_vente
-        if (!isset($validated['prix_vente']) || $validated['prix_vente'] < $prixVenteMinimum) {
-            $validated['prix_vente'] = $prixVenteMinimum;
-        }
-
         $validated['couleur'] = json_encode($validated['couleur']);
         $validated['description'] = json_encode($validated['description']);
         $validated['etat_vehicule'] = json_encode($validated['etat_vehicule']);
