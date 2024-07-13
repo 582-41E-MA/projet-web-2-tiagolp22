@@ -13,13 +13,13 @@ function Home({ voitures }) {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 4, 
+    slidesToShow: 4,
     slidesToScroll: 1,
     responsive: [
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 3, 
+          slidesToShow: 3,
           slidesToScroll: 1,
           infinite: true,
           dots: true,
@@ -28,7 +28,7 @@ function Home({ voitures }) {
       {
         breakpoint: 600,
         settings: {
-          slidesToShow: 2, // Mostra um carro por slide em telas menores que 600px
+          slidesToShow: 2,
           slidesToScroll: 1,
         },
       },
@@ -52,7 +52,7 @@ function Home({ voitures }) {
           <img src="../../../img/icones/flower.png" alt="flower qc" className="flower-qc" />
         </div>
       </div>
-     
+
         <div className=".slider-container wrapper">
           <div className="carousel">
             <h2 className='Nouveautes'>{t('home.new_arrivals')}</h2>
@@ -70,7 +70,7 @@ function Home({ voitures }) {
             </Slider>
           </div>
         </div>
-      
+
       <Footer />
     </>
   );

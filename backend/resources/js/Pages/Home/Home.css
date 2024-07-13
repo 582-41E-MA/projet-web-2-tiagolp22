@@ -59,24 +59,24 @@
     padding: 10px 20px;
     border-radius: 0.25rem;
     color: #ffffff;
-    display: flex; /* Para alinhar conteúdo verticalmente */
-    align-items: center; /* Para alinhar conteúdo verticalmente */
+    display: flex;
+    align-items: center;
 }
 
 .flower-qc {
-    max-width: 30px; /* Ajuste o tamanho conforme necessário */
-    height: auto; /* Garante que a altura se ajuste automaticamente */
-    margin-left: 10px; /* Espaçamento à esquerda da flor, ajuste conforme necessário */
+    max-width: 30px;
+    height: auto;
+    margin-left: 10px;
 }
 /* Styles pour la bannière */
 .banner {
     position: relative;
-    height: 550px; 
+    height: 550px;
     overflow: hidden;
 }
 
 .banner p, .banner h1 {
-    color: #ffffff; 
+    color: #ffffff;
 }
 
 .banner-image {
@@ -85,7 +85,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover; 
+    object-fit: cover;
 }
 
 .banner-content {
@@ -93,7 +93,7 @@
     top: 50%;
     left: 50%;
     transform: translate(0, -70%);
-    text-align: right; 
+    text-align: right;
 }
 
 .banner-content h1 {
@@ -121,55 +121,63 @@
 }
 
 .banner-footer {
-    width: 27vw; 
+    width: 27vw;
     position: absolute;
     bottom: 0;
     right: 0;
     background-color: var(--color-primary);
     padding: 10px 20px;
     border-radius: 0.25rem;
-    color: #ffffff; 
-    display: flex; 
-    align-items: center; 
+    color: #ffffff;
+    display: flex;
+    align-items: center;
 }
 
 .flower-qc {
-    max-width: 30px; 
-    height: auto; 
+    max-width: 30px;
+    height: auto;
 }
 
 
-  .carousel{
-   padding: var(--space-medium-large) 0; 
-  }
+.carousel {
+    padding: var(--space-medium-large) 0;
+    min-height: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
 
   .carousel h2{
-    text-align: center; 
-    padding: var(--space-small) 0; 
+    text-align: center;
+    padding: var(--space-small) 0;
    }
-  
+
   .slide {
     padding: 0 var(--space-xsmall);
     border-radius: 12px;
     transition: transform 0.3s ease;
-    height: 300px; 
-    overflow: hidden; 
+    overflow: hidden;
+    min-height: 100%;
 }
 
 .slide img {
     width: 100%;
-    height: auto; 
+    height: auto;
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    object-position: center;
 }
 
-  
+
   .slide:hover {
     transform: translateY(-5px);
   }
- 
-  
-  
 
-  
+
+
+
+
   .details-button {
     display: inline-block;
     margin: 0 20px 20px;
@@ -181,42 +189,42 @@
     font-weight: 500;
     transition: background-color 0.3s ease;
   }
-  
+
   .details-button:hover {
     background-color: #0056b3;
   }
-  
- 
-  
-  
-  
-  
-  
+
+
+
+
+
+
+
 
 
 @media (max-width: 1300px) {
-   
+
     .banner-content p {
-        font-size: 1rem; 
+        font-size: 1rem;
     }
 }
 /* Media Query para Tablets (768px) */
 @media (max-width: 768px) {
-   
-    
+
+
     .banner-content p {
-        font-size: 1rem; 
+        font-size: 1rem;
     }
 }
 
 
 @media (max-width: 430px) {
     .banner-content h1 {
-        font-size: 2rem; 
+        font-size: 2rem;
     }
-    
+
     .banner-content p {
-        font-size: 1rem; 
+        font-size: 1rem;
     }
     .banner-footer {
         height:7vh;
@@ -224,8 +232,8 @@
      .banner-footer p{
         font-size: 0.6rem;
     }
-   
+
     .flower-qc {
-        display: none; 
+        display: none;
     }
 }
