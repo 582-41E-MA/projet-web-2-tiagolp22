@@ -12,37 +12,46 @@ const VoitureCreate = ({
     transmissions,
     groupesMotopropulseur,
     carrosseries,
+    privilege_id,
 }) => {
     const { t, i18n } = useTranslation();
-    const { data, setData, post, processing, errors, setError, clearErrors } = useForm({
-        modele_id: "",
-        annee: "",
-        date_arrivee: "",
-        prix_achat: "",
-        prix_vente: "",
-        couleur: {
-            en: "",
-            fr: "",
-        },
-        type_transmission_id: "",
-        groupe_motopropulseur_id: "",
-        type_carburant_id: "",
-        carrosserie_id: "",
-        nombre_portes: "",
-        nombre_places: "",
-        kilometrage: "",
-        description: {
-            en: "",
-            fr: "",
-        },
-        etat_vehicule: {
-            en: "",
-            fr: "",
-        },
-        commandes_id_commande: null,
-        photos: [],
-    });
+    const { data, setData, post, processing, errors, setError, clearErrors } =
+        useForm({
+            modele_id: "",
+            annee: "",
+            date_arrivee: "",
+            prix_achat: "",
+            prix_vente: "",
+            couleur: {
+                en: "",
+                fr: "",
+            },
+            type_transmission_id: "",
+            groupe_motopropulseur_id: "",
+            type_carburant_id: "",
+            carrosserie_id: "",
+            nombre_portes: "",
+            nombre_places: "",
+            kilometrage: "",
+            description: {
+                en: "",
+                fr: "",
+            },
+            etat_vehicule: {
+                en: "",
+                fr: "",
+            },
+            commandes_id_commande: null,
+            photos: [],
+        });
 
+    useEffect(() => {
+        const prixAchat = parseFloat(data.prix_achat);
+        if (!isNaN(prixAchat)) {
+            const prixVenteDefault = prixAchat * 1.25;
+            setData("prix_vente", prixVenteDefault.toString());
+        }
+    }, [data.prix_achat]);
     const [thumbnails, setThumbnails] = useState([]);
 
     const handleFileChange = (e) => {
@@ -59,30 +68,56 @@ const VoitureCreate = ({
     const validateFields = () => {
         const newErrors = {};
 
-        if (!data.modele_id) newErrors.modele_id = t("car.errors.model_required");
-        if (!data.annee || data.annee < 1900 || data.annee > new Date().getFullYear() + 1)
+        if (!data.modele_id)
+            newErrors.modele_id = t("car.errors.model_required");
+        if (
+            !data.annee ||
+            data.annee < 1900 ||
+            data.annee > new Date().getFullYear() + 1
+        )
             newErrors.annee = t("car.errors.year_invalid");
-        if (!data.date_arrivee) newErrors.date_arrivee = t("car.errors.arrival_date_required");
+        if (!data.date_arrivee)
+            newErrors.date_arrivee = t("car.errors.arrival_date_required");
         if (!data.prix_achat || isNaN(data.prix_achat) || data.prix_achat < 0)
             newErrors.prix_achat = t("car.errors.purchase_price_invalid");
-        if (!data.couleur[i18n.language]) newErrors.couleur = t("car.errors.color_required");
-        if (!data.type_transmission_id) newErrors.type_transmission_id = t("car.errors.transmission_type_required");
-        if (!data.groupe_motopropulseur_id) newErrors.groupe_motopropulseur_id = t("car.errors.powertrain_group_required");
-        if (!data.type_carburant_id) newErrors.type_carburant_id = t("car.errors.fuel_type_required");
-        if (!data.carrosserie_id) newErrors.carrosserie_id = t("car.errors.body_type_required");
-        if (!data.nombre_portes || isNaN(data.nombre_portes) || data.nombre_portes < 1)
+        if (!data.couleur[i18n.language])
+            newErrors.couleur = t("car.errors.color_required");
+        if (!data.type_transmission_id)
+            newErrors.type_transmission_id = t(
+                "car.errors.transmission_type_required"
+            );
+        if (!data.groupe_motopropulseur_id)
+            newErrors.groupe_motopropulseur_id = t(
+                "car.errors.powertrain_group_required"
+            );
+        if (!data.type_carburant_id)
+            newErrors.type_carburant_id = t("car.errors.fuel_type_required");
+        if (!data.carrosserie_id)
+            newErrors.carrosserie_id = t("car.errors.body_type_required");
+        if (
+            !data.nombre_portes ||
+            isNaN(data.nombre_portes) ||
+            data.nombre_portes < 1
+        )
             newErrors.nombre_portes = t("car.errors.number_of_doors_invalid");
-        if (!data.nombre_places || isNaN(data.nombre_places) || data.nombre_places < 1)
+        if (
+            !data.nombre_places ||
+            isNaN(data.nombre_places) ||
+            data.nombre_places < 1
+        )
             newErrors.nombre_places = t("car.errors.number_of_seats_invalid");
-        if (!data.kilometrage || isNaN(data.kilometrage) || data.kilometrage < 0)
+        if (
+            !data.kilometrage ||
+            isNaN(data.kilometrage) ||
+            data.kilometrage < 0
+        )
             newErrors.kilometrage = t("car.errors.mileage_invalid");
-        if (!data.etat_vehicule[i18n.language]) newErrors.etat_vehicule = t("car.errors.vehicle_state_required");
-
+        if (!data.etat_vehicule[i18n.language])
+            newErrors.etat_vehicule = t("car.errors.vehicle_state_required");
 
         if (!data.photos || data.photos.length < 3) {
             newErrors.photos = t("car.errors.minimum_photos_required");
         }
-
 
         return newErrors;
     };
@@ -101,16 +136,14 @@ const VoitureCreate = ({
             }
         });
 
-
         const validationErrors = validateFields();
 
         if (Object.keys(validationErrors).length > 0) {
-            Object.keys(validationErrors).forEach(field => {
+            Object.keys(validationErrors).forEach((field) => {
                 setError(field, validationErrors[field]);
             });
 
             return;
-
         }
 
         post("/voitures", {
@@ -122,7 +155,7 @@ const VoitureCreate = ({
                 console.log("Voiture criada com sucesso!");
             },
             onError: (errors) => {
-                console.error("Error", errors);
+                console.error("Erro ao criar a voiture:", errors);
             },
         });
     };
@@ -258,19 +291,23 @@ const VoitureCreate = ({
 
                     <div className="form-group">
                         <label htmlFor="prix_vente">
-                            {t("car.sale_price")}
+                        {t("car.sale_price")}
                         </label>
                         <input
-                            type="text"
-                            name="prix_vente"
+                            type="number"
                             id="prix_vente"
+                            name="prix_vente"
+                            className="form-control"
                             value={data.prix_vente}
                             onChange={(e) =>
                                 setData("prix_vente", e.target.value)
                             }
+                            disabled={privilege_id !== 1}
                         />
                         {errors.prix_vente && (
-                            <span className="error">{errors.prix_vente}</span>
+                            <div className="invalid-feedback">
+                                {errors.prix_vente}
+                            </div>
                         )}
                     </div>
 
@@ -589,4 +626,3 @@ const VoitureCreate = ({
 };
 
 export default VoitureCreate;
-
