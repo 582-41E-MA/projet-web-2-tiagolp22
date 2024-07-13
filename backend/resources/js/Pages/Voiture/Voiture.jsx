@@ -65,7 +65,7 @@ function Voiture({ voitures: initialVoitures, privilege_id }) {
                                             {voiture.modele.constructeur.nom_constructeur}{" "}
                                             {voiture.modele.nom_modele}
                                         </h3>
-                                        <p>
+                                        <p className="car-description">
                                             {voiture.description
                                                 ? JSON.parse(
                                                       voiture.description
