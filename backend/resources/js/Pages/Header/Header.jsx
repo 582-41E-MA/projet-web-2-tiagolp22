@@ -9,10 +9,11 @@ function Header() {
   const { t, i18n } = useTranslation();
   const { auth } = usePage().props; 
   const [showModal, setShowModal] = useState(false);
+
   const handleLogout = () => {
     Inertia.post('/logout', {}, {
       onSuccess: () => {
-       
+        
       }
     });
   };
@@ -20,6 +21,8 @@ function Header() {
   const changeLanguage = (lang) => {
     i18n.changeLanguage(lang);
   };
+
+ 
 
   return (
     <header className="custom-header">
@@ -36,6 +39,11 @@ function Header() {
               <Link href="/voitures" className="nav-link">{t('header.catalogue')}</Link>
               <Link href="/about" className="nav-link">{t('header.about')}</Link>
               <Link href="/contact" className="nav-link">{t('header.contact')}</Link>
+
+              {/* Renderiza o link para o dashboard */}
+              {auth.user && (auth.user.privilege === 1) && (
+                <Link href="/dashboard" className="nav-link">{t('header.dashboard')}</Link>
+              )}
             </nav>
           </div>
           <div className="header-section">
@@ -50,6 +58,7 @@ function Header() {
                     <img className="icones_navigation" src="../../img/icones/Profil.png" alt="Profile" />
                   </button>
                   <div className="dropdown-content">
+                    <p className="welcome-message">{t('header.welcome')} {auth.user.name}</p>
                     <button onClick={handleLogout} className="dropdown-button nav-link">{t('header.logout')}</button>
                     <Link href={`/user/profile/${auth.user.id}`} className="nav-link">{t('header.profile')}</Link>
                   </div>
