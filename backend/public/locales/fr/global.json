@@ -130,5 +130,27 @@
     "edit_title":"Modifier le modele",
     "update_button":"modifier"
 
-  }
+  },
+  
+    "constructeur": {
+      "create":"créer un constructeur",
+      "index_title": "Liste des Constructeurs",
+      "name": "Nom",
+      "origin_country": "Pays d'origine",
+      "create_button": "Créer un Constructeur",
+      "edit_button": "Modifier",
+      "delete_button": "Supprimer",
+      "confirm_delete": "Êtes-vous sûr de vouloir supprimer ce constructeur?",
+      "create_title": "Créer un Constructeur",
+      "edit_title": "Modifier le Constructeur",
+      "name_label": "Nom du Constructeur",
+      "origin_country_label": "Pays d'origine",
+      "create_submit": "Créer",
+      "edit_submit": "Mettre à jour",
+      "cancel_button": "Annuler"
+    },
+    "actions": "Actions"
+  
+  
+
 }
