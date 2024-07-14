@@ -13,6 +13,9 @@ use App\Http\Controllers\TypeCarburantController;
 use App\Http\Controllers\ModeleController;
 use App\Http\Controllers\GroupeMotopropulseurController;
 use App\Http\Controllers\CarrosserieController;
+use App\Http\Controllers\PaysController;
+use App\Http\Controllers\ProvinceController;
+use App\Http\Controllers\VilleController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\FactureController;
 use App\Http\Middleware\CheckPrivilege;
@@ -23,7 +26,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     // Routes pour tous les utilisateurs authentifiés
     Route::get('/user/profile/{id}', [UtilisateurController::class, 'show'])->name('user.profile');
     Route::put('/user/profile/{id}', [UtilisateurController::class, 'update'])->name('user.update');
-
     // Routes pour les clients (ID 2)
     Route::middleware(CheckPrivilege::class . ':2')->group(function () {
         Route::post('/voitures/{id}/buy', [VoitureController::class, 'buy'])->name('voitures.buy');
@@ -51,7 +53,26 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/modeles/{id}/edit', [ModeleController::class, 'edit'])->name('modeles.edit');
         Route::put('/modeles/{id}', [ModeleController::class, 'update'])->name('modeles.update');
 
+        Route::get('/pays', [PaysController::class, 'index'])->name('pays.index');
+        Route::get('/pays/create', [PaysController::class, 'create'])->name('pays.create');
+        Route::post('/pays', [PaysController::class, 'store'])->name('pays.store');
+        Route::get('/pays/{id}/edit', [PaysController::class, 'edit'])->name('pays.edit');
+        Route::put('/pays/{id}', [PaysController::class, 'update'])->name('pays.update');
+        Route::delete('/pays/{id}', [PaysController::class, 'destroy'])->name('pays.destroy');
 
+        Route::get('/provinces', [ProvinceController::class, 'index'])->name('provinces.index');
+        Route::get('/provinces/create', [ProvinceController::class, 'create'])->name('provinces.create');
+        Route::post('/provinces', [ProvinceController::class, 'store'])->name('provinces.store');
+        Route::get('/provinces/{id}/edit', [ProvinceController::class, 'edit'])->name('provinces.edit');
+        Route::put('/provinces/{id}', [ProvinceController::class, 'update'])->name('provinces.update');
+        Route::delete('/provinces/{id}', [ProvinceController::class, 'destroy'])->name('provinces.destroy');
+        
+        Route::get('/villes', [VilleController::class, 'index'])->name('villes.index');
+        Route::get('/villes/create', [VilleController::class, 'create'])->name('villes.create');
+        Route::post('/villes', [VilleController::class, 'store'])->name('villes.store');
+        Route::get('/villes/{id}/edit', [VilleController::class, 'edit'])->name('villes.edit');
+        Route::put('/villes/{id}', [VilleController::class, 'update'])->name('villes.update');
+        Route::delete('/villes/{id}', [VilleController::class, 'destroy'])->name('villes.destroy');
         // Gestion des clients
         // Route::resource('/clients', ClientController::class)->except(['destroy']);
 

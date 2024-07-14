@@ -24,10 +24,14 @@ class PaysController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validated();
-
-        $pays = Pays::create($validated);
-        return redirect()->route('pays.index')->with('success', 'Pays created successfully.');
+        $validated = $request->validate([
+            'nom_pays' => 'required|json',
+        ]);
+        $pays = Pays::create([
+            'nom_pays' => $validated['nom_pays'], 
+        ]);
+    
+        return redirect()->route('pays.index')->with('success', 'Pays créé avec succès');
     }
 
     public function show($id)
@@ -39,9 +43,12 @@ class PaysController extends Controller
     public function edit($id)
     {
         $pays = Pays::findOrFail($id);
-        return Inertia::render('Pays/PaysEdit/PaysEdit', ['pays' => $pays]);
+    
+        return inertia('Pays/PaysEdit/PaysEdit', [
+            'pays' => $pays,
+        ]);
     }
-
+    
     public function update(Request $request, $id)
     {
         $validated = $request->validated();
