@@ -76,6 +76,9 @@
       "photos_required": "Please select at least 2 photos."
     }
   },
+  "confirm_delete":"Are you sure you want to delete the car? ",
+  "confirm":"confirm",
+  "cancel":"cancel",
   "car_show": {
     "general_info": "General Information",
     "back": "Back",
