@@ -116,6 +116,9 @@
     "Number of Doors": "Nombre de portes",
     "Apply Filters": "Appliquer les filtres"
   },
+  "confirm_delete":"Voulez-vous vraiment supprimer la voiture? ",
+  "cancel":"annuler",
+  "confirm":"confirm",
   "model": {
     "create": "Créer un modèle",
     "name": "Nom du modèle",
