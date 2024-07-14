@@ -46,7 +46,7 @@ class Voiture extends Model
 
     public function modele()
     {
-        return $this->belongsTo(Modele::class, 'modele_id', 'id_modele');
+        return $this->belongsTo(Modele::class, 'modele_id', 'id_modele')->with('constructeur');
     }
 
     public function transmission()
@@ -76,5 +76,10 @@ class Voiture extends Model
     public function photos()
     {
         return $this->hasMany(Photo::class, 'voitures_id_voiture', 'id_voiture');
+    }
+
+    public function constructeur()
+    {
+        return $this->hasOneThrough(Constructeur::class, Modele::class, 'id_modele', 'id_constructeur', 'modele_id', 'constructeur_id','nom_constructeur');
     }
 }
