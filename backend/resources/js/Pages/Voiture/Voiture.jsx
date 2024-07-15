@@ -41,7 +41,6 @@ function Voiture({ voitures: initialVoitures, privilege_id }) {
             }
         }
     };
-    
 
     const handleCloseModal = () => {
         setIsModalOpen(false);
@@ -51,6 +50,15 @@ function Voiture({ voitures: initialVoitures, privilege_id }) {
     const handleCarClick = (e, id) => {
         if (e.target.closest('.admin-actions')) {
             e.preventDefault();
+        }
+    };
+
+    const parseDescription = (description) => {
+        try {
+            return JSON.parse(description);
+        } catch (error) {
+            console.error("Erreur de parsing JSON:", error);
+            return { en: '', fr: '' }; // Valeur par défaut en cas d'erreur
         }
     };
 
@@ -68,61 +76,60 @@ function Voiture({ voitures: initialVoitures, privilege_id }) {
                 </div>
                 <div className="cars-section">
                     <div className="cars-grid">
-
-                        {voitures.map((voiture, index) => (
-                            <div key={index} className="car-link">
-                                <Link
-                                    href={`/voitures/${voiture.id_voiture}`}
-                                    className="car-link"
-                                    onClick={handleCarClick}
-                                >
-                                <div className="car">
-                                    <img
-                                        src={voiture.photo_url || "../../../img/car/default_car.png"}
-                                        
-                                        alt={voiture.modele.nom_modele}
-                                        className="car-photo"
-                                    />
-                                    <h3 className="car-title">
-                                        {voiture.annee} {voiture.modele.constructeur.nom_constructeur} {voiture.modele.nom_modele}
-                                    </h3>
-                                    <p className="car-description">
-                                        {voiture.description
-                                            [i18n.language]}
-                                    </p>
-                                    <button className="details-button">
-                                        Plus d'info
-                                    </button>
-                                    {(privilege_id === 1 || privilege_id === 3) && (
-                                        <div className="admin-actions">
-                                            <Link
-                                                href={`/voitures/${voiture.id_voiture}/edit`}
-                                                className="edit-button"
-                                                onClick={(e) => e.stopPropagation()}
-                                            >
-                                                {t("edit")}
-                                            </Link>
-                                            {privilege_id === 1 && (
-                                                <button
-                                                    onClick={(e) => {
-                                                        e.preventDefault();
-                                                        e.stopPropagation();
-                                                        handleDeleteClick(voiture.id_voiture);
-                                                    }}
-                                                    className="delete-button"
-                                                >
-                                                    {t("delete")}
-                                                </button>
+                        {voitures.map((voiture, index) => {
+                            const descriptionObj = parseDescription(voiture.description);
+                            return (
+                                <div key={index} className="car-link">
+                                    <Link
+                                        href={`/voitures/${voiture.id_voiture}`}
+                                        className="car-link"
+                                        onClick={(e) => handleCarClick(e, voiture.id_voiture)}
+                                    >
+                                        <div className="car">
+                                            <img
+                                                src={voiture.photo_url || "../../../img/car/default_car.png"}
+                                                alt={voiture.modele.nom_modele}
+                                                className="car-photo"
+                                            />
+                                            <h3 className="car-title">
+                                                {voiture.annee} {voiture.modele.constructeur.nom_constructeur} {voiture.modele.nom_modele}
+                                            </h3>
+                                            <p className="car-description">
+                                                {descriptionObj[i18n.language] || ''}
+                                            </p>
+                                            <button className="details-button">
+                                                Plus d'info
+                                            </button>
+                                            {(privilege_id === 1 || privilege_id === 3) && (
+                                                <div className="admin-actions">
+                                                    <Link
+                                                        href={`/voitures/${voiture.id_voiture}/edit`}
+                                                        className="edit-button"
+                                                        onClick={(e) => e.stopPropagation()}
+                                                    >
+                                                        {t("edit")}
+                                                    </Link>
+                                                    {privilege_id === 1 && (
+                                                        <button
+                                                            onClick={(e) => {
+                                                                e.preventDefault();
+                                                                e.stopPropagation();
+                                                                handleDeleteClick(voiture.id_voiture);
+                                                            }}
+                                                            className="delete-button"
+                                                        >
+                                                            {t("delete")}
+                                                        </button>
+                                                    )}
+                                                </div>
                                             )}
                                         </div>
-                                    )}
+                                    </Link>
                                 </div>
-                                </Link>
-                            </div>
-                        ))}
+                            );
+                        })}
                     </div>
                 </div>
-
             </div>
             <Modal
                 isOpen={isModalOpen}

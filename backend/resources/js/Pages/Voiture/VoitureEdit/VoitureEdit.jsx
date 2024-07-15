@@ -10,6 +10,30 @@ const VoitureEdit = () => {
     const { t, i18n } = useTranslation();
     const { voiture, modeles } = usePage().props;
 
+      // Fonction utilitaire pour parser JSON avec fallback aux valeurs par défaut
+      const parseJSONWithFallback = (jsonString) => {
+        try {
+          // Si jsonString est déjà un objet JavaScript, retourne directement
+          if (typeof jsonString === 'object') {
+            return {
+              en: jsonString.en || '',
+              fr: jsonString.fr || '',
+            };
+          }
+      
+          // Si jsonString est une chaîne JSON, parse et retourne
+          const parsed = JSON.parse(jsonString);
+          return {
+            en: parsed.en || '',
+            fr: parsed.fr || '',
+          };
+        } catch (error) {
+          console.error('Erreur de parsing JSON :', error);
+          return { en: '', fr: '' }; // Fallback aux valeurs par défaut
+        }
+      };
+      
+  
     useEffect(() => {
         console.log('Composant monté ou props mis à jour');
         console.log('Voiture:', voiture);
@@ -20,31 +44,59 @@ const VoitureEdit = () => {
         return <div>Erreur: Données manquantes</div>;
     }
 
-    const { data, setData, put, processing, errors } = useForm({
-      modele_id: voiture.modele_id,
-      annee: voiture.annee,
-      prix_vente: voiture.prix_vente,
-      couleur: voiture.couleur ? voiture.couleur : { en: '', fr: '' },
-      etat_vehicule: voiture.etat_vehicule ? voiture.etat_vehicule : { en: '', fr: '' },
-      nombre_places: voiture.nombre_places,
-      nombre_portes: voiture.nombre_portes,
-      description: voiture.description ? voiture.description : { en: '', fr: '' },
+  // Récupération des données avec gestion des valeurs par défaut
+  const { data, setData, put, processing, errors } = useForm({
+    modele_id: voiture.modele_id,
+    annee: voiture.annee,
+    prix_vente: voiture.prix_vente,
+    couleur: parseJSONWithFallback(voiture.couleur),
+    etat_vehicule: parseJSONWithFallback(voiture.etat_vehicule),
+    nombre_places: voiture.nombre_places,
+    nombre_portes: voiture.nombre_portes,
+    description: parseJSONWithFallback(voiture.description),
   });
-  
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setData(name, value);
-    };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        put(`/voitures/${voiture.id_voiture}`, {
-            preserveState: true,
-                        onSuccess: () => {
-            },
-        });
+
+  // Fonction pour préparer les données à envoyer au backend
+  const prepareFormData = () => {
+    const formData = {
+      modele_id: data.modele_id,
+      annee: data.annee,
+      prix_vente: data.prix_vente,
+      couleur: JSON.stringify({
+        en: data.couleur.en,
+        fr: data.couleur.fr,
+      }),
+      etat_vehicule: JSON.stringify({
+        en: data.etat_vehicule.en,
+        fr: data.etat_vehicule.fr,
+      }),
+      nombre_places: data.nombre_places,
+      nombre_portes: data.nombre_portes,
+      description: JSON.stringify({
+        en: data.description.en,
+        fr: data.description.fr,
+      }),
     };
+    return formData;
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setData(name, value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formData = prepareFormData();
+    put(`/voitures/${voiture.id_voiture}`, {
+      preserveState: true,
+      data: formData,
+      onSuccess: () => {
+      },
+    });
+  };
 
     return (
         <>
