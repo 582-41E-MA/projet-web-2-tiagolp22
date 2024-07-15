@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import "./Profile.css";
 import EditableProfileItem from "./EditableProfileItem/EditableProfileItem";
 import { useForm } from "@inertiajs/inertia-react";
+import axios from "axios";
 
 const ProfileEdit = ({ utilisateur, villes, privileges }) => {
     const { t, i18n } = useTranslation();
@@ -29,6 +30,7 @@ const ProfileEdit = ({ utilisateur, villes, privileges }) => {
     const handleChange = (name, value) => {
         setData(name, value);
     };
+
     const handleSubmit = (e) => {
         e.preventDefault();
         put(`/user/profile/${utilisateur.id_utilisateur}`, {
@@ -42,6 +44,19 @@ const ProfileEdit = ({ utilisateur, villes, privileges }) => {
                 );
             },
         });
+    };
+
+    const handleDelete = (id) => {
+        if (confirm(t('user.confirm_delete'))) {
+            router.delete(`/user/profile/delete/${id}`, {
+                onSuccess: () => {
+                    console.log("Utilisateur supprimé avec succès");
+                },
+                onError: (errors) => {
+                    console.error("Erreur lors de la suppression de l'utilisateur", errors);
+                },
+            });
+        }
     };
 
     return (
@@ -163,10 +178,16 @@ const ProfileEdit = ({ utilisateur, villes, privileges }) => {
                         }))}
                     />
 
-                    <button type="submit" className="btn btn-primary">
+                    <button type="submit" className="edit-button ">
                         {t("profile.update_button")}
                     </button>
                 </form>
+                <button
+                    onClick={() => handleDelete(utilisateur.id_utilisateur)}
+                    className="delete-button"
+                >
+                    {t("profile.delete_button")}
+                </button>
             </div>
             <Footer />
         </>

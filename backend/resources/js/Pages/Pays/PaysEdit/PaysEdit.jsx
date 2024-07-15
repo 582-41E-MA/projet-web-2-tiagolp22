@@ -78,7 +78,7 @@ const PaysEdit = ({ pays }) => {
                         onChange={handleChange}
                         error={errors.nom_pays}
                     />
-                    <button type="submit" className="btn btn-primary">
+                    <button type="submit" className="edit-button">
                         {t('pays.update_button')}
                     </button>
                 </form>
