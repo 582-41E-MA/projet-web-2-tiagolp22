@@ -8,6 +8,7 @@ use App\Models\Ville;
 use App\Models\Privilege;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 class UtilisateurController extends Controller
 {
@@ -77,7 +78,8 @@ class UtilisateurController extends Controller
         $utilisateur = Utilisateur::findOrFail($id);
         $utilisateur->delete();
 
-        return redirect()->route('utilisateurs.index')->with('success', 'Utilisateur supprimé avec succès.');
+        return Inertia::location(route('Accueil'));
+
     }
 
     public function getUtilisateurWithPrivilegeOne()
