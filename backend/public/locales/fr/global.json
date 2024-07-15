@@ -141,7 +141,8 @@
     "update_button":"modifier"
 
   },
-  
+  "Learn_more":"En savoir plus",
+
     "constructeur": {
       "create":"créer un constructeur",
       "index_title": "Liste des Constructeurs",
