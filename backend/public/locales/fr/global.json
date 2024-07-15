@@ -10,6 +10,13 @@
     "profile": "Profil",
     "login": "Connexion",
     "register": "S'inscrire"
+  }, 
+    "home": {
+    "titre": "Les Meilleures Voitures d'Occasion",
+    "description": "Découvrez des voitures d'occasion de qualité à des prix imbattables. Quebecar, transparence et service personnalisé pour votre confiance.",
+    "new_arrivals": "Nouveautés",
+    "plus_info": "Plus d'info",
+    "fiers_quebecois": "Fiers d'être Québécois"
   },
   "login": {
     "title": "Connexion",
@@ -35,10 +42,6 @@
     "username": "Nom d'utilisateur",
     "password": "Mot de passe",
     "register_button": "S'inscrire"
-  },
-  "home": {
-    "new_arrivals": "Nouveautés",
-    "car_description": "Description du véhicule."
   },
   "car": {
     "select_option": "Sélectionner",

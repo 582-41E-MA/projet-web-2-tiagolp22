@@ -11,6 +11,13 @@
     "login": "Login",
     "register": "Register"
   },
+  "home": {
+    "titre": "The Best Used Cars",
+    "description": "Discover quality used cars at unbeatable prices. Quebecar, transparency and personalized service for your trust.",
+    "new_arrivals": "New Arrivals",
+    "plus_info": "More Info",
+    "fiers_quebecois": "Proud to be Quebecois"
+  },
   "login": {
     "title": "Login",
     "email": "Email",
@@ -35,10 +42,6 @@
     "username": "Username",
     "password": "Password",
     "register_button": "Register"
-  },
-  "home": {
-    "new_arrivals": "New Arrivals",
-    "car_description": "Vehicle Description."
   },
   "car": {
     "select_option": "Select",
