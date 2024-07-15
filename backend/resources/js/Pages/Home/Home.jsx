@@ -45,7 +45,7 @@ function Home({ voitures }) {
         <div className="banner-content wrapper">
           <h1>Les Meilleurs Voitures d'Occasion</h1>
           <p>Découvrez des voitures d'occasion de qualité à des prix imbattables. Quebecar, transparence et service personnalisé pour votre confiance.</p>
-          <Link href="/voitures" className="btn">{t('header.catalogue')}</Link>
+          <Link target="blank" href="/voitures" className="btn">{t('header.catalogue')}</Link>
         </div>
         <div className="banner-footer">
           <p>Nous sommes fiers d'être Québécois</p>
@@ -62,7 +62,7 @@ function Home({ voitures }) {
                   <img src={voiture.photo_url ? voiture.photo_url : "../../../img/car/default_car.png"} alt={voiture.modele.nom_modele} />
                   <h3>{voiture.annee} {voiture.modele.nom_modele}</h3>
                   <p>{voiture.description ? JSON.parse(voiture.description)[i18n.language] : t('home.car_description')}</p>
-                  <Link href={`/voitures/${voiture.id_voiture}`} className="details-button">
+                  <Link target="blank" href={`/voitures/${voiture.id_voiture}`} className="details-button">
                     Plus d'info
                   </Link>
                 </div>
@@ -77,3 +77,4 @@ function Home({ voitures }) {
 }
 
 export default Home;
+

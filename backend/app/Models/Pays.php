@@ -14,9 +14,14 @@ class Pays extends Model
     public $timestamps = false;
 
     protected $fillable = ['nom_pays'];
-
+    protected $casts = [
+        'nom_pays' => 'json',
+    ];
     public function provinces()
     {
         return $this->hasMany(Province::class, 'pays_id', 'id_pays');
     }
 }
+
+
+

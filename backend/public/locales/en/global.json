@@ -1,13 +1,15 @@
 {
   "header": {
     "home": "Home",
-    "catalogue": "Catalog",
+    "catalogue": "Catalogue",
     "about": "About",
-    "contact": "Contact Us",
-    "login": "Login",
-    "register": "Register",
+    "contact": "Contact",
+    "dashboard": "Dashboard",
+    "welcome": "Welcome",
     "logout": "Logout",
-    "profile": "Profile"
+    "profile": "Profile",
+    "login": "Login",
+    "register": "Register"
   },
   "login": {
     "title": "Login",
