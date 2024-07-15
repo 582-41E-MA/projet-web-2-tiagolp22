@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateUtilisateurRequest;
 use App\Http\Requests\UpdateUtilisateurRequest;
 use App\Models\Utilisateur;
+use App\Models\Ville;
+use App\Models\Privilege;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
@@ -47,27 +49,28 @@ class UtilisateurController extends Controller
     public function edit($id)
     {
         $utilisateur = Utilisateur::findOrFail($id);
-        return inertia('Utilisateurs/Edit', [
-            'utilisateur' => $utilisateur
+        $villes = Ville::orderBy('nom_ville')->get();
+        $privileges = Privilege::orderBy('nom_privilege')->get();
+        return inertia('User/Profile', [
+            'utilisateur' => $utilisateur,
+            'villes' => $villes,
+            'privileges' => $privileges,
         ]);
     }
 
-    public function update(UpdateUtilisateurRequest $request, $id)
+    public function update(UpdateUtilisateurRequest $request, $id_utilisateur)
     {
-        dd('entrou'); // Isso deve aparecer se a função estiver sendo chamada corretamente
-    
         $validated = $request->validated();
-    
-        $utilisateur = Utilisateur::findOrFail($id);
+        $utilisateur = Utilisateur::findOrFail($id_utilisateur);
         $utilisateur->fill($validated);
         if ($request->filled('mot_de_passe')) {
             $utilisateur->mot_de_passe = Hash::make($validated['mot_de_passe']);
         }
         $utilisateur->save();
-    
         return redirect()->route('utilisateurs.index')->with('success', 'Utilisateur mis à jour avec succès.');
     }
-    
+
+
 
     public function destroy($id)
     {

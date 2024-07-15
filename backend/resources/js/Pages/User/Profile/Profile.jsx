@@ -1,145 +1,176 @@
-// Profile.jsx
-import React, { useState } from 'react';
-import axios from 'axios';
-import Header from '../../Header/Header';
-import Footer from '../../Footer/Footer';
-import { useTranslation } from 'react-i18next';
-import './Profile.css';
-import EditableProfileItem from './EditableProfileItem/EditableProfileItem'; 
+import React from "react";
+import Header from "../../Header/Header";
+import Footer from "../../Footer/Footer";
+import { useTranslation } from "react-i18next";
+import "./Profile.css";
+import EditableProfileItem from "./EditableProfileItem/EditableProfileItem";
+import { useForm } from "@inertiajs/inertia-react";
 
-const Profile = ({ utilisateur }) => {
-    const { t } = useTranslation();
-    const [isEditing, setIsEditing] = useState(false);
-    const [editedUtilisateur, setEditedUtilisateur] = useState(utilisateur);
+const ProfileEdit = ({ utilisateur, villes, privileges }) => {
+    const { t, i18n } = useTranslation();
+    const initialDate = utilisateur.date_naissance
+        ? utilisateur.date_naissance.split("T")[0]
+        : "";
+    const { data, setData, put, errors } = useForm({
+        prenom: utilisateur.prenom || "",
+        nom: utilisateur.nom || "",
+        date_naissance: initialDate || "",
+        adresse: utilisateur.adresse || "",
+        code_postal: utilisateur.code_postal || "",
+        numero_telephone: utilisateur.numero_telephone || "",
+        numero_portable: utilisateur.numero_portable || "",
+        courriel: utilisateur.courriel || "",
+        privileges_id: utilisateur.privileges_id || "",
+        nom_utilisateur: utilisateur.nom_utilisateur || "",
+        mot_de_passe: utilisateur.mot_de_passe || "",
+        villes_id_ville: utilisateur.villes_id_ville || "",
+    });
 
-    // URL de la route Laravel pour mettre à jour le profil
-    const updateProfileUrl = `/user/profile/${utilisateur.id_utilisateur}`; // Inclua o id do usuário na URL
-
-    // Gestionnaire pour activer le mode édition
-    const handleEdit = () => {
-        setIsEditing(true);
+    const handleChange = (name, value) => {
+        setData(name, value);
     };
-
-    // Gestionnaire pour sauvegarder les modifications
-    const handleSave = async () => {
-        try {
-            console.log('URL de atualização:', updateProfileUrl);
-            console.log('Dados enviados:', editedUtilisateur);
-
-            // Effectuer une requête PUT pour envoyer les données mises à jour
-            await axios.put(updateProfileUrl, editedUtilisateur);
-
-            setIsEditing(false); // Sortir du mode édition après la sauvegarde
-            alert('Profil mis à jour avec succès !'); 
-        } catch (error) {
-            console.error('Erreur lors de la mise à jour du profil :', error.response ? error.response.data : error.message);
-            alert('Erreur lors de la mise à jour du profil. Veuillez réessayer.'); 
-        }
-    };
-
-    // Gestionnaire pour annuler les modifications
-    const handleCancel = () => {
-        setEditedUtilisateur(utilisateur); // Réinitialiser les modifications aux données d'origine
-        setIsEditing(false); // Sortir du mode édition sans sauvegarder
-    };
-
-    // Gestionnaire pour mettre à jour les champs éditables
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setEditedUtilisateur({
-            ...editedUtilisateur,
-            [name]: value,
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        put(`/user/profile/${utilisateur.id_utilisateur}`, {
+            onSuccess: () => {
+                console.log("Utilisateur mis à jour avec succès");
+            },
+            onError: (errors) => {
+                console.error(
+                    "Erreur lors de la mise à jour de l'utilisateur",
+                    errors
+                );
+            },
         });
     };
-
-    if (!utilisateur) {
-        return <div>Chargement...</div>;
-    }
 
     return (
         <>
             <Header />
-            <div className="wrapper">
-                <h1>{t('user.title_profile', )} { utilisateur.nom }</h1>
-                <div className="profile-card">
+            <div className="profile-edit-container">
+                <h1>{t("profile.edit_title")}</h1>
+                <form onSubmit={handleSubmit}>
                     <EditableProfileItem
-                        label={t('user.first_name')}
+                        label={t("profile.first_name")}
                         name="prenom"
-                        value={editedUtilisateur.prenom}
-                        isEditing={isEditing}
+                        value={data.prenom}
+                        isEditing={true}
                         handleChange={handleChange}
                     />
+
                     <EditableProfileItem
-                        label={t('user.last_name')}
+                        label={t("profile.last_name")}
                         name="nom"
-                        value={editedUtilisateur.nom}
-                        isEditing={isEditing}
+                        value={data.nom}
+                        isEditing={true}
                         handleChange={handleChange}
                     />
+
                     <EditableProfileItem
-                        label={t('user.email')}
-                        name="courriel"
-                        value={editedUtilisateur.courriel}
-                        isEditing={isEditing}
+                        label={t("profile.date_of_birth")}
+                        name="date_naissance"
+                        value={data.date_naissance}
+                        isEditing={true}
                         handleChange={handleChange}
+                        type="date"
                     />
-                    <div className="profile-item">
-                        <label>{t('user.birthdate')}</label>
-                        <p>{new Date(utilisateur.date_naissance).toLocaleDateString()}</p>
-                    </div>
+
                     <EditableProfileItem
-                        label={t('user.address')}
+                        label={t("profile.address")}
                         name="adresse"
-                        value={editedUtilisateur.adresse}
-                        isEditing={isEditing}
+                        value={data.adresse}
+                        isEditing={true}
                         handleChange={handleChange}
                     />
+
                     <EditableProfileItem
-                        label={t('user.postal_code')}
+                        label={t("profile.postal_code")}
                         name="code_postal"
-                        value={editedUtilisateur.code_postal}
-                        isEditing={isEditing}
+                        value={data.code_postal}
+                        isEditing={true}
                         handleChange={handleChange}
                     />
+
                     <EditableProfileItem
-                        label={t('user.phone')}
+                        label={t("profile.phone_number")}
                         name="numero_telephone"
-                        value={editedUtilisateur.numero_telephone}
-                        isEditing={isEditing}
+                        value={data.numero_telephone}
+                        isEditing={true}
                         handleChange={handleChange}
                     />
+
                     <EditableProfileItem
-                        label={t('user.mobile')}
+                        label={t("profile.mobile_number")}
                         name="numero_portable"
-                        value={editedUtilisateur.numero_portable}
-                        isEditing={isEditing}
+                        value={data.numero_portable}
+                        isEditing={true}
                         handleChange={handleChange}
                     />
+
                     <EditableProfileItem
-                        label={t('user.username')}
+                        label={t("profile.email")}
+                        name="courriel"
+                        value={data.courriel}
+                        isEditing={true}
+                        handleChange={handleChange}
+                        type="email"
+                    />
+
+                    <EditableProfileItem
+                        label={t("profile.privilege")}
+                        name="privileges_id"
+                        value={data.privileges_id}
+                        isEditing={true}
+                        handleChange={handleChange}
+                        type="select"
+                        options={privileges.map((privilege) => ({
+                            value: privilege.id_privilege,
+                            label:
+                                i18n.language === "en"
+                                    ? JSON.parse(privilege.nom_privilege).en
+                                    : JSON.parse(privilege.nom_privilege).fr,
+                        }))}
+                        disabled={utilisateur.privileges_id !== 1}
+                    />
+
+                    <EditableProfileItem
+                        label={t("profile.username")}
                         name="nom_utilisateur"
-                        value={editedUtilisateur.nom_utilisateur}
-                        isEditing={isEditing}
+                        value={data.nom_utilisateur}
+                        isEditing={true}
                         handleChange={handleChange}
                     />
-                    <div className="profile-item">
-                        <label>{t('user.last_connection')}</label>
-                        <p>{new Date(utilisateur.derniere_connexion).toLocaleString()}</p>
-                    </div>
-                    {/* Boutons d'édition et de sauvegarde */}
-                    {isEditing ? (
-                        <div className="profile-buttons">
-                            <button className="btn-save" onClick={handleSave}>Enregistrer</button>
-                            <button className="btn-cancel" onClick={handleCancel}>Annuler</button>
-                        </div>
-                    ) : (
-                        <button className="btn-edit" onClick={handleEdit}>Éditer</button>
-                    )}
-                </div>
+
+                    <EditableProfileItem
+                        label={t("profile.password")}
+                        name="mot_de_passe"
+                        value={data.mot_de_passe}
+                        isEditing={true}
+                        handleChange={handleChange}
+                        type="password"
+                    />
+
+                    <EditableProfileItem
+                        label={t("profile.city")}
+                        name="villes_id_ville"
+                        value={data.villes_id_ville}
+                        isEditing={true}
+                        handleChange={handleChange}
+                        type="select"
+                        options={villes.map((ville) => ({
+                            value: ville.id_ville,
+                            label: ville.nom_ville,
+                        }))}
+                    />
+
+                    <button type="submit" className="btn btn-primary">
+                        {t("profile.update_button")}
+                    </button>
+                </form>
             </div>
             <Footer />
         </>
     );
 };
 
-export default Profile;
+export default ProfileEdit;
