@@ -46,9 +46,8 @@
   },
 
 
-  "save_changes":"Save changes",
-
   "car": {
+    "save_changes":"Save changes",
     "edit_title": "Edit car",
     "select_option": "Select",
     "title": "Create a Car",
