@@ -68,11 +68,18 @@ function Voiture({ voitures: initialVoitures, privilege_id }) {
                 </div>
                 <div className="cars-section">
                     <div className="cars-grid">
+
                         {voitures.map((voiture, index) => (
                             <div key={index} className="car-link">
+                                <Link
+                                    href={`/voitures/${voiture.id_voiture}`}
+                                    className="car-link"
+                                    onClick={handleCarClick}
+                                >
                                 <div className="car">
                                     <img
                                         src={voiture.photo_url || "../../../img/car/default_car.png"}
+                                        
                                         alt={voiture.modele.nom_modele}
                                         className="car-photo"
                                     />
@@ -111,10 +118,12 @@ function Voiture({ voitures: initialVoitures, privilege_id }) {
                                         </div>
                                     )}
                                 </div>
+                                </Link>
                             </div>
                         ))}
                     </div>
                 </div>
+
             </div>
             <Modal
                 isOpen={isModalOpen}

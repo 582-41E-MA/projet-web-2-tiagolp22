@@ -41,6 +41,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/modele', [ModeleController::class, 'index'])->name('modele.index');
         Route::get('/modele/create', [ModeleController::class, 'create'])->name('modele.create');
         Route::post('/modele', [ModeleController::class, 'store'])->name('modele.store');
+
+        Route::get('/constructeur', [ConstructeurController::class, 'index'])->name('constructeur.index');
+        Route::get('/constructeur/create', [ConstructeurController::class, 'create'])->name('constructeur.create');
+        Route::post('/constructeur', [ConstructeurController::class, 'store'])->name('constructeur.store');
+        Route::get('/constructeur/{id_constructeur}/edit', [ConstructeurController::class, 'edit'])->name('constructeur.edit');
+        
         Route::delete('/modele/{id}', [ModeleController::class, 'destroy'])->name('modele.destroy');
         Route::get('/modeles/{id}/edit', [ModeleController::class, 'edit'])->name('modeles.edit');
         Route::put('/modeles/{id}', [ModeleController::class, 'update'])->name('modeles.update');
@@ -55,7 +61,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         // Route::post('/factures/{id}/send-email', [FactureController::class, 'sendEmail'])->name('factures.sendEmail');
 
         // Autres ressources
-        Route::resource('/constructeurs', ConstructeurController::class)->except(['destroy']);
+        Route::resource('/constructeur', ConstructeurController::class)->except(['destroy']);
         Route::resource('/transmissions', TransmissionController::class)->except(['destroy']);
         Route::resource('/status', StatusController::class)->except(['destroy']);
         Route::resource('/type-carburants', TypeCarburantController::class)->except(['destroy']);
@@ -69,7 +75,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::delete('/voitures/{id}', [VoitureController::class, 'destroy'])->name('voitures.destroy');
         // Route::delete('/clients/{id}', [ClientController::class, 'destroy'])->name('clients.destroy');
         // Route::delete('/factures/{id}', [FactureController::class, 'destroy'])->name('factures.destroy');
-        Route::delete('/constructeurs/{id}', [ConstructeurController::class, 'destroy'])->name('constructeurs.destroy');
+        Route::delete('/constructeur/{id}', [ConstructeurController::class, 'destroy'])->name('constructeur.destroy');
         Route::delete('/transmissions/{id}', [TransmissionController::class, 'destroy'])->name('transmissions.destroy');
         Route::delete('/status/{id}', [StatusController::class, 'destroy'])->name('status.destroy');
         Route::delete('/type-carburants/{id}', [TypeCarburantController::class, 'destroy'])->name('type-carburants.destroy');

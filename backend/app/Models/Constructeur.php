@@ -12,6 +12,7 @@ class Constructeur extends Model
     protected $table = 'constructeurs';
     protected $primaryKey = 'id_constructeur';
     protected $fillable = ['nom_constructeur', 'pays_origine'];
+    public $timestamps = false;
 
     public function modeles()
     {

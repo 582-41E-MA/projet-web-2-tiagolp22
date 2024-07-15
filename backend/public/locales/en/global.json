@@ -129,5 +129,25 @@
     "edit_button":"Edit",
     "edit_title":"Edit Model",
     "update_button":"update"
-  }
+  },
+  
+    "constructeur": {
+      "create":"create cunstructor",
+      "index_title": "Constructors List",
+      "name": "Name",
+      "origin_country": "Country of Origin",
+      "create_button": "Create Constructor",
+      "edit_button": "Edit",
+      "delete_button": "Delete",
+      "confirm_delete": "Are you sure you want to delete this constructor?",
+      "create_title": "Create Constructor",
+      "edit_title": "Edit Constructor",
+      "name_label": "Constructor Name",
+      "origin_country_label": "Country of Origin",
+      "create_submit": "Create",
+      "edit_submit": "Update",
+      "cancel_button": "Cancel"
+    },
+    "actions": "Actions"
+  
 }

@@ -10,21 +10,24 @@ class ConstructeurController extends Controller
     public function index()
     {
         $constructeurs = Constructeur::all();
-        return Inertia::render('Constructeurs/ConstructeursIndex', ['constructeurs' => $constructeurs]);
+        return Inertia::render('Constructeur/Constructeur', ['constructeurs' => $constructeurs]);
     }
 
     public function create()
     {
-        return Inertia::render('Constructeurs/ConstructeursCreate/ConstructeursCreate');
+        return Inertia::render('Constructeur/ConstructeurCreate/ConstructeurCreate',);
     }
 
     public function store(Request $request)
     {
-        
-        $validated = $request->validated();
+        $validated = $request->validate([
+            'nom_constructeur' => 'required|string|max:255',
+            'pays_origine' => 'required|string|max:255',
+        ]);
+    
         Constructeur::create($validated);
-
-        return redirect()->route('constructeurs.index')->with('success', 'Constructeur created successfully.');
+    
+        return redirect()->route('constructeur.index')->with('success', 'Constructeur created successfully.');
     }
 
     public function show($id)
