@@ -16,7 +16,8 @@
     "description": "Discover quality used cars at unbeatable prices. Quebecar, transparency and personalized service for your trust.",
     "new_arrivals": "New Arrivals",
     "plus_info": "More Info",
-    "fiers_quebecois": "Proud to be Quebecois"
+    "fiers_quebecois": "Proud to be Quebecois",
+    "car_description": "Vehicle Description."
   },
   "login": {
     "title": "Login",
@@ -43,7 +44,12 @@
     "password": "Password",
     "register_button": "Register"
   },
+
+
+  "save_changes":"Save changes",
+
   "car": {
+    "edit_title": "Edit car",
     "select_option": "Select",
     "title": "Create a Car",
     "model": "Model",

@@ -88,8 +88,7 @@ function Voiture({ voitures: initialVoitures, privilege_id }) {
                                     </h3>
                                     <p className="car-description">
                                         {voiture.description
-                                            ? JSON.parse(voiture.description)[i18n.language]
-                                            : t("car_show.no_description")}
+                                            [i18n.language]}
                                     </p>
                                     <button className="details-button">
                                         Plus d'info
