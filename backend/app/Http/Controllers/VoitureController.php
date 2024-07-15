@@ -161,25 +161,38 @@ class VoitureController extends Controller
     }
 
 
-
     public function edit($id)
     {
         $voiture = Voiture::findOrFail($id);
+        $modeles = Modele::all();
 
-        return Inertia::render('Voiture/VoitureEdit/VoitureEdit', ['voiture' => $voiture]);
+        return Inertia::render('Voiture/VoitureEdit/VoitureEdit', [
+            'voiture' => $voiture,
+            'modeles' => $modeles,
+        ]);
     }
 
-    public function update(Request $request, $id)
-    {
-        $validated = $request->validated();
-        $voiture = Voiture::findOrFail($id);
-        $validated['couleur'] = json_encode($validated['couleur']);
-        $validated['description'] = json_encode($validated['description']);
-        $validated['etat_vehicule'] = json_encode($validated['etat_vehicule']);
+public function update(Request $request, $id)
+{
+    $voiture = Voiture::findOrFail($id);
+    
+    $validated = $request->validate([
+        'modele_id' => 'required|exists:modeles,id_modele',
+        'annee' => 'required|integer',
+        'prix_vente' => 'required|numeric',
+        'couleur' => 'required',
+        'etat_vehicule' => 'required',
+        'nombre_places' => 'required|integer',
+        'nombre_portes' => 'required|integer',
+        'description' => 'required',
+    ]);
 
-        $voiture->update($validated);
-        return redirect()->route('voitures.index');
-    }
+    // Log::info('Données validées:', $validated);
+
+    $voiture->update($validated);
+    // Log::info('Voiture mise à jour', ['id' => $voiture->id_voiture]);
+    return redirect()->route('voitures.index');
+}
 
     public function destroy($id)
     {

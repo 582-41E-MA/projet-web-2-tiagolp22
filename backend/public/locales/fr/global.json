@@ -16,7 +16,9 @@
     "description": "Découvrez des voitures d'occasion de qualité à des prix imbattables. Quebecar, transparence et service personnalisé pour votre confiance.",
     "new_arrivals": "Nouveautés",
     "plus_info": "Plus d'info",
-    "fiers_quebecois": "Fiers d'être Québécois"
+    "fiers_quebecois": "Fiers d'être Québécois",
+    "car_description": "Description du véhicule."
+
   },
   "login": {
     "title": "Connexion",
@@ -43,7 +45,10 @@
     "password": "Mot de passe",
     "register_button": "S'inscrire"
   },
+
   "car": {
+    
+    "edit_title": "Modifier la voiture",
     "select_option": "Sélectionner",
     "title": "Créer une voiture",
     "model": "Modèle",
