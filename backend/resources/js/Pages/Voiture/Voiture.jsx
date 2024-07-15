@@ -54,11 +54,14 @@ function Voiture({ voitures: initialVoitures, privilege_id }) {
     };
 
     const parseDescription = (description) => {
+        if (typeof description === 'object') {
+            return description;
+        }
         try {
             return JSON.parse(description);
         } catch (error) {
             console.error("Erreur de parsing JSON:", error);
-            return { en: '', fr: '' }; // Valeur par défaut en cas d'erreur
+            return { en: '', fr: '' }; 
         }
     };
 
@@ -80,17 +83,19 @@ function Voiture({ voitures: initialVoitures, privilege_id }) {
                             const descriptionObj = parseDescription(voiture.description);
                             return (
                                 <div key={index} className="car-link">
-                                    <Link
-                                        href={`/voitures/${voiture.id_voiture}`}
-                                        className="car-link"
-                                        onClick={(e) => handleCarClick(e, voiture.id_voiture)}
-                                    >
-                                        <div className="car">
+                                    <div className="car">
+                                        <Link
+                                            href={`/voitures/${voiture.id_voiture}`}
+                                            className="car-link"
+                                            onClick={(e) => handleCarClick(e, voiture.id_voiture)}
+                                        >
+                                            <div className="car-photo-container">
                                             <img
                                                 src={voiture.photo_url || "../../../img/car/default_car.png"}
                                                 alt={voiture.modele.nom_modele}
                                                 className="car-photo"
                                             />
+                                            </div>
                                             <h3 className="car-title">
                                                 {voiture.annee} {voiture.modele.constructeur.nom_constructeur} {voiture.modele.nom_modele}
                                             </h3>
@@ -100,31 +105,31 @@ function Voiture({ voitures: initialVoitures, privilege_id }) {
                                             <button className="details-button">
                                                 Plus d'info
                                             </button>
-                                            {(privilege_id === 1 || privilege_id === 3) && (
-                                                <div className="admin-actions">
-                                                    <Link
-                                                        href={`/voitures/${voiture.id_voiture}/edit`}
-                                                        className="edit-button"
-                                                        onClick={(e) => e.stopPropagation()}
+                                        </Link>
+                                        {(privilege_id === 1 || privilege_id === 3) && (
+                                            <div className="admin-actions">
+                                                <Link
+                                                    href={`/voitures/${voiture.id_voiture}/edit`}
+                                                    className="edit-button"
+                                                    onClick={(e) => e.stopPropagation()}
+                                                >
+                                                    {t("edit")}
+                                                </Link>
+                                                {privilege_id === 1 && (
+                                                    <button
+                                                        onClick={(e) => {
+                                                            e.preventDefault();
+                                                            e.stopPropagation();
+                                                            handleDeleteClick(voiture.id_voiture);
+                                                        }}
+                                                        className="delete-button"
                                                     >
-                                                        {t("edit")}
-                                                    </Link>
-                                                    {privilege_id === 1 && (
-                                                        <button
-                                                            onClick={(e) => {
-                                                                e.preventDefault();
-                                                                e.stopPropagation();
-                                                                handleDeleteClick(voiture.id_voiture);
-                                                            }}
-                                                            className="delete-button"
-                                                        >
-                                                            {t("delete")}
-                                                        </button>
-                                                    )}
-                                                </div>
-                                            )}
-                                        </div>
-                                    </Link>
+                                                        {t("delete")}
+                                                    </button>
+                                                )}
+                                            </div>
+                                        )}
+                                    </div>
                                 </div>
                             );
                         })}

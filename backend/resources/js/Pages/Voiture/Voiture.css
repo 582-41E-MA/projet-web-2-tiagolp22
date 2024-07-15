@@ -12,6 +12,20 @@
   width: 80%;
   padding: 10px;
 }
+.car-photo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px; 
+  width: 100%;
+}
+
+.car-photo {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}
+
 
 .cars-grid {
   display: grid;
@@ -23,11 +37,13 @@
   border: 1px solid #ddd;
   padding: 10px;
   text-align: center;
-  transition: transform 0.3s ease;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.5s;
+  border-radius: 5px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   width: 100%;
   height: 100%;
   padding: 10px;
@@ -42,12 +58,7 @@
 .car p {
   color: grey;
 }
-.car-link {
-  flex: 1 1 30%;
-  margin: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s;
-}
+
 .car-description {
   white-space: nowrap;
   overflow: hidden;
@@ -63,10 +74,12 @@
 
 
 .details-button {
+  font-weight: 700;
   display: inline-block;
   padding: 8px;
   background-color: var(--color-tertiary);
-  color: black;
+  color: var(--color-white);
+  font-size: small;
   text-decoration: none;
   margin-top: 10px;
   border: none;
@@ -77,7 +90,7 @@
 
 .details-button:hover {
   background-color: #e6b800;
-  color: #000; 
+  color: var(--color-white); 
 }
 
 .admin-actions {
