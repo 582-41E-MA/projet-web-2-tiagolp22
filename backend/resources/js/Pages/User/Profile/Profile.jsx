@@ -1,13 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "../../Header/Header";
 import Footer from "../../Footer/Footer";
 import { useTranslation } from "react-i18next";
 import "./Profile.css";
 import EditableProfileItem from "./EditableProfileItem/EditableProfileItem";
 import { useForm } from "@inertiajs/inertia-react";
+import axios from "axios";
+import Modal from "../../Modal/Modal";
+
 
 const ProfileEdit = ({ utilisateur, villes, privileges }) => {
     const { t, i18n } = useTranslation();
+    const [isModalOpen, setIsModalOpen] = useState(false); 
     const initialDate = utilisateur.date_naissance
         ? utilisateur.date_naissance.split("T")[0]
         : "";
@@ -29,6 +33,7 @@ const ProfileEdit = ({ utilisateur, villes, privileges }) => {
     const handleChange = (name, value) => {
         setData(name, value);
     };
+
     const handleSubmit = (e) => {
         e.preventDefault();
         put(`/user/profile/${utilisateur.id_utilisateur}`, {
@@ -43,7 +48,28 @@ const ProfileEdit = ({ utilisateur, villes, privileges }) => {
             },
         });
     };
+    const handleDelete = (id) => {
+        setIsModalOpen(true); 
+        
+    };
 
+
+    const confirmDelete = async () => {
+        try {
+            await axios.delete(`/user/profile/delete/${utilisateur.id_utilisateur}`);
+            closeModal();
+            window.location.href = "/";
+        } catch (error) {
+            alert(
+                `Erreur lors de la suppression de l'utilisateur : ${
+                  error.response?.data?.message || error.message
+                }`
+              );
+        }
+    };
+    const closeModal = () => {
+        setIsModalOpen(false); 
+    };
     return (
         <>
             <Header />
@@ -163,10 +189,23 @@ const ProfileEdit = ({ utilisateur, villes, privileges }) => {
                         }))}
                     />
 
-                    <button type="submit" className="btn btn-primary">
+                    <button type="submit" className="edit-button ">
                         {t("profile.update_button")}
                     </button>
                 </form>
+                <button
+                    onClick={() => handleDelete(utilisateur.id_utilisateur)}
+                    className="delete-button"
+                >
+                    {t("profile.delete_button")}
+                </button>
+                  {/* Modal de confirmação */}
+                  <Modal
+                    isOpen={isModalOpen}
+                    onClose={closeModal}
+                    onConfirm={confirmDelete}
+                    message={t("confirm_delete_message")}
+                />
             </div>
             <Footer />
         </>

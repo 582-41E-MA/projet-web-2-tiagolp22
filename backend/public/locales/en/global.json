@@ -44,12 +44,13 @@
     "password": "Password",
     "register_button": "Register"
   },
-
-
   "save_changes":"Save changes",
   "Learn_more":"Learn more",
 
+
+
   "car": {
+    "save_changes":"Save changes",
     "edit_title": "Edit car",
     "select_option": "Select",
     "title": "Create a Car",
