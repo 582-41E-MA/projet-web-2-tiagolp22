@@ -32,11 +32,25 @@ const EditableProfileItem = ({
                             </option>
                         ))}
                     </select>
+                ) : type === "password" ? (
+                    <input {...inputProps} />
                 ) : (
                     <input {...inputProps} />
                 )
             ) : (
-                <p className="profile-value">{value}</p>
+                <div className="non-editable-field">
+                    {type === "select" ? (
+                        <select {...inputProps} disabled>
+                            {options.map((option) => (
+                                <option key={option.value} value={option.value}>
+                                    {option.label}
+                                </option>
+                            ))}
+                        </select>
+                    ) : (
+                        <p className="profile-value">{value}</p>
+                    )}
+                </div>
             )}
         </div>
     );
