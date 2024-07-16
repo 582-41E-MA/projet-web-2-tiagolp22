@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateUtilisateurRequest;
 use App\Http\Requests\UpdateUtilisateurRequest;
+use App\Http\Resources\UtilisateurResource;
 use App\Models\Utilisateur;
 use App\Models\Ville;
 use App\Models\Privilege;
@@ -14,12 +15,8 @@ class UtilisateurController extends Controller
 {
     public function index()
     {
-
-        // $utilisateurs = Utilisateur::all();
-        // return response()->json($utilisateurs);
-
         return inertia('Utilisateurs/Index', [
-            'utilisateurs' => Utilisateur::all()
+            'utilisateurs' => UtilisateurResource::collection(Utilisateur::all())
         ]);
     }
 
@@ -43,7 +40,7 @@ class UtilisateurController extends Controller
     {
         $utilisateur = Utilisateur::findOrFail($id);
         return inertia('User/Profile', [
-            'utilisateur' => $utilisateur
+            'utilisateur' => new UtilisateurResource($utilisateur)
         ]);
     }
 
@@ -53,7 +50,7 @@ class UtilisateurController extends Controller
         $villes = Ville::orderBy('nom_ville')->get();
         $privileges = Privilege::orderBy('nom_privilege')->get();
         return inertia('User/Profile', [
-            'utilisateur' => $utilisateur,
+            'utilisateur' => new UtilisateurResource($utilisateur),
             'villes' => $villes,
             'privileges' => $privileges,
         ]);
@@ -71,13 +68,11 @@ class UtilisateurController extends Controller
         return redirect()->route('utilisateurs.index')->with('success', 'Utilisateur mis à jour avec succès.');
     }
 
-
-
     public function destroy($id)
     {
         $utilisateur = Utilisateur::findOrFail($id);
         $utilisateur->delete();
-        
+
         return response()->json(['message' => 'Utilisateur supprimer avec succes']);;
     }
 
@@ -87,7 +82,7 @@ class UtilisateurController extends Controller
             $utilisateur = Utilisateur::where('privileges_id', 1)->first();
 
             if ($utilisateur) {
-                return response()->json($utilisateur);
+                return response()->json(new UtilisateurResource($utilisateur));
             } else {
                 return response()->json(['message' => 'No user with privilege 1 found.'], 404);
             }
