@@ -26,7 +26,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     // Routes pour tous les utilisateurs authentifiés
     Route::get('/user/profile/{id}', [UtilisateurController::class, 'edit'])->name('user.profile');
     Route::put('/user/profile/{id}', [UtilisateurController::class, 'update'])->name('utilisateurs.update');
-    Route::put('/user/profile/delete', [UtilisateurController::class, 'detroy'])->name('utilisateurs.delete');
+    Route::delete('/user/profile/delete/{id}', [UtilisateurController::class, 'destroy'])->name('utilisateurs.delete');
 
 
 

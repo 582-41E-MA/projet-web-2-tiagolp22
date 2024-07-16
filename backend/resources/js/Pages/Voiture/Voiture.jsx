@@ -6,7 +6,7 @@ import { Link, usePage } from "@inertiajs/react";
 import { useTranslation } from "react-i18next";
 import "./Voiture.css";
 import axios from "axios";
-import Modal from "./Modal";
+import Modal from "../Modal/Modal";
 
 function Voiture({ voitures: initialVoitures, privilege_id }) {
     const { t, i18n } = useTranslation();

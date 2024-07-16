@@ -77,9 +77,8 @@ class UtilisateurController extends Controller
     {
         $utilisateur = Utilisateur::findOrFail($id);
         $utilisateur->delete();
-
-        return Inertia::location(route('Accueil'));
-
+        
+        return response()->json(['message' => 'Utilisateur supprimer avec succes']);;
     }
 
     public function getUtilisateurWithPrivilegeOne()

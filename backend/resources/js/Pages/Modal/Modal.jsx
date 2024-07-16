@@ -9,7 +9,7 @@ const Modal = ({ isOpen, onClose, onConfirm, message }) => {
 
   const handleConfirmAndReload = async () => {
     await onConfirm(); 
-    window.location.reload(); 
+    onClose();
   };
   const { t, i18n } = useTranslation();
 
