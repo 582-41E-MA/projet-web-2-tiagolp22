@@ -8,6 +8,7 @@ import { useForm } from "@inertiajs/inertia-react";
 import axios from "axios";
 import Modal from "../../Modal/Modal";
 
+
 const ProfileEdit = ({ utilisateur, villes, privileges }) => {
     const { t, i18n } = useTranslation();
     const [isModalOpen, setIsModalOpen] = useState(false); 
@@ -51,6 +52,7 @@ const ProfileEdit = ({ utilisateur, villes, privileges }) => {
         setIsModalOpen(true); 
         
     };
+
 
     const confirmDelete = async () => {
         try {
