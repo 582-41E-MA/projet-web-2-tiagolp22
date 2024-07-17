@@ -87,24 +87,24 @@ const ProfileEdit = ({ utilisateur, villes, privileges }) => {
         <>
             <Header />
             <div className="form-container">
-                <h1>{t("profile.edit_title")}</h1>
+                <h1>{t("user.title_profile")}</h1>
                 <form onSubmit={handleSubmit}>
                         <EditableProfileItem
-                            label={t("profile.first_name")}
+                            label={t("user.first_name")}
                             name="prenom"
                             value={data.prenom}
                             isEditing={isEditing}
                             handleChange={handleChange}
                         />
                         <EditableProfileItem
-                            label={t("profile.last_name")}
+                            label={t("user.last_name")}
                             name="nom"
                             value={data.nom}
                             isEditing={isEditing}
                             handleChange={handleChange}
                         />
                         <EditableProfileItem
-                            label={t("profile.date_of_birth")}
+                            label={t("user.birthdate")}
                             name="date_naissance"
                             value={data.date_naissance}
                             isEditing={isEditing}
@@ -112,35 +112,35 @@ const ProfileEdit = ({ utilisateur, villes, privileges }) => {
                             type="date"
                         />  
                         <EditableProfileItem
-                            label={t("profile.address")}
+                            label={t("user.address")}
                             name="adresse"
                             value={data.adresse}
                             isEditing={isEditing}
                             handleChange={handleChange}
                         />
                         <EditableProfileItem
-                            label={t("profile.postal_code")}
+                            label={t("user.postal_code")}
                             name="code_postal"
                             value={data.code_postal}
                             isEditing={isEditing}
                             handleChange={handleChange}
                         />
                         <EditableProfileItem
-                            label={t("profile.phone_number")}
+                            label={t("user.phone")}
                             name="numero_telephone"
                             value={data.numero_telephone}
                             isEditing={isEditing}
                             handleChange={handleChange}
                         />
                         <EditableProfileItem
-                            label={t("profile.mobile_number")}
+                            label={t("user.mobile")}
                             name="numero_portable"
                             value={data.numero_portable}
                             isEditing={isEditing}
                             handleChange={handleChange}
                         />
                         <EditableProfileItem
-                            label={t("profile.email")}
+                            label={t("user.email")}
                             name="courriel"
                             value={data.courriel}
                             isEditing={isEditing}
@@ -148,7 +148,7 @@ const ProfileEdit = ({ utilisateur, villes, privileges }) => {
                             type="email"
                         />
                         <EditableProfileItem
-                            label={t("profile.privilege")}
+                            label={t("user.privilege")}
                             name="privileges_id"
                             value={data.privileges_id}
                             isEditing={isEditing}
@@ -164,14 +164,14 @@ const ProfileEdit = ({ utilisateur, villes, privileges }) => {
                             disabled={utilisateur.privileges_id !== 1}
                         />
                         <EditableProfileItem
-                            label={t("profile.username")}
+                            label={t("user.username")}
                             name="nom_utilisateur"
                             value={data.nom_utilisateur}
                             isEditing={isEditing}
                             handleChange={handleChange}
                         />
                         <EditableProfileItem
-                            label={t("profile.city")}
+                            label={t("user.city")}
                             name="villes_id_ville"
                             value={data.villes_id_ville}
                             isEditing={isEditing}
@@ -183,7 +183,7 @@ const ProfileEdit = ({ utilisateur, villes, privileges }) => {
                             }))}
                         />
                         <EditableProfileItem
-                            label={t("profile.password")}
+                            label={t("user.password")}
                             name="mot_de_passe"
                             value={data.mot_de_passe}
                             isEditing={isEditing}
@@ -195,21 +195,21 @@ const ProfileEdit = ({ utilisateur, villes, privileges }) => {
                 {!isEditing ? (
                     <div>
                         <button className="btn-edit" onClick={handleEdit}>
-                            {t("edit_button")}
+                            {t("user.edit_button")}
                         </button>
                         <button onClick={() => handleDelete(utilisateur.id_utilisateur)} className="delete-button">
-                            {t("delete_button")}
+                            {t("user.delete_button")}
                         </button>
                         {/* Modal de confirmação */}
-                        <Modal isOpen={isModalOpen} onClose={closeModal} onConfirm={confirmDelete} message={t("confirm_delete_message")} />
+                        <Modal isOpen={isModalOpen} onClose={closeModal} onConfirm={confirmDelete} message={t("user.confirm_delete_message")} />
                     </div>
                 ) : (
                     <div>
                         <button type="submit" className="btn btn-primary" onClick={handleSubmit}>
-                            {t("update_button")}
+                            {t("user.update_button")}
                         </button>
                         <button type="button" className="cancel-button" onClick={handleCancel}>
-                            {t("profile.cancel_button")}
+                            {t("user.cancel_button")}
                         </button>
                     </div>
                 )}
