@@ -1,6 +1,6 @@
 import React from 'react';
 
-const InputField = ({ label, name, value, onChange, error, type = 'text', options = [] }) => {
+const InputField = ({ label, name, value, onChange, error, type = 'text', options = [], getLabel }) => {
     const inputProps = {
         id: name,
         name: name,
@@ -21,7 +21,7 @@ const InputField = ({ label, name, value, onChange, error, type = 'text', option
                 <select {...inputProps}>
                     {options.map((option) => (
                         <option key={option.value} value={option.value}>
-                            {option.label}
+                            {getLabel ? getLabel(option) : option.label}
                         </option>
                     ))}
                 </select>

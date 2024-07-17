@@ -47,32 +47,28 @@ const ProvinceEdit = () => {
         });
     };
 
+  
     return (
         <>
             <Header />
             <div className="form-container">
                 <h1>{t('province.edit_title')}</h1>
                 <form onSubmit={handleSubmit}>
-                        <InputField
-                            label={t('province.name')}
-                            name="nom_province"
-                            value={data.nom_province}
-                            onChange={(e) => setData('nom_province', e.target.value)}
-                        />
-                        <label htmlFor="pays_id">{t('province.country')}</label>
-                        <select
-                            id="pays_id"
-                            name="pays_id"
-                            value={data.pays_id}
-                            onChange={handleSelectChange}
-                        >
-                            <option value="">{t('select.country')}</option>
-                            {pays.map((p) => (
-                                <option key={p.id_pays} value={p.id_pays}>
-                                    {getNomPays(p)}
-                                </option>
-                            ))}
-                        </select>
+                    <InputField
+                        label={t('province.name')}
+                        name="nom_province"
+                        value={data.nom_province}
+                        onChange={(e) => setData('nom_province', e.target.value)}
+                    />
+                    <InputField
+                        label={t('province.country')}
+                        name="pays_id"
+                        value={data.pays_id}
+                        onChange={handleSelectChange}
+                        type="select"
+                        options={pays}
+                        getLabel={getNomPays} 
+                    />
                     <button className="edit-button" type="submit">{t('province.update_button')}</button>
                 </form>
             </div>
