@@ -48,24 +48,24 @@ const PaysCreate = () => {
     return (
         <>
             <Header />
-            <div className="pays-create-container">
+            <div className="form-container">
                 <h1>Créer un Pays</h1>
                 <form onSubmit={handleSubmit}>
-                    <InputField
-                        label="Nom du Pays (EN)"
-                        name="en"
-                        value={data.nom_pays.en}
-                        onChange={handleChange}
-                        error={errors.nom_pays}
-                    />
-                    <InputField
-                        label="Nom du Pays (FR)"
-                        name="fr"
-                        value={data.nom_pays.fr}
-                        onChange={handleChange}
-                        error={errors.nom_pays}
-                    />
-                    <button type="submit">Créer</button>
+                        <InputField
+                            label="Nom du Pays (EN)"
+                            name="en"
+                            value={data.nom_pays.en}
+                            onChange={handleChange}
+                            error={errors.nom_pays}
+                        />
+                        <InputField
+                            label="Nom du Pays (FR)"
+                            name="fr"
+                            value={data.nom_pays.fr}
+                            onChange={handleChange}
+                            error={errors.nom_pays}
+                        />
+                    <button className="create-button"type="submit">Créer</button>
                 </form>
             </div>
             <Footer />

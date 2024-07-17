@@ -15,7 +15,7 @@
     background-color: white;
     padding: 20px;
     border-radius: 5px;
-    width: 300px;
+    
   }
   
   .message-modal {
@@ -28,34 +28,5 @@
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
-  }
-  
-  .confirm-button,
-  .cancel-button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
-  }
-  
-  .confirm-button {
-    background-color: #dc3545;
-    color: white;
-    font-size: larger;
-  }
-  
-  .confirm-button:hover {
-    background-color: #92222d;
-  }
-  
-  .cancel-button {
-    background-color: #6c757d;
-    color: white;
-    font-size: larger;
-  }
-  
-  .cancel-button:hover {
-    background-color: #454f58;
   }
   

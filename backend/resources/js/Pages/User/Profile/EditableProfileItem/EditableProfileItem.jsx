@@ -21,7 +21,7 @@ const EditableProfileItem = ({
     };
 
     return (
-        <div className="profile-item">
+        <div className="form-group">
             <label className="profile-label">{label}</label>
             {isEditing ? (
                 type === "select" ? (
@@ -32,8 +32,6 @@ const EditableProfileItem = ({
                             </option>
                         ))}
                     </select>
-                ) : type === "password" ? (
-                    <input {...inputProps} />
                 ) : (
                     <input {...inputProps} />
                 )
@@ -47,6 +45,8 @@ const EditableProfileItem = ({
                                 </option>
                             ))}
                         </select>
+                    ) : type === "password" ? (
+                        <p className="profile-value">{"•".repeat(value.length)}</p>
                     ) : (
                         <p className="profile-value">{value}</p>
                     )}

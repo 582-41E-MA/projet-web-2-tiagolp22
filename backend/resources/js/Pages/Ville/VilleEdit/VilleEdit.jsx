@@ -3,11 +3,13 @@ import { usePage, router } from '@inertiajs/react';
 import Header from '../../Header/Header';
 import Footer from '../../Footer/Footer';
 import { useTranslation } from 'react-i18next';
-import './VilleEdit.css'; 
+import InputField from '../../InputField/InputField'; 
+
+import './VilleEdit.css';
 
 const VilleEdit = () => {
-    const { t } = useTranslation(); 
-    const { ville } = usePage().props;
+    const { t } = useTranslation();
+    const { ville, provinces } = usePage().props; 
     const [data, setData] = useState({
         nom_ville: ville.nom_ville || '',
         province_id: ville.province_id || '',
@@ -38,29 +40,27 @@ const VilleEdit = () => {
     return (
         <>
             <Header />
-            <div className="ville-edit-container">
+            <div className="form-container">
                 <h1>{t('ville.edit_title')}</h1>
                 <form onSubmit={handleSubmit}>
-                    <div>
-                        <label>{t('ville.name')}</label>
-                        <input
-                            type="text"
+                        <InputField
+                            label={t('ville.name')}
                             name="nom_ville"
                             value={data.nom_ville}
                             onChange={handleChange}
                         />
-                    </div>
-                    <div>
-                        <label>{t('ville.province')}</label>
-                        <select
+                        <InputField
+                            label={t('ville.province')}
                             name="province_id"
                             value={data.province_id}
                             onChange={handleChange}
-                        >
-                            {/* Renderizar as opções da province_id aqui */}
-                        </select>
-                    </div>
-                    <button type="submit">{t('ville.update_button')}</button>
+                            type="select"
+                            options={provinces.map(province => ({
+                                value: province.id_province,
+                                label: province.nom_province
+                            }))}
+                        />
+                    <button className="edit-button" type="submit">{t('ville.update_button')}</button>
                 </form>
             </div>
             <Footer />

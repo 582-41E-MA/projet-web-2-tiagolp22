@@ -61,23 +61,23 @@ const PaysEdit = ({ pays }) => {
     return (
         <>
             <Header />
-            <div className="pays-edit-container">
+            <div className="form-container">
                 <h1>{t('pays.edit_title')}</h1>
                 <form onSubmit={handleSubmit}>
-                    <InputField
-                        label={t('pays.name_en')}
-                        name="en"
-                        value={parsedNomPays.en || ''}
-                        onChange={handleChange}
-                        error={errors.nom_pays}
-                    />
-                    <InputField
-                        label={t('pays.name_fr')}
-                        name="fr"
-                        value={parsedNomPays.fr || ''}
-                        onChange={handleChange}
-                        error={errors.nom_pays}
-                    />
+                        <InputField
+                            label={t('pays.name_en')}
+                            name="en"
+                            value={parsedNomPays.en || ''}
+                            onChange={handleChange}
+                            error={errors.nom_pays}
+                        />
+                        <InputField
+                            label={t('pays.name_fr')}
+                            name="fr"
+                            value={parsedNomPays.fr || ''}
+                            onChange={handleChange}
+                            error={errors.nom_pays}
+                        />
                     <button type="submit" className="edit-button">
                         {t('pays.update_button')}
                     </button>

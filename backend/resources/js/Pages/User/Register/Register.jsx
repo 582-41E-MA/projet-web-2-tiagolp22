@@ -154,7 +154,7 @@ const Register = () => {
                         />
                         {errors.mot_de_passe && <span className="error">{errors.mot_de_passe}</span>}
                     </div>
-                    <button type="submit" disabled={processing}>
+                    <button className="create-button" type="submit" disabled={processing}>
                         {t('user.register_button')}
                     </button>
                 </form>
