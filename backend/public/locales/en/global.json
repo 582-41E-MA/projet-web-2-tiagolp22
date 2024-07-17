@@ -168,6 +168,7 @@
       "edit_submit": "Update",
       "cancel_button": "Cancel"
     },
+
     "actions": "Actions"
     ,"about": {
     "title": "About QuebeCar",
@@ -210,6 +211,11 @@
       "content": "Visit our showroom or contact us for a personalized consultation.",
       "button": "View our catalog"
     }
-  }
+  },
+
+    
+    "contact": {
+      "title": "Contact Us"
+    }
   
 }
