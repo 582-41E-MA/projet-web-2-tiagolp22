@@ -1,16 +1,31 @@
 import React from 'react';
 
-const InputField = ({ label, name, value, onChange, error }) => {
+const InputField = ({ label, name, value, onChange, error, type = 'text', options = [] }) => {
+    const inputProps = {
+        id: name,
+        name: name,
+        value: value,
+        onChange: onChange
+    };
+
     return (
-        <div className="input-field">
+        <div className="form-group">
             <label htmlFor={name}>{label}</label>
-            <input
-                type="text"
-                id={name}
-                name={name}
-                value={value}
-                onChange={onChange}
-            />
+            {type === 'text' && (
+                <input
+                    type="text"
+                    {...inputProps}
+                />
+            )}
+            {type === 'select' && (
+                <select {...inputProps}>
+                    {options.map((option) => (
+                        <option key={option.value} value={option.value}>
+                            {option.label}
+                        </option>
+                    ))}
+                </select>
+            )}
             {error && <div className="error">{error}</div>}
         </div>
     );

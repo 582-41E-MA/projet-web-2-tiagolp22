@@ -13,6 +13,7 @@ const Pays = ({ pays }) => {
             router.delete(`/pays/${id}`, {
                 onSuccess: () => {
                     console.log("Pays supprimé avec succès");
+                    // Atualizar a página ou redirecionar conforme necessário
                 },
                 onError: (errors) => {
                     console.error("Erreur lors de la suppression du pays", errors);
@@ -26,30 +27,23 @@ const Pays = ({ pays }) => {
             <Header />
             <div className="pays-container">
                 <h1>{t('pays.list_title')}</h1>
-                <Link href="/pays/create" className="create-button">{t('pays.create_button')}</Link>
-                <table className="table">
-                    <thead>
-                        <tr>
-                            <th>{t('pays.id')}</th>
-                            <th>{t('pays.name')}</th>
-                            <th>{t('pays.actions')}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {pays && pays.map(p => {
-                            let nomPays;
-                            try {
-                                nomPays = JSON.parse(p.nom_pays);
-                            } catch (error) {
-                                console.error("Erreur lors de l'analyse du nom du pays:", error);
-                                nomPays = { en: 'Invalid JSON', fr: 'JSON invalide' };
-                            }
+                <div className="pays-list">
+                    {pays.map(p => {
+                        let nomPays = {};
+                        try {
+                            nomPays = JSON.parse(p.nom_pays);
+                        } catch (error) {
+                            console.error("Erreur lors de l'analyse du nom du pays:", error);
+                            nomPays = { en: 'Invalid JSON', fr: 'JSON invalide' };
+                        }
 
-                            return (
-                                <tr key={p.id_pays}>
-                                    <td>{p.id_pays}</td>
-                                    <td>{i18n.language === 'en' ? nomPays.en : nomPays.fr}</td>
-                                    <td>
+                        return (
+                            <div key={p.id_pays} className="pays-item">
+                                <div className="pays-info">
+                                    <div className="pays-name">
+                                        {i18n.language === 'en' ? nomPays.en : nomPays.fr}
+                                    </div>
+                                    <div className="pays-actions">
                                         <Link href={`/pays/${p.id_pays}/edit`} className="edit-button">{t('pays.edit')}</Link>
                                         <button
                                             onClick={() => handleDelete(p.id_pays)}
@@ -57,12 +51,12 @@ const Pays = ({ pays }) => {
                                         >
                                             {t('pays.delete')}
                                         </button>
-                                    </td>
-                                </tr>
-                            );
-                        })}
-                    </tbody>
-                </table>
+                                    </div>
+                                </div>
+                            </div>
+                        );
+                    })}
+                </div>
             </div>
             <Footer />
         </>

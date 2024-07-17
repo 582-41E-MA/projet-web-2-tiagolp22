@@ -3,6 +3,7 @@ import { useForm } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
 import Header from '../../Header/Header';
 import Footer from '../../Footer/Footer';
+import InputField from '../../InputField/InputField'; 
 import './VilleCreate.css';
 
 const VilleCreate = ({ provinces }) => {
@@ -32,34 +33,32 @@ const VilleCreate = ({ provinces }) => {
     return (
         <>
             <Header />
-            <div className="ville-create-container">
+            <div className="form-container">
                 <h1>{t('ville.create')}</h1>
                 <form onSubmit={handleSubmit}>
-                    <div>
-                        <label>{t('ville.name')}</label>
-                        <input
-                            type="text"
+                        <InputField
+                            label={t('ville.name')}
+                            name="nom_ville"
                             value={data.nom_ville}
                             onChange={(e) => setData('nom_ville', e.target.value)}
+                            error={errors.nom_ville}
                         />
-                        {errors.nom_ville && <span>{errors.nom_ville}</span>}
-                    </div>
-                    <div>
-                        <label>{t('ville.province')}</label>
-                        <select
+                        <InputField
+                            label={t('ville.province')}
+                            name="province_id"
                             value={data.province_id}
                             onChange={(e) => setData('province_id', e.target.value)}
-                        >
-                            <option value="">Sélectionner une province</option>
-                            {provinces.map((province) => (
-                                <option key={province.id_province} value={province.id_province}>
-                                    {province.nom_province}
-                                </option>
-                            ))}
-                        </select>
-                        {errors.province_id && <span>{errors.province_id}</span>}
-                    </div>
-                    <button type="submit">{t('ville.create_button')}</button>
+                            type="select"
+                            options={[
+                                { value: '', label: t('ville.select_province') },
+                                ...provinces.map((province) => ({
+                                    value: province.id_province,
+                                    label: province.nom_province
+                                }))
+                            ]}
+                            error={errors.province_id}
+                        />
+                    <button className="create-button" type="submit">{t('ville.create_button')}</button>
                 </form>
             </div>
             <Footer />
