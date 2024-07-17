@@ -169,7 +169,7 @@ const VoitureCreate = ({
                     src="../../../img/logo/logo.png"
                     alt="Logo"
                 />
-                <h3>{t("car.title")}</h3>
+                <h3>{t("car.title_create")}</h3>
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
                         <label htmlFor="photos">{t("car.photos")}</label>
