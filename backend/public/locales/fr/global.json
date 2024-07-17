@@ -166,8 +166,12 @@
       "edit_submit": "Mettre à jour",
       "cancel_button": "Annuler"
     },
-    "actions": "Actions"
+    "actions": "Actions",
   
-  
+      "contact": {
+        "title": "Contactez-nous"
+      }
+    
+    
 
 }

@@ -168,6 +168,10 @@
       "edit_submit": "Update",
       "cancel_button": "Cancel"
     },
-    "actions": "Actions"
+    "actions": "Actions", 
+    
+    "contact": {
+      "title": "Contact Us"
+    }
   
 }
