@@ -30,8 +30,8 @@
     "create_account": "Create an account"
   },
   "user": {
-    "title": "Create your account",
-    "title_profile": "Welcome to your account",
+    "title_create": "Create your account",
+    "title_profile": "My Account",
     "first_name": "First Name",
     "last_name": "Last Name",
     "birthdate": "Date of Birth",
@@ -42,7 +42,14 @@
     "email": "Email",
     "username": "Username",
     "password": "Password",
-    "register_button": "Register"
+    "privilege":"Privilege",
+    "city":"City",
+    "register_button": "Register",
+     "edit_button":"Edit Account",
+    "delete_button":"Delete account", 
+    "confirm_delete_message": "Do you really want to delete your account?",
+    "update_button": "Update",
+    "cancel_button": "Cancel"
   },
   "save_changes":"Save changes",
   "Learn_more":"Learn more",

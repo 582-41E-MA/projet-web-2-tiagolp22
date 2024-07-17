@@ -30,8 +30,8 @@
     "create_account": "Créer un compte"
   },
   "user": {
-    "title": "Créer votre compte",
-    "title_profile": "Bienvenue sur votre compte",
+    "title_create": "Créer votre compte",
+    "title_profile": "Mon compte",
     "first_name": "Prénom",
     "last_name": "Nom",
     "birthdate": "Date de naissance",
@@ -42,7 +42,14 @@
     "email": "Email",
     "username": "Nom d'utilisateur",
     "password": "Mot de passe",
-    "register_button": "S'inscrire"
+    "privilege":"Privilege",
+    "city":"Ville",
+    "register_button": "S'inscrire",
+    "edit_button":"Editer compte",
+    "delete_button":"Supprimer compte",
+    "confirm_delete_message":"Voulez vous vraiment supprimer votre compte?",
+    "update_button":"Mettre a jour",
+    "cancel_button":"Canceler"
   },
 
   "car": {
