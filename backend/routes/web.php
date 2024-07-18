@@ -20,6 +20,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\FactureController;
 use App\Http\Middleware\CheckPrivilege;
 use Inertia\Inertia;
+use App\Http\Controllers\StripeController;
 
 // Routes protégées par authentification
 Route::middleware(['auth:sanctum'])->group(function () {
@@ -134,3 +135,6 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::get('/login', [AuthController::class, 'index'])->name('login.index');
 Route::post('/login', [AuthController::class, 'userLogin'])->name('login.userLogin');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+Route::post('/create-checkout-session', [StripeController::class, 'createCheckoutSession']);
+Route::post('/webhook', [StripeController::class, 'webhook']);
