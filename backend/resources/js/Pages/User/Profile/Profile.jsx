@@ -9,16 +9,13 @@ import axios from "axios";
 import Modal from "../../Modal/Modal";
 
 const ProfileEdit = ({ utilisateur, villes, privileges }) => {
-    const { t, i18n } = useTranslation();
     const [isEditing, setIsEditing] = useState(false);
+
+    const { t, i18n } = useTranslation();
     const [isModalOpen, setIsModalOpen] = useState(false);
-    
-    // Initial data from utilisateur
     const initialDate = utilisateur.date_naissance
         ? utilisateur.date_naissance.split("T")[0]
         : "";
-
-    // Form handling with InertiaJS useForm
     const { data, setData, put, reset } = useForm({
         prenom: utilisateur.prenom || "",
         nom: utilisateur.nom || "",
@@ -34,47 +31,50 @@ const ProfileEdit = ({ utilisateur, villes, privileges }) => {
         villes_id_ville: utilisateur.villes_id_ville || "",
     });
 
-    // Toggle editing mode
     const handleEdit = () => {
         setIsEditing(true);
     };
 
-    // Cancel editing and reset form
     const handleCancel = () => {
         reset();
         setIsEditing(false);
     };
 
-    // Handle form field changes
     const handleChange = (name, value) => {
         setData(name, value);
     };
 
-    // Submit form for updating user profile
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             await put(`/user/profile/${utilisateur.id_utilisateur}`);
+
             console.log("Utilisateur mis à jour avec succès");
             setIsEditing(false);
         } catch (error) {
-            console.error("Erreur lors de la mise à jour de l'utilisateur", error);
+            console.error(
+                "Erreur lors de la mise à jour de l'utilisateur",
+                error
+            );
         }
     };
-
-    // Handle opening modal for delete confirmation
     const handleDelete = (id) => {
         setIsModalOpen(true);
     };
 
-    // Confirm deletion of user
     const confirmDelete = async () => {
         try {
-            await axios.delete(`/user/profile/delete/${utilisateur.id_utilisateur}`);
+            await axios.delete(
+                `/user/profile/delete/${utilisateur.id_utilisateur}`
+            );
             closeModal();
             window.location.href = "/";
         } catch (error) {
-            alert(`Erreur lors de la suppression de l'utilisateur : ${error.response?.data?.message || error.message}`);
+            alert(
+                `Erreur lors de la suppression de l'utilisateur : ${
+                    error.response?.data?.message || error.message
+                }`
+            );
         }
     };
 
@@ -86,72 +86,81 @@ const ProfileEdit = ({ utilisateur, villes, privileges }) => {
     return (
         <>
             <Header />
-            <div className="form-container">
-                <h1>{t("user.title_profile")}</h1>
-                <form onSubmit={handleSubmit}>
+            <div className="profile-edit-container">
+                <h1>{t("profile.edit_title")}</h1>
+                {isEditing ? (
+                    <form onSubmit={handleSubmit}>
                         <EditableProfileItem
-                            label={t("user.first_name")}
+                            label={t("profile.first_name")}
                             name="prenom"
                             value={data.prenom}
-                            isEditing={isEditing}
+                            isEditing={true}
                             handleChange={handleChange}
                         />
+
                         <EditableProfileItem
-                            label={t("user.last_name")}
+                            label={t("profile.last_name")}
                             name="nom"
                             value={data.nom}
-                            isEditing={isEditing}
+                            isEditing={true}
                             handleChange={handleChange}
                         />
+
                         <EditableProfileItem
-                            label={t("user.birthdate")}
+                            label={t("profile.date_of_birth")}
                             name="date_naissance"
                             value={data.date_naissance}
-                            isEditing={isEditing}
+                            isEditing={true}
                             handleChange={handleChange}
                             type="date"
-                        />  
+                        />
+
                         <EditableProfileItem
-                            label={t("user.address")}
+                            label={t("profile.address")}
                             name="adresse"
                             value={data.adresse}
-                            isEditing={isEditing}
+                            isEditing={true}
                             handleChange={handleChange}
                         />
+
                         <EditableProfileItem
-                            label={t("user.postal_code")}
+                            label={t("profile.postal_code")}
                             name="code_postal"
                             value={data.code_postal}
-                            isEditing={isEditing}
+                            isEditing={true}
                             handleChange={handleChange}
                         />
+
                         <EditableProfileItem
-                            label={t("user.phone")}
+                            label={t("profile.phone_number")}
                             name="numero_telephone"
                             value={data.numero_telephone}
-                            isEditing={isEditing}
+                            isEditing={true}
                             handleChange={handleChange}
                         />
+
                         <EditableProfileItem
-                            label={t("user.mobile")}
+                            label={t("profile.mobile_number")}
                             name="numero_portable"
                             value={data.numero_portable}
-                            isEditing={isEditing}
+                            isEditing={true}
                             handleChange={handleChange}
                         />
+
                         <EditableProfileItem
-                            label={t("user.email")}
+                            label={t("profile.email")}
                             name="courriel"
                             value={data.courriel}
-                            isEditing={isEditing}
+                            isEditing={true}
                             handleChange={handleChange}
                             type="email"
                         />
+
                         <EditableProfileItem
-                            label={t("user.privilege")}
+                            label={t("profile.privilege")}
                             name="privileges_id"
                             value={data.privileges_id}
-                            isEditing={isEditing}
+                            isEditing={true}
                             handleChange={handleChange}
                             type="select"
                             options={privileges.map((privilege) => ({
@@ -159,22 +168,25 @@ const ProfileEdit = ({ utilisateur, villes, privileges }) => {
                                 label:
                                     i18n.language === "en"
                                         ? JSON.parse(privilege.nom_privilege).en
-                                        : JSON.parse(privilege.nom_privilege).fr,
+                                        : JSON.parse(privilege.nom_privilege)
+                                              .fr,
                             }))}
                             disabled={utilisateur.privileges_id !== 1}
                         />
+
                         <EditableProfileItem
-                            label={t("user.username")}
+                            label={t("profile.username")}
                             name="nom_utilisateur"
                             value={data.nom_utilisateur}
-                            isEditing={isEditing}
+                            isEditing={true}
                             handleChange={handleChange}
                         />
+
                         <EditableProfileItem
-                            label={t("user.city")}
+                            label={t("profile.city")}
                             name="villes_id_ville"
                             value={data.villes_id_ville}
-                            isEditing={isEditing}
+                            isEditing={true}
                             handleChange={handleChange}
                             type="select"
                             options={villes.map((ville) => ({
@@ -182,35 +194,130 @@ const ProfileEdit = ({ utilisateur, villes, privileges }) => {
                                 label: ville.nom_ville,
                             }))}
                         />
+
                         <EditableProfileItem
-                            label={t("user.password")}
+                            label={t("profile.password")}
                             name="mot_de_passe"
                             value={data.mot_de_passe}
-                            isEditing={isEditing}
+                            isEditing={true}
                             handleChange={handleChange}
                             type="password"
                         />
-                </form>
-                {/* Conditional rendering based on edit mode */}
-                {!isEditing ? (
-                    <div>
-                        <button className="btn-edit" onClick={handleEdit}>
-                            {t("user.edit_button")}
+                        <button type="submit" className="btn btn-primary">
+                            {t("profile.update_button")}
                         </button>
-                        <button onClick={() => handleDelete(utilisateur.id_utilisateur)} className="delete-button">
-                            {t("user.delete_button")}
+                        <button
+                            type="button"
+                            className="btn btn-secondary"
+                            onClick={handleCancel}
+                        >
+                            {t("profile.cancel_button")}
                         </button>
-                        {/* Modal de confirmação */}
-                        <Modal isOpen={isModalOpen} onClose={closeModal} onConfirm={confirmDelete} message={t("user.confirm_delete_message")} />
-                    </div>
+                    </form>
                 ) : (
                     <div>
-                        <button type="submit" className="btn btn-primary" onClick={handleSubmit}>
-                            {t("user.update_button")}
+                        <EditableProfileItem
+                            label={t("profile.first_name")}
+                            name="prenom"
+                            value={utilisateur.prenom}
+                            isEditing={false}
+                        />
+                        <EditableProfileItem
+                            label={t("profile.last_name")}
+                            name="nom"
+                            value={utilisateur.nom}
+                            isEditing={false}
+                        />
+                        <EditableProfileItem
+                            label={t("profile.date_of_birth")}
+                            name="date_naissance"
+                            value={utilisateur.date_naissance}
+                            isEditing={false}
+                        />
+                        <EditableProfileItem
+                            label={t("profile.address")}
+                            name="adresse"
+                            value={utilisateur.adresse}
+                            isEditing={false}
+                        />
+                        <EditableProfileItem
+                            label={t("profile.postal_code")}
+                            name="code_postal"
+                            value={utilisateur.code_postal}
+                            isEditing={false}
+                        />
+                        <EditableProfileItem
+                            label={t("profile.phone_number")}
+                            name="numero_telephone"
+                            value={utilisateur.numero_telephone}
+                            isEditing={false}
+                        />
+                        <EditableProfileItem
+                            label={t("profile.mobile_number")}
+                            name="numero_portable"
+                            value={utilisateur.numero_portable}
+                            isEditing={false}
+                        />
+                        <EditableProfileItem
+                            label={t("profile.email")}
+                            name="courriel"
+                            value={utilisateur.courriel}
+                            isEditing={false}
+                        />
+                        <EditableProfileItem
+                            label={t("profile.privilege")}
+                            name="privileges_id"
+                            value={utilisateur.privileges_id}
+                            isEditing={false}
+                            options={privileges.map((privilege) => ({
+                                value: privilege.id_privilege,
+                                label:
+                                    i18n.language === "en"
+                                        ? JSON.parse(privilege.nom_privilege).en
+                                        : JSON.parse(privilege.nom_privilege)
+                                              .fr,
+                            }))}
+                            type="select"
+                        />
+                        <EditableProfileItem
+                            label={t("profile.username")}
+                            name="nom_utilisateur"
+                            value={utilisateur.nom_utilisateur}
+                            isEditing={false}
+                        />
+                        <EditableProfileItem
+                            label={t("profile.city")}
+                            name="villes_id_ville"
+                            value={utilisateur.villes_id_ville}
+                            isEditing={false}
+                            options={villes.map((ville) => ({
+                                value: ville.id_ville,
+                                label: ville.nom_ville,
+                            }))}
+                            type="select"
+                        />
+                    </div>
+                )}
+                {!isEditing && (
+                    <div>
+                        <button className="btn-edit" onClick={handleEdit}>
+                            {t("profile.edit_button")}
                         </button>
-                        <button type="button" className="cancel-button" onClick={handleCancel}>
-                            {t("user.cancel_button")}
+                        <button
+                            onClick={() =>
+                                handleDelete(utilisateur.id_utilisateur)
+                            }
+                            className="delete-button"
+                        >
+                            {t("profile.delete_button")}
                         </button>
+                        {/* Modal de confirmação */}
+                        <Modal
+                            isOpen={isModalOpen}
+                            onClose={closeModal}
+                            onConfirm={confirmDelete}
+                            message={t("confirm_delete_message")}
+                        />
                     </div>
                 )}
             </div>

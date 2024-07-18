@@ -32,6 +32,8 @@ const EditableProfileItem = ({
                             </option>
                         ))}
                     </select>
+                ) : type === "password" ? (
+                    <input {...inputProps} />
                 ) : (
                     <input {...inputProps} />
                 )
