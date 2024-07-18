@@ -1,5 +1,4 @@
-import React from "react";
-import { InertiaLink } from "@inertiajs/inertia-react";
+import React, { useState, useEffect } from "react";
 import { Link } from "@inertiajs/react";
 import { useTranslation } from "react-i18next";
 import Header from "../../Header/Header";
@@ -26,6 +25,18 @@ import {
 
 const VoitureShow = ({ voiture, photos }) => {
     const { t, i18n } = useTranslation();
+    const [cartItems, setCartItems] = useState([]);
+
+    useEffect(() => {
+        const storedCartItems = localStorage.getItem("cartItems");
+        if (storedCartItems) {
+            setCartItems(JSON.parse(storedCartItems));
+        }
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    }, [cartItems]);
 
     const getTranslation = (data) => {
         if (typeof data === "string") {
@@ -37,6 +48,14 @@ const VoitureShow = ({ voiture, photos }) => {
         return "";
     };
 
+    const addToCart = () => {
+        if (!cartItems.some((item) => item.id_voiture === voiture.id_voiture)) {
+            const updatedCart = [...cartItems, voiture];
+            setCartItems(updatedCart);
+        } else {
+            alert("Deja dans le panier");
+        }
+    };
     const settings = {
         dots: true,
         infinite: true,
@@ -61,6 +80,7 @@ const VoitureShow = ({ voiture, photos }) => {
             },
         ],
     };
+
     return (
         <>
             <Header />
@@ -82,6 +102,9 @@ const VoitureShow = ({ voiture, photos }) => {
                             </div>
                         ))}
                     </Slider>
+                    <button onClick={addToCart} className="btn btn-primary">
+                        {t("car_show.add_to_cart")}
+                    </button>
                 </div>
                 <div className="details-box">
                     <h2>{t("car_show.general_info")}</h2>

@@ -1,163 +1,161 @@
-header{
-  background-color: var(--color-white);
+header {
+    background-color: var(--color-white);
 }
 
 .header-content {
-  
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .logo-image {
-  height: 40px;
+    height: 40px;
 }
 
 .nav-links {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 }
 
 .nav-link {
-  margin: 0 var(--space-xsmall);
-  
-  text-decoration: none;
-  border: none;
+    margin: 0 var(--space-xsmall);
+
+    text-decoration: none;
+    border: none;
 }
 
 .dropdown-content .nav-link {
-  padding: var(--space-xsmall);
-  cursor: pointer;
+    padding: var(--space-xsmall);
+    cursor: pointer;
 }
 
 .dropdown {
-  position: relative;
+    position: relative;
 }
 
-
 .icones {
-  display: flex;
-  justify-content: flex-end;
+    display: flex;
+    justify-content: flex-end;
 }
 
 .dropdown-button {
-  background: none;
-  border: none;
-  color: var(--color-black);
-  cursor: pointer;
-  text-decoration: none;
-  padding: 0;
-  margin: 0 var(--space-xsmall);
-  display: flex;
-  align-items: center;
+    background: none;
+    border: none;
+    color: var(--color-black);
+    cursor: pointer;
+    text-decoration: none;
+    padding: 0;
+    margin: 0 var(--space-xsmall);
+    display: flex;
+    align-items: center;
 }
 .dropdown-button:hover {
-color: var(--color-primary);
+    color: var(--color-primary);
 }
 .dropdown-content {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  background-color: var(--color-white);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  min-width: 120px;
-  z-index: 1;
-  display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: var(--color-white);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    min-width: 120px;
+    z-index: 1;
+    display: none;
 }
 
 .dropdown:hover .dropdown-content {
-  display: block;
+    display: block;
 }
 
 .dropdown-content a {
-  display: block;
-  color: var(--color-black);
-  text-decoration: none;
+    display: block;
+    color: var(--color-black);
+    text-decoration: none;
 }
 
-
 .dropdown-content a:hover {
-  background-color: #f1f1f1;
+    background-color: #f1f1f1;
 }
 
 .dropdown-content button:hover {
-  background-color: #f1f1f1;
+    background-color: #f1f1f1;
 }
 
 .logo {
-  width: 30%;
-  padding-top: 10px;
-  padding-bottom: 10px;
+    width: 30%;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
-  .icones_navigation{
+.icones_navigation {
     width: 30px;
-  }
- 
-  .language-button {
+}
+
+.language-button {
     background-color: #ffffff;
-   
+
     border: 1px solid #ccc;
     padding: 8px 12px;
     cursor: pointer;
     font-size: 14px;
-  }
-  
-  .language-button:hover {
+}
+
+.language-button:hover {
     background-color: #f0f0f0;
-  }
-  
-  .language-button.active {
+}
+
+.language-button.active {
     background-color: #007bff;
     color: #fff;
     border-color: #007bff;
-  }
-  
-  .language-button.active:hover {
+}
+
+.language-button.active:hover {
     background-color: #0056b3;
     border-color: #0056b3;
-  }
-  
+}
 
-  
-  .dropdown-content a:hover  {
+.dropdown-content a:hover {
     background-color: #f1f1f1;
-  }
-  .dropdown-content button:hover  {
+}
+.dropdown-content button:hover {
     background-color: #f1f1f1;
-  }
-  .logo{
+}
+.logo {
     width: 150px;
-  }
-  
-  /* Estilos para tablets  */
+}
+
+.cart-button {
+    background: none; 
+    border: none; 
+    padding: 0; 
+    cursor: pointer; 
+    outline: none; 
+}
+/* Estilos para tablets  */
 @media (max-width: 768px) {
-  .header-content {
-    flex-direction: column;
-    text-align: center;
-  }
+    .header-content {
+        flex-direction: column;
+        text-align: center;
+    }
 
-  .nav-links {
-    flex-direction: column;
-  }
+    .nav-links {
+        flex-direction: column;
+    }
 
-  .nav-link {
-    margin: var(--space-xsmall) 0;
-  }
-
-  
-
+    .nav-link {
+        margin: var(--space-xsmall) 0;
+    }
 }
- /* Estilos para moveis  */
+/* Estilos para moveis  */
 @media (max-width: 430px) {
-.logo{
-  width: 100px;
-}
+    .logo {
+        width: 100px;
+    }
 
-
-.nav-link {
-  margin:0;
-}
-.icones_navigation{
-  width: 25px;
-}
+    .nav-link {
+        margin: 0;
+    }
+    .icones_navigation {
+        width: 25px;
+    }
 }
