@@ -169,5 +169,47 @@
       "cancel_button": "Cancel"
     },
     "actions": "Actions"
+    ,"about": {
+    "title": "About QuebeCar",
+    "history": {
+      "title": "Our History",
+      "content": "Founded in 2024, QuebeCar was born from a passion for automobiles and a desire to revolutionize the car market in Quebec. We started as a small local dealership and have grown to become a major player in the sale of new and used cars."
+    },
+    "mission": {
+      "title": "Our Mission",
+      "content": "At QuebeCar, we are committed to providing quality vehicles, whether new or used, at competitive prices. Our goal is to make buying a car as simple and enjoyable as possible for all Quebecers."
+    },
+    "values": {
+      "title": "Our Values",
+      "transparency": "Transparency in our transactions",
+      "quality": "Quality and reliability of our vehicles",
+      "customerService": "Exceptional customer service",
+      "environment": "Respect for the environment"
+    },
+    "services": {
+      "title": "Our Services",
+      "newCars": {
+        "title": "New Car Sales",
+        "content": "Discover our wide range of new vehicles from the best brands."
+      },
+      "usedCars": {
+        "title": "Certified Used Cars",
+        "content": "Carefully inspected and guaranteed used vehicles."
+      },
+      "financing": {
+        "title": "Flexible Financing",
+        "content": "Financing options tailored to all budgets."
+      },
+      "afterSales": {
+        "title": "After-Sales Service",
+        "content": "A team of qualified mechanics for the maintenance of your vehicle."
+      }
+    },
+    "cta": {
+      "title": "Ready to find your next car?",
+      "content": "Visit our showroom or contact us for a personalized consultation.",
+      "button": "View our catalog"
+    }
+  }
   
 }
