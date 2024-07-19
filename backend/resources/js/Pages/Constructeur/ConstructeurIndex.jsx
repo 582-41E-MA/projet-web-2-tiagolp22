@@ -2,9 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { router } from '@inertiajs/react';
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
-import './Constructeur.css'; 
+import './ConstructeurIndex.css'; 
 
 const ConstructeurIndex = ({ constructeurs }) => {
     const { t } = useTranslation();
@@ -24,7 +22,6 @@ const ConstructeurIndex = ({ constructeurs }) => {
 
     return (
         <>
-            <Header />
             <div className="constructeur-index-container">
                 <h1>{t('constructeur.index_title')}</h1>
                 <div className="constructeur-list">
@@ -51,7 +48,6 @@ const ConstructeurIndex = ({ constructeurs }) => {
                     ))}
                 </div>
             </div>
-            <Footer />
         </>
     );
 };

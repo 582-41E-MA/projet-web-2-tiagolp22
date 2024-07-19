@@ -4,7 +4,7 @@ import Footer from '../Footer/Footer';
 import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt, faPhone, faEnvelope } from '@fortawesome/free-solid-svg-icons';
-import './Contact.css'; // Assurez-vous d'importer vos styles CSS personnalisés ici
+import './Contact.css';
 
 const Contact = () => {
     const { t } = useTranslation();

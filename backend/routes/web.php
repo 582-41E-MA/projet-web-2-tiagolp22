@@ -17,8 +17,11 @@ use App\Http\Controllers\PaysController;
 use App\Http\Controllers\ProvinceController;
 use App\Http\Controllers\VilleController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FactureController;
+use App\Http\Controllers\TaxeController;
 use App\Http\Middleware\CheckPrivilege;
+use App\Models\Taxe;
 use Inertia\Inertia;
 use App\Http\Controllers\StripeController;
 
@@ -49,10 +52,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/modele/create', [ModeleController::class, 'create'])->name('modele.create');
         Route::post('/modele', [ModeleController::class, 'store'])->name('modele.store');
 
-        Route::get('/constructeur', [ConstructeurController::class, 'index'])->name('constructeur.index');
-        Route::get('/constructeur/create', [ConstructeurController::class, 'create'])->name('constructeur.create');
-        Route::post('/constructeur', [ConstructeurController::class, 'store'])->name('constructeur.store');
-        Route::get('/constructeur/{id_constructeur}/edit', [ConstructeurController::class, 'edit'])->name('constructeur.edit');
+        // Route::get('/constructeur', [ConstructeurController::class, 'index'])->name('constructeur.index');
+        // Route::get('/constructeur/create', [ConstructeurController::class, 'create'])->name('constructeur.create');
+        // Route::post('/constructeur', [ConstructeurController::class, 'store'])->name('constructeur.store');
+        // Route::get('/constructeur/{id_constructeur}/edit', [ConstructeurController::class, 'edit'])->name('constructeur.edit');
 
         Route::delete('/modele/{id}', [ModeleController::class, 'destroy'])->name('modele.destroy');
         Route::get('/modeles/{id}/edit', [ModeleController::class, 'edit'])->name('modeles.edit');
@@ -78,6 +81,13 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/villes/{id}/edit', [VilleController::class, 'edit'])->name('villes.edit');
         Route::put('/villes/{id}', [VilleController::class, 'update'])->name('villes.update');
         Route::delete('/villes/{id}', [VilleController::class, 'destroy'])->name('villes.destroy');
+
+        Route::get('/taxes', [TaxeController::class, 'index'])->name('taxes.index');
+        Route::get('/taxes/create', [TaxeController::class, 'create'])->name('taxes.create');
+        Route::post('/taxes', [TaxeController::class, 'store'])->name('taxes.store');
+        Route::get('/taxes/{id}/edit', [TaxeController::class, 'edit'])->name('taxes.edit');
+        Route::put('/taxes/{id}', [TaxeController::class, 'update'])->name('taxes.update');
+        Route::delete('/taxes/{id}', [TaxeController::class, 'destroy'])->name('taxes.destroy');
         // Gestion des clients
         // Route::resource('/clients', ClientController::class)->except(['destroy']);
 
@@ -111,6 +121,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
         // Gestion des privilèges
         Route::resource('/privileges', PrivilegeController::class);
+
+        // Gestion des privilèges
+        Route::resource('/dashboard', DashboardController::class);
 
         // Gestion des utilisateurs (y compris les employés)
         Route::resource('/utilisateurs', UtilisateurController::class);

@@ -1,11 +1,9 @@
 import React from 'react';
 import { Link, router } from '@inertiajs/react';
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
 import { useTranslation } from 'react-i18next';
-import './Pays.css';
+import './PaysIndex.css';
 
-const Pays = ({ pays }) => {
+const PaysIndex = ({ pays }) => {
     const { t, i18n } = useTranslation();
    
     const handleDelete = (id) => {
@@ -24,7 +22,6 @@ const Pays = ({ pays }) => {
 
     return (
         <>
-            <Header />
             <div className="pays-container">
                 <h1>{t('pays.list_title')}</h1>
                 <div className="pays-list">
@@ -58,9 +55,8 @@ const Pays = ({ pays }) => {
                     })}
                 </div>
             </div>
-            <Footer />
         </>
     );
 };
 
-export default Pays;
+export default PaysIndex;

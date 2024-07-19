@@ -31,7 +31,7 @@ const PaysCreate = () => {
         const formData = {
             nom_pays: JSON.stringify(data.nom_pays), 
         };
-    console.log(formData);
+    
         router.post("/pays", formData, {
             preserveState: true,
             preserveScroll: true,
@@ -47,7 +47,6 @@ const PaysCreate = () => {
 
     return (
         <>
-            <Header />
             <div className="form-container">
                 <h1>Créer un Pays</h1>
                 <form onSubmit={handleSubmit}>
@@ -67,8 +66,7 @@ const PaysCreate = () => {
                         />
                     <button className="create-button"type="submit">Créer</button>
                 </form>
-            </div>
-            <Footer />
+            </div> 
         </>
     );
 };

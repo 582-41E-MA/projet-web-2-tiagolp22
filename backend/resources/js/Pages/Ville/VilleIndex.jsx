@@ -2,8 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { usePage, router } from '@inertiajs/react';
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
+
 import './VilleIndex.css';
 
 const VilleIndex = ({ villes }) => {
@@ -24,7 +23,6 @@ const VilleIndex = ({ villes }) => {
 
     return (
         <>
-            <Header />
             <div className="ville-index-container">
                 <h1>{t('ville.index_title')}</h1>
                 <div className="ville-list">
@@ -51,7 +49,6 @@ const VilleIndex = ({ villes }) => {
                     ))}
                 </div>
             </div>
-            <Footer />
         </>
     );
 };
