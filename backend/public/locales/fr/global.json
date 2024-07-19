@@ -166,7 +166,49 @@
       "edit_submit": "Mettre à jour",
       "cancel_button": "Annuler"
     },
-    "actions": "Actions"
+    "actions": "Actions",
+    "about": {
+    "title": "À propos de QuebeCar",
+    "history": {
+      "title": "Notre Histoire",
+      "content": "Fondée en 2024, QuebeCar est née de la passion pour l'automobile et d'un désir de révolutionner le marché des voitures au Québec. Nous avons commencé comme un petit concessionnaire local et avons grandi pour devenir un acteur majeur dans la vente de voitures neuves et d'occasion."
+    },
+    "mission": {
+      "title": "Notre Mission",
+      "content": "Chez QuebeCar, nous nous engageons à fournir des véhicules de qualité, qu'ils soient neufs ou d'occasion, à des prix compétitifs. Notre objectif est de rendre l'achat d'une voiture aussi simple et agréable que possible pour tous les Québécois."
+    },
+    "values": {
+      "title": "Nos Valeurs",
+      "transparency": "Transparence dans nos transactions",
+      "quality": "Qualité et fiabilité de nos véhicules",
+      "customerService": "Service client exceptionnel",
+      "environment": "Respect de l'environnement"
+    },
+    "services": {
+      "title": "Nos Services",
+      "newCars": {
+        "title": "Vente de Voitures Neuves",
+        "content": "Découvrez notre large gamme de véhicules neufs des meilleures marques."
+      },
+      "usedCars": {
+        "title": "Voitures d'Occasion Certifiées",
+        "content": "Des véhicules d'occasion soigneusement inspectés et garantis."
+      },
+      "financing": {
+        "title": "Financement Flexible",
+        "content": "Des options de financement adaptées à tous les budgets."
+      },
+      "afterSales": {
+        "title": "Service Après-Vente",
+        "content": "Une équipe de mécaniciens qualifiés pour l'entretien de votre véhicule."
+      }
+    },
+    "cta": {
+      "title": "Prêt à trouver votre prochaine voiture ?",
+      "content": "Visitez notre showroom ou contactez-nous pour une consultation personnalisée.",
+      "button": "Voir notre catalogue"
+    }
+  }
   
   
 
