@@ -1,0 +1,32 @@
+/* Dashboard.css */
+
+
+/* Container do Dashboard */
+.dashboard-container {
+    display: flex;
+    height: 100vh;
+
+   
+}
+
+/* Estilos para o Sidebar */
+.sidebar {
+    width: 250px;
+background-color:darkgrey;
+}
+
+
+/* Estilos para os ícones do menu */
+.menu-icon {
+    margin-right: 10px;
+    
+}
+
+/* Estilos para o conteúdo principal */
+.main-content {
+    padding: 20px;
+    background-color: rgba(229, 229, 229, 0.484);
+    flex: 1;
+    border-left: 1px solid var(--color-black); /* Cor da borda esquerda */
+    
+}
