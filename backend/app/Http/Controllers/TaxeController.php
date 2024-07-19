@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Taxe;
+use App\Models\Province;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -10,20 +11,27 @@ class TaxeController extends Controller
 {
     public function index()
     {
-        $taxes = Taxe::all();
+        $taxes = Taxe::with('province')->get(); 
 
-        return Inertia::render('Taxe/Taxe', [
+        return Inertia::render('Taxe/TaxeIndex', [
             'taxes' => $taxes,
         ]);
     }
 
+
     public function create()
     {
-        return Inertia::render('Taxe/TaxeCreate/TaxeCreate');
+        $provinces = Province::all(); 
+    
+        return Inertia::render('Taxe/TaxeCreate/TaxeCreate', [
+            'provinces' => $provinces,
+        ]);
     }
+    
 
     public function store(Request $request)
     {
+        dd($request);
         $validated = $request->validated();
 
         $taxe = Taxe::create($validated);
