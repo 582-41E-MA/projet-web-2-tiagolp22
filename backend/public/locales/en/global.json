@@ -168,7 +168,6 @@
       "edit_submit": "Update",
       "cancel_button": "Cancel"
     },
-
     "actions": "Actions"
     ,"about": {
     "title": "About QuebeCar",
@@ -213,7 +212,6 @@
     }
   },
 
-    
     "contact": {
       "title": "Contact Us"
     }
