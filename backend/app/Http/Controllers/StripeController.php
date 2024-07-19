@@ -7,31 +7,34 @@ use Illuminate\Http\Request;
 use Stripe\Stripe;
 use Stripe\Checkout\Session;
 use App\Models\Commande;
+use Inertia\Inertia;
 
 class StripeController extends Controller
 {
-    public function createCheckoutSession(Request $request, $commandeId)
+    public function createCheckoutSession(Request $request)
     {
-        $commande = Commande::findOrFail($commandeId);
-
         Stripe::setApiKey(env('STRIPE_SECRET'));
 
-        $session = Session::create([
-            'payment_method_types' => ['card'],
-            'line_items' => [[
+        $lineItems = [];
+        foreach ($request->items as $item) {
+            $lineItems[] = [
                 'price_data' => [
                     'currency' => 'cad',
                     'product_data' => [
-                        'name' => 'Commande #' . $commande->id,
+                        'name' => $item['modele']['nom_modele'] . ' ' . $item['annee'],
                     ],
-                    'unit_amount' => $commande->prix_total * 100,
+                    'unit_amount' => $item['prix_vente'] * 100,
                 ],
                 'quantity' => 1,
-            ]],
+            ];
+        }
+
+        $session = Session::create([
+            'payment_method_types' => ['card'],
+            'line_items' => $lineItems,
             'mode' => 'payment',
-            'success_url' => route('payment.success', ['commande' => $commande->id]),
-            'cancel_url' => route('payment.cancel', ['commande' => $commande->id]),
-            'client_reference_id' => $commande->id, // ID commandes
+            'success_url' => route('payment.success'),
+            'cancel_url' => route('payment.cancel'),
         ]);
 
         return response()->json(['id' => $session->id]);
@@ -72,5 +75,17 @@ class StripeController extends Controller
         }
 
         return response()->json(['status' => 'success']);
+    }
+
+    public function paymentSuccess()
+    {
+
+        return Inertia::render('PaymentSuccess');
+    }
+
+    public function paymentCancel()
+    {
+
+        return Inertia::render('PaymentCancel');
     }
 }
