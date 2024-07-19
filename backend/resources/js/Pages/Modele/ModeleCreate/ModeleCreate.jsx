@@ -36,7 +36,6 @@ const ModeleCreate = ({ constructeurs }) => {
 
     return (
         <>
-            <Header />
             <div className="modele-create-container">
                 <h1>{t('model.create')}</h1>
                 <form onSubmit={handleSubmit}>
@@ -67,7 +66,6 @@ const ModeleCreate = ({ constructeurs }) => {
                     <button type="submit">{t('model.create_button')}</button>
                 </form>
             </div>
-            <Footer />
         </>
     );
 };
