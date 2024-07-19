@@ -28,33 +28,31 @@ const ProvinceCreate = ({ pays }) => {
 
     return (
         <>
-            <Header />
             <div className="form-container">
                 <h1>{t('province.create')}</h1>
                 <form onSubmit={handleSubmit}>
-                        <InputField
-                            label={t('province.name')}
-                            name="nom_province"
-                            value={data.nom_province}
-                            onChange={(e) => setData('nom_province', e.target.value)}
-                            error={errors.nom_province}
-                        />
-                        <InputField
-                            label={t('province.country')}
-                            name="pays_id"
-                            value={data.pays_id}
-                            onChange={(e) => setData('pays_id', e.target.value)}
-                            type="select"
-                            options={pays.map(pays => ({
-                                value: pays.id_pays,
-                                label: pays.nom_pays[i18n.language],
-                            }))}
-                            error={errors.pays_id}
-                        />
+                    <InputField
+                        label={t('province.name')}
+                        name="nom_province"
+                        value={data.nom_province}
+                        onChange={(e) => setData('nom_province', e.target.value)}
+                        error={errors.nom_province}
+                    />
+                    <InputField
+                        label={t('province.country')}
+                        name="pays_id"
+                        value={data.pays_id}
+                        onChange={(e) => setData('pays_id', e.target.value)}
+                        type="select"
+                        options={pays.map(pays => ({
+                            value: pays.id_pays,
+                            label: pays.nom_pays ? pays.nom_pays[i18n.language] : pays.nom_pays, 
+                        }))}
+                        error={errors.pays_id}
+                    />
                     <button className="create-button" type="submit">{t('province.create_button')}</button>
                 </form>
             </div>
-            <Footer />
         </>
     );
 };

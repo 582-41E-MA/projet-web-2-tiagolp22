@@ -32,7 +32,6 @@ const VilleCreate = ({ provinces }) => {
 
     return (
         <>
-            <Header />
             <div className="form-container">
                 <h1>{t('ville.create')}</h1>
                 <form onSubmit={handleSubmit}>
@@ -61,7 +60,6 @@ const VilleCreate = ({ provinces }) => {
                     <button className="create-button" type="submit">{t('ville.create_button')}</button>
                 </form>
             </div>
-            <Footer />
         </>
     );
 };

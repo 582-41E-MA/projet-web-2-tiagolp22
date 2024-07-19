@@ -2,8 +2,6 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { usePage, router } from '@inertiajs/react';
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
 import './ProvinceIndex.css';
 
 const ProvinceIndex = ({ provinces }) => {
@@ -34,7 +32,6 @@ const ProvinceIndex = ({ provinces }) => {
 
     return (
         <>
-            <Header />
             <div className="province-index-container">
                 <h1>{t('province.index_title')}</h1>
                 <div className="province-list">
@@ -61,7 +58,6 @@ const ProvinceIndex = ({ provinces }) => {
                     ))}
                 </div>
             </div>
-            <Footer />
         </>
     );
 };

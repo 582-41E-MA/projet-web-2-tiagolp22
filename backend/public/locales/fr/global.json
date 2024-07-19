@@ -208,8 +208,11 @@
       "content": "Visitez notre showroom ou contactez-nous pour une consultation personnalisée.",
       "button": "Voir notre catalogue"
     }
-  }
-  
-  
+  },
+      "contact": {
+        "title": "Contactez-nous"
+      }
+    
+    
 
 }

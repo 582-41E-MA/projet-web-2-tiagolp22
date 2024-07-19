@@ -32,7 +32,6 @@ const ConstructeurCreate = ({ constructeurs }) => {
 
     return (
         <>
-            <Header />
             <div className="constructeur-create-container">
                 <h1>{t('constructeur.create')}</h1>
                 <form onSubmit={handleSubmit}>
@@ -57,7 +56,6 @@ const ConstructeurCreate = ({ constructeurs }) => {
                     <button type="submit">{t('constructeur.create_button')}</button>
                 </form>
             </div>
-            <Footer />
         </>
     );
 };
