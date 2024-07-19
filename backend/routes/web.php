@@ -136,5 +136,25 @@ Route::get('/login', [AuthController::class, 'index'])->name('login.index');
 Route::post('/login', [AuthController::class, 'userLogin'])->name('login.userLogin');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+Route::middleware('web')->group(function () {
+    Route::post('/webhook', [StripeController::class, 'webhook']);
+});
+
+// Route::middleware('web')->group(function () {
+//
+
+//     
+//     Route::prefix('stripe')->group(function () {
+//         Route::post('/create-checkout-session', [StripeController::class, 'createCheckoutSession']);
+//         Route::post('/webhook', [StripeController::class, 'webhook']);
+//         Route::get('/payment/success', [StripeController::class, 'paymentSuccess'])->name('payment.success');
+//         Route::get('/payment/cancel', [StripeController::class, 'paymentCancel'])->name('payment.cancel');
+//     });
+// });
+
 Route::post('/create-checkout-session', [StripeController::class, 'createCheckoutSession']);
 Route::post('/webhook', [StripeController::class, 'webhook']);
+Route::get('/payment/success', [StripeController::class, 'paymentSuccess'])->name('payment.success');
+Route::get('/payment/cancel', [StripeController::class, 'paymentCancel'])->name('payment.cancel');
+
+

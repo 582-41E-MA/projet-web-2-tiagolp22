@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "@inertiajs/react";
 import { useTranslation } from "react-i18next";
+import { loadStripe } from "@stripe/stripe-js";
+
+// STRIPE KEY PUBLIC
+const stripePromise = loadStripe('pk_test_51PF4mDRu1tx5Etuh3InKoGjspqPg3YrBnWETBSYv1yLB5m4d8R1JK4fM36LioMbzScU4Vy9mJtaennaXRU1gKsat00g5hjVeom');
 
 const CartIndex = ({ onClose }) => {
     const { t, i18n } = useTranslation();
     const [cartItems, setCartItems] = useState([]);
+    const [isProcessing, setIsProcessing] = useState(false);
 
     useEffect(() => {
         const storedCartItems = localStorage.getItem("cartItems");
@@ -27,6 +32,31 @@ const CartIndex = ({ onClose }) => {
         onClose();
         setCartItems([]);
         localStorage.removeItem("cartItems");
+    };
+
+    const handleCheckout = async () => {
+        setIsProcessing(true);
+        const stripe = await stripePromise;
+
+        const response = await fetch('/create-checkout-session', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ items: cartItems }),
+        });
+
+        const session = await response.json();
+
+        const result = await stripe.redirectToCheckout({
+            sessionId: session.id,
+        });
+
+        if (result.error) {
+            console.error(result.error.message);
+        }
+
+        setIsProcessing(false);
     };
 
     return (
@@ -65,9 +95,13 @@ const CartIndex = ({ onClose }) => {
                         <button onClick={clearCart} className="clear-cart">
                             {t("cart.clear")}
                         </button>
-                        <Link href="/cart/checkout" className="checkout-button">
-                            {t("cart.checkout")}
-                        </Link>
+                        <button
+                            onClick={handleCheckout}
+                            className="checkout-button"
+                            disabled={isProcessing}
+                        >
+                            {isProcessing ? t("cart.processing") : t("cart.checkout")}
+                        </button>
                     </>
                 )}
             </div>
