@@ -58,7 +58,6 @@ class StripeController extends Controller
             return response()->json(['error' => $e->getMessage()], 400);
         }
 
-        // Handle the event
         switch ($event->type) {
             case 'checkout.session.completed':
                 $session = $event->data->object;
@@ -87,5 +86,34 @@ class StripeController extends Controller
     {
 
         return Inertia::render('PaymentCancel');
+    }
+
+    public function processPayment(Request $request)
+    {
+        Stripe::setApiKey(env('STRIPE_SECRET'));
+
+        try {
+            $paymentIntent = \Stripe\PaymentIntent::create([
+                'amount' => $this->calculateTotalAmount($request->items) * 100,
+                'currency' => 'cad',
+                'payment_method' => $request->paymentMethod,
+                'confirmation_method' => 'manual',
+                'confirm' => true,
+                'return_url' => route('payment.success'),
+            ]);
+
+            // TODO: nous pouvons mettre en œuvre les règles commerciales ici ou d'autres détails sur le paiement
+
+            return response()->json(['success' => true, 'clientSecret' => $paymentIntent->client_secret]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'error' => $e->getMessage()]);
+        }
+    }
+
+    private function calculateTotalAmount($items)
+    {
+        return array_reduce($items, function ($carry, $item) {
+            return $carry + $item['prix_vente'];
+        }, 0);
     }
 }
