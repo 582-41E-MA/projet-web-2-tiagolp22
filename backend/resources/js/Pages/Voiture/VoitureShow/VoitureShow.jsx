@@ -103,7 +103,7 @@ const VoitureShow = ({ voiture, photos }) => {
                         ))}
                     </Slider>
                     <button onClick={addToCart} className="btn btn-primary">
-                        {t("car_show.add_to_cart")}
+                        {t("cart.car_show.add_to_cart")}
                     </button>
                 </div>
                 <div className="details-box">

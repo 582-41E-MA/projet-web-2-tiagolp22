@@ -1,7 +1,9 @@
 header {
     background-color: var(--color-white);
 }
-
+.lang-buttom {
+    text-align: right;
+}
 .header-content {
     display: flex;
     justify-content: space-between;

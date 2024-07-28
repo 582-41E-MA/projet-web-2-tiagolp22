@@ -42,22 +42,19 @@
     "email": "Email",
     "username": "Username",
     "password": "Password",
-    "privilege":"Privilege",
-    "city":"City",
+    "privilege": "Privilege",
+    "city": "City",
     "register_button": "Register",
-     "edit_button":"Edit Account",
-    "delete_button":"Delete account", 
+    "edit_button": "Edit Account",
+    "delete_button": "Delete account",
     "confirm_delete_message": "Do you really want to delete your account?",
     "update_button": "Update",
     "cancel_button": "Cancel"
   },
-  "save_changes":"Save changes",
-  "Learn_more":"Learn more",
-
-
-
+  "save_changes": "Save changes",
+  "Learn_more": "Learn more",
   "car": {
-    "save_changes":"Save changes",
+    "save_changes": "Save changes",
     "edit_title": "Edit car",
     "select_option": "Select",
     "title": "Create a Car",
@@ -96,9 +93,9 @@
       "photos_required": "Please select at least 2 photos."
     }
   },
-  "confirm_delete":"Are you sure you want to delete the car? ",
-  "confirm":"confirm",
-  "cancel":"cancel",
+  "confirm_delete": "Are you sure you want to delete the car? ",
+  "confirm": "confirm",
+  "cancel": "cancel",
   "car_show": {
     "general_info": "General Information",
     "back": "Back",
@@ -146,30 +143,29 @@
     "create_button": "Create",
     "index_title": "Model List",
     "delete_button": "Delete",
-    "edit_button":"Edit",
-    "edit_title":"Edit Model",
-    "update_button":"update"
+    "edit_button": "Edit",
+    "edit_title": "Edit Model",
+    "update_button": "update"
   },
-  
-    "constructeur": {
-      "create":"create cunstructor",
-      "index_title": "Constructors List",
-      "name": "Name",
-      "origin_country": "Country of Origin",
-      "create_button": "Create Constructor",
-      "edit_button": "Edit",
-      "delete_button": "Delete",
-      "confirm_delete": "Are you sure you want to delete this constructor?",
-      "create_title": "Create Constructor",
-      "edit_title": "Edit Constructor",
-      "name_label": "Constructor Name",
-      "origin_country_label": "Country of Origin",
-      "create_submit": "Create",
-      "edit_submit": "Update",
-      "cancel_button": "Cancel"
-    },
-    "actions": "Actions"
-    ,"about": {
+  "constructeur": {
+    "create": "create cunstructor",
+    "index_title": "Constructors List",
+    "name": "Name",
+    "origin_country": "Country of Origin",
+    "create_button": "Create Constructor",
+    "edit_button": "Edit",
+    "delete_button": "Delete",
+    "confirm_delete": "Are you sure you want to delete this constructor?",
+    "create_title": "Create Constructor",
+    "edit_title": "Edit Constructor",
+    "name_label": "Constructor Name",
+    "origin_country_label": "Country of Origin",
+    "create_submit": "Create",
+    "edit_submit": "Update",
+    "cancel_button": "Cancel"
+  },
+  "actions": "Actions",
+  "about": {
     "title": "About QuebeCar",
     "history": {
       "title": "Our History",
@@ -211,9 +207,20 @@
       "button": "View our catalog"
     }
   },
-
-    "contact": {
-      "title": "Contact Us"
-    }
-  
+  "contact": {
+    "title": "Contact Us"
+  },
+  "cart": {
+    "title": "Shopping Cart",
+    "empty": "Your cart is empty.",
+    "year": "Year",
+    "km": "Mileage",
+    "price": "Price",
+    "total": "Total",
+    "checkout": "Checkout",
+    "clear": "Clear Cart",
+    "remove": "Remove",
+    "processing": "Processing...",
+    "car_show.add_to_cart": "Add to cart"
+  }
 }
