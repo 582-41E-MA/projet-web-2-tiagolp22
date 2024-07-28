@@ -1,5 +1,5 @@
 {
- "header": {
+  "header": {
     "home": "Accueil",
     "catalogue": "Catalogue",
     "about": "À propos",
@@ -10,8 +10,8 @@
     "profile": "Profil",
     "login": "Connexion",
     "register": "S'inscrire"
-  }, 
-    "home": {
+  },
+  "home": {
     "titre": "Les Meilleures Voitures d'Occasion",
     "description": "Découvrez des voitures d'occasion de qualité à des prix imbattables. Quebecar, transparence et service personnalisé pour votre confiance.",
     "new_arrivals": "Nouveautés",
@@ -42,18 +42,16 @@
     "email": "Email",
     "username": "Nom d'utilisateur",
     "password": "Mot de passe",
-    "privilege":"Privilege",
-    "city":"Ville",
+    "privilege": "Privilege",
+    "city": "Ville",
     "register_button": "S'inscrire",
-    "edit_button":"Editer compte",
-    "delete_button":"Supprimer compte",
-    "confirm_delete_message":"Voulez vous vraiment supprimer votre compte?",
-    "update_button":"Mettre a jour",
-    "cancel_button":"Canceler"
+    "edit_button": "Editer compte",
+    "delete_button": "Supprimer compte",
+    "confirm_delete_message": "Voulez vous vraiment supprimer votre compte?",
+    "update_button": "Mettre a jour",
+    "cancel_button": "Canceler"
   },
-
   "car": {
-    
     "edit_title": "Modifier la voiture",
     "select_option": "Sélectionner",
     "title": "Créer une voiture",
@@ -132,9 +130,9 @@
     "Number of Doors": "Nombre de portes",
     "Apply Filters": "Appliquer les filtres"
   },
-  "confirm_delete":"Voulez-vous vraiment supprimer la voiture? ",
-  "cancel":"annuler",
-  "confirm":"confirm",
+  "confirm_delete": "Voulez-vous vraiment supprimer la voiture? ",
+  "cancel": "annuler",
+  "confirm": "confirm",
   "model": {
     "create": "Créer un modèle",
     "name": "Nom du modèle",
@@ -142,32 +140,30 @@
     "create_button": "Créer",
     "index_title": "Liste des modèles",
     "delete_button": "Supprimer",
-    "edit_button":"modifier",  
-    "edit_title":"Modifier le modele",
-    "update_button":"modifier"
-
+    "edit_button": "modifier",
+    "edit_title": "Modifier le modele",
+    "update_button": "modifier"
   },
-  "Learn_more":"En savoir plus",
-
-    "constructeur": {
-      "create":"créer un constructeur",
-      "index_title": "Liste des Constructeurs",
-      "name": "Nom",
-      "origin_country": "Pays d'origine",
-      "create_button": "Créer un Constructeur",
-      "edit_button": "Modifier",
-      "delete_button": "Supprimer",
-      "confirm_delete": "Êtes-vous sûr de vouloir supprimer ce constructeur?",
-      "create_title": "Créer un Constructeur",
-      "edit_title": "Modifier le Constructeur",
-      "name_label": "Nom du Constructeur",
-      "origin_country_label": "Pays d'origine",
-      "create_submit": "Créer",
-      "edit_submit": "Mettre à jour",
-      "cancel_button": "Annuler"
-    },
-    "actions": "Actions",
-    "about": {
+  "Learn_more": "En savoir plus",
+  "constructeur": {
+    "create": "créer un constructeur",
+    "index_title": "Liste des Constructeurs",
+    "name": "Nom",
+    "origin_country": "Pays d'origine",
+    "create_button": "Créer un Constructeur",
+    "edit_button": "Modifier",
+    "delete_button": "Supprimer",
+    "confirm_delete": "Êtes-vous sûr de vouloir supprimer ce constructeur?",
+    "create_title": "Créer un Constructeur",
+    "edit_title": "Modifier le Constructeur",
+    "name_label": "Nom du Constructeur",
+    "origin_country_label": "Pays d'origine",
+    "create_submit": "Créer",
+    "edit_submit": "Mettre à jour",
+    "cancel_button": "Annuler"
+  },
+  "actions": "Actions",
+  "about": {
     "title": "À propos de QuebeCar",
     "history": {
       "title": "Notre Histoire",
@@ -209,10 +205,20 @@
       "button": "Voir notre catalogue"
     }
   },
-      "contact": {
-        "title": "Contactez-nous"
-      }
-    
-    
-
+  "cart": {
+    "title": "Votre panier",
+    "empty": "Votre panier est vide.",
+    "year": "Année",
+    "km": "Kilométrage",
+    "price": "Prix",
+    "total": "Total",
+    "checkout": "Passer à la caisse",
+    "clear": "Vider le panier",
+    "remove": "Retirer du panier",
+    "processing": "Traitement en cours...",
+    "car_show.add_to_cart": "Ajouter au panier"
+  },
+  "contact": {
+    "title": "Contactez-nous"
+  }
 }

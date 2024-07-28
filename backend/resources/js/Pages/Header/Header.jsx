@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, usePage } from "@inertiajs/react";
 import { useTranslation } from "react-i18next";
 import LoginModal from "../User/Login/LoginModal";
@@ -7,12 +7,26 @@ import { Inertia } from "@inertiajs/inertia";
 import CartIndex from "../Cart/CartIndex";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartArrowDown } from "@fortawesome/free-solid-svg-icons";
+import {
+    Drawer,
+    IconButton,
+    Badge,
+} from "@mui/material";
 
 function Header() {
     const { t, i18n } = useTranslation();
     const { auth } = usePage().props;
     const [showModal, setShowModal] = useState(false);
-    const [showCartModal, setShowCartModal] = useState(false);
+    const [showCartDrawer, setShowCartDrawer] = useState(false);
+    const [cartItemCount, setCartItemCount] = useState(0);
+
+    useEffect(() => {
+        const storedCartItems = JSON.parse(
+            localStorage.getItem("cartItems") || "[]"
+        );
+        setCartItemCount(storedCartItems.length);
+    }, []);
+
     const handleLogout = () => {
         Inertia.post(
             "/logout",
@@ -22,18 +36,41 @@ function Header() {
             }
         );
     };
-    const openCart = () => setShowCartModal(true);
-    const closeCart = () => setShowCartModal(false);
+
+    const openCart = () => setShowCartDrawer(true);
+    const closeCart = () => setShowCartDrawer(false);
 
     const handleCartEmpty = () => {
         closeCart();
+        setCartItemCount(0);
     };
+
     const changeLanguage = (lang) => {
         i18n.changeLanguage(lang);
     };
 
     return (
         <header className="custom-header">
+            <div className="lang-buttom">
+                <button
+                    className={`language-button ${
+                        i18n.language === "en" ? "active" : ""
+                    }`}
+                    onClick={() => changeLanguage("en")}
+                    aria-label="English"
+                >
+                    En
+                </button>
+                <button
+                    className={`language-button ${
+                        i18n.language === "fr" ? "active" : ""
+                    }`}
+                    onClick={() => changeLanguage("fr")}
+                    aria-label="Français"
+                >
+                    Fr
+                </button>
+            </div>
             <div className="wrapper">
                 <div className="header-content">
                     <div className="header-section logo-section">
@@ -60,7 +97,6 @@ function Header() {
                                 {t("header.contact")}
                             </Link>
 
-                            {/* Renderiza o link para o dashboard */}
                             {auth.user && auth.user.privilege === 1 && (
                                 <Link href="/dashboard" className="nav-link">
                                     {t("header.dashboard")}
@@ -134,10 +170,17 @@ function Header() {
                                     </div>
                                 </div>
                             )}
-                            <div className="">
-                                <button
-                                    onClick={openCart}
-                                    className="cart-button"
+                            <IconButton
+                                onClick={openCart}
+                                className="cart-button"
+                                sx={{
+                                    padding: 0,
+                                    margin: 0,
+                                }}
+                            >
+                                <Badge
+                                    badgeContent={cartItemCount}
+                                    color="secondary"
                                 >
                                     <FontAwesomeIcon
                                         icon={faCartArrowDown}
@@ -146,34 +189,21 @@ function Header() {
                                             fontSize: "32px",
                                         }}
                                     />
-                                </button>
-                                <button
-                                    className={`language-button ${
-                                        i18n.language === "en" ? "active" : ""
-                                    }`}
-                                    onClick={() => changeLanguage("en")}
-                                    aria-label="English"
-                                >
-                                    En
-                                </button>
-                                <button
-                                    className={`language-button ${
-                                        i18n.language === "fr" ? "active" : ""
-                                    }`}
-                                    onClick={() => changeLanguage("fr")}
-                                    aria-label="Français"
-                                >
-                                    Fr
-                                </button>
-                            </div>
+                                </Badge>
+                            </IconButton>
                         </div>
                     </div>
                 </div>
             </div>
             {showModal && <LoginModal onClose={() => setShowModal(false)} />}
-            {showCartModal && (
-                <CartIndex onClose={closeCart} onClearCart={handleCartEmpty} />
-            )}
+            <Drawer anchor="right" open={showCartDrawer} onClose={closeCart}>
+                <CartIndex
+                    onClose={closeCart}
+                    onClearCart={handleCartEmpty}
+                    setCartItemCount={setCartItemCount}
+                    openCart={openCart}
+                />
+            </Drawer>
         </header>
     );
 }
