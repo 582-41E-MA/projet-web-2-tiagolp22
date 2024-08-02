@@ -23,15 +23,15 @@ const VilleIndex = ({ villes }) => {
 
     return (
         <>
-            <div className="ville-index-container">
+            <div className="dashboard-index-container">
                 <h1>{t('ville.index_title')}</h1>
-                <div className="ville-list">
+                <div className="dashboard-list">
                     {villes.map((ville) => (
-                        <div key={ville.id_ville} className="ville-item">
+                        <div key={ville.id_ville} className="dashboard-item">
                             <div>
                                 <strong>{ville.nom_ville}</strong> - {ville.province.nom_province}
                             </div>
-                            <div className="ville-actions">
+                            <div className="dashboard-actions">
                                 <button 
                                     onClick={() => handleEdit(ville.id_ville)}
                                     className="edit-button"

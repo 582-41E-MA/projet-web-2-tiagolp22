@@ -20,15 +20,15 @@ const ModeleIndex = ({ modeles, onEdit }) => {
     };
 
     return (
-        <div className="modele-index-container">
+        <div className="dashboard-index-container">
             <h1>{t('model.index_title')}</h1>
-            <div className="modele-list">
+            <div className="dashboard-list">
                 {modeles.map((modele) => (
-                    <div key={modele.id_modele} className="modele-item">
+                    <div key={modele.id_modele} className="dashboard-item">
                         <div>
                             <strong>{modele.nom_modele}</strong> - {modele.constructeur.nom_constructeur}
                         </div>
-                        <div className="modele-actions">
+                        <div className="dashboard-actions">
                             <button 
                                 onClick={() => onEdit(modele.id_modele)}
                                 className="edit-button"

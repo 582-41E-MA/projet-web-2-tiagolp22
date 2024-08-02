@@ -32,15 +32,15 @@ const ProvinceIndex = ({ provinces }) => {
 
     return (
         <>
-            <div className="province-index-container">
+            <div className="dashboard-index-container">
                 <h1>{t('province.index_title')}</h1>
-                <div className="province-list">
+                <div className="dashboard-list">
                     {provinces.map((province) => (
-                        <div key={province.id_province} className="province-item">
+                        <div key={province.id_province} className="dashboard-item">
                             <div>
                                 <strong>{province.nom_province}</strong> - {getPaysNom(province.pays.nom_pays) || 'Nom de pays indisponible'}
                             </div>
-                            <div className="province-actions">
+                            <div className="dashboard-actions">
                                 <button 
                                     onClick={() => handleEdit(province.id_province)}
                                     className="edit-button"
