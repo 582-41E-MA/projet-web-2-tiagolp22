@@ -13,6 +13,23 @@ const ProvinceCreate = ({ pays }) => {
         pays_id: '',
     });
 
+    const getPaysOptions = () => {
+        return pays.map((paysItem) => {
+            let nomPays = { en: 'Invalid JSON', fr: 'JSON invalide' };
+            try {
+                nomPays = JSON.parse(paysItem.nom_pays);
+            } catch (error) {
+                console.error("Erreur lors de l'analyse du nom du pays:", error);
+            }
+
+            return (
+                <option key={paysItem.id_pays} value={paysItem.id_pays}>
+                    {i18n.language === 'en' ? nomPays.en : nomPays.fr}
+                </option>
+            );
+        });
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
         post("/provinces", {
@@ -38,18 +55,19 @@ const ProvinceCreate = ({ pays }) => {
                         onChange={(e) => setData('nom_province', e.target.value)}
                         error={errors.nom_province}
                     />
-                    <InputField
-                        label={t('province.country')}
-                        name="pays_id"
-                        value={data.pays_id}
-                        onChange={(e) => setData('pays_id', e.target.value)}
-                        type="select"
-                        options={pays.map(pays => ({
-                            value: pays.id_pays,
-                            label: pays.nom_pays ? pays.nom_pays[i18n.language] : pays.nom_pays, 
-                        }))}
-                        error={errors.pays_id}
-                    />
+                    <div className="form-group">
+                        <label>{t('province.country')}</label>
+                        <select
+                            name="pays_id"
+                            value={data.pays_id}
+                            onChange={(e) => setData('pays_id', e.target.value)}
+                            className="form-control"
+                        >
+                            <option value="">{t('province.select_country')}</option>
+                            {getPaysOptions()}
+                        </select>
+                        {errors.pays_id && <span className="error-text">{errors.pays_id}</span>}
+                    </div>
                     <button className="create-button" type="submit">{t('province.create_button')}</button>
                 </form>
             </div>
