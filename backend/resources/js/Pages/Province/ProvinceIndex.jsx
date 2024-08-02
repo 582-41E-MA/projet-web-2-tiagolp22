@@ -1,64 +1,51 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
-import { usePage, router } from '@inertiajs/react';
+import { router } from '@inertiajs/react';
 import './ProvinceIndex.css';
 
-const ProvinceIndex = ({ provinces }) => {
-    const { t, i18n } = useTranslation();
+const ProvinceIndex = ({ provinces, onEdit }) => {
+    const { t } = useTranslation();
 
     const handleDelete = async (id) => {
-        try {
-            await axios.delete(`/provinces/${id}`);
-            window.location.reload(); 
-        } catch (error) {
-            console.error('Erro ao excluir province:', error);
-        }
-    };
-
-    const handleEdit = (id) => {
-        router.visit(`/provinces/${id}/edit`);
-    };
-
-    const getPaysNom = (nom_pays) => {
-        try {
-            const parsedNomPays = JSON.parse(nom_pays);
-            return parsedNomPays[i18n.language];
-        } catch (error) {
-            console.error('Erreur lors de l\'analyse de nom_pays:', error);
-            return ''; // Retourne une chaîne vide en cas d'erreur
+        if (window.confirm(t('province.confirm_delete'))) {
+            try {
+                await axios.delete(`/provinces/${id}`);
+                router.reload({ only: ['provinces'] });
+            } catch (error) {
+                console.error('Error deleting province:', error);
+                alert(t('province.delete_error'));
+            }
         }
     };
 
     return (
-        <>
-            <div className="dashboard-index-container">
-                <h1>{t('province.index_title')}</h1>
-                <div className="dashboard-list">
-                    {provinces.map((province) => (
-                        <div key={province.id_province} className="dashboard-item">
-                            <div>
-                                <strong>{province.nom_province}</strong> - {getPaysNom(province.pays.nom_pays) || 'Nom de pays indisponible'}
-                            </div>
-                            <div className="dashboard-actions">
-                                <button 
-                                    onClick={() => handleEdit(province.id_province)}
-                                    className="edit-button"
-                                >
-                                    {t('province.edit_button')}
-                                </button>
-                                <button 
-                                    onClick={() => handleDelete(province.id_province)}
-                                    className="delete-button"
-                                >
-                                    {t('province.delete_button')}
-                                </button>
-                            </div>
+        <div className="dashboard-index-container">
+            <h1>{t('province.index_title')}</h1>
+            <div className="dashboard-list">
+                {provinces.map((province) => (
+                    <div key={province.id_province} className="dashboard-item">
+                        <div>
+                            <strong>{province.nom_province}</strong>
                         </div>
-                    ))}
-                </div>
+                        <div className="dashboard-actions">
+                            <button 
+                                onClick={() => onEdit(province.id_province)}
+                                className="edit-button"
+                            >
+                                {t('province.edit_button')}
+                            </button>
+                            <button 
+                                onClick={() => handleDelete(province.id_province)}
+                                className="delete-button"
+                            >
+                                {t('province.delete_button')}
+                            </button>
+                        </div>
+                    </div>
+                ))}
             </div>
-        </>
+        </div>
     );
 };
 

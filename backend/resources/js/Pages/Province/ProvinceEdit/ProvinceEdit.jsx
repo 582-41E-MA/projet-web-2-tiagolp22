@@ -1,41 +1,46 @@
-import React, { useState } from 'react';
-import { usePage, useForm, router } from '@inertiajs/react';
-import Header from '../../Header/Header';
-import Footer from '../../Footer/Footer';
+import React, { useState, useEffect } from 'react';
+import { router } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
+import axios from 'axios';
 import './ProvinceEdit.css';
-import InputField from '../../InputField/InputField';
 
-const ProvinceEdit = () => {
-    const { t, i18n } = useTranslation(); // Utilisation du hook useTranslation
-    const { province, pays } = usePage().props;
-
-    const { data, setData } = useForm({
-        nom_province: province.nom_province || '',
-        pays_id: province.pays_id || '',
+const ProvinceEdit = ({ id, pays }) => {
+    const { t, i18n } = useTranslation();
+    const [data, setData] = useState({
+        nom_province: '',
+        id_pays: '',
     });
 
-    const handleSelectChange = (e) => {
-        setData('pays_id', e.target.value);
-    };
+    useEffect(() => {
+        const fetchProvince = async () => {
+            try {
+                const response = await axios.get(`/provinces/${id}/edit`);
+                const fetchedData = response.data;
 
-    const parseNomPays = (nomPays) => {
-        try {
-            const parsedPays = JSON.parse(nomPays);
-            return parsedPays[i18n.language]; // Utilisation de i18n.language pour récupérer la langue sélectionnée
-        } catch (error) {
-            console.error("Erreur lors de l'analyse du nom du pays:", error);
-            return nomPays;
-        }
-    };
+                setData({
+                    nom_province: fetchedData.nom_province,
+                    id_pays: fetchedData.id_pays,
+                });
+            } catch (error) {
+                console.error("Erreur lors du chargement de la province", error);
+            }
+        };
 
-    const getNomPays = (p) => {
-        return typeof p.nom_pays === 'string' ? parseNomPays(p.nom_pays) : p.nom_pays[i18n.language];
+        fetchProvince();
+    }, [id]);
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setData(prevData => ({
+            ...prevData,
+            [name]: value
+        }));
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        router.put(`/provinces/${province.id_province}`, data, {
+        console.log(data);
+        router.put(`/provinces/${id}`, data, {
             preserveState: true,
             preserveScroll: true,
             onSuccess: () => {
@@ -47,33 +52,56 @@ const ProvinceEdit = () => {
         });
     };
 
-  
+    const getPaysOptions = () => {
+        return pays.map((paysItem) => {
+            let nomPays = { en: 'Invalid JSON', fr: 'JSON invalide' };
+            try {
+                nomPays = JSON.parse(paysItem.nom_pays);
+            } catch (error) {
+                console.error("Erreur lors de l'analyse du nom du pays:", error);
+            }
+
+            return (
+                <option key={paysItem.id_pays} value={paysItem.id_pays}>
+                    {i18n.language === 'en' ? nomPays.en : nomPays.fr}
+                </option>
+            );
+        });
+    };
+
     return (
-        <>
-            <Header />
-            <div className="form-container">
-                <h1>{t('province.edit_title')}</h1>
-                <form onSubmit={handleSubmit}>
-                    <InputField
-                        label={t('province.name')}
+        <div className="form-container">
+            <h1>{t('province.edit_title')}</h1>
+            <form onSubmit={handleSubmit}>
+                <div className="form-group">
+                    <label>{t('province.nom_province')}</label>
+                    <input
+                        type="text"
                         name="nom_province"
                         value={data.nom_province}
-                        onChange={(e) => setData('nom_province', e.target.value)}
+                        onChange={handleChange}
+                        className="form-control"
                     />
-                    <InputField
-                        label={t('province.country')}
+                </div>
+
+                <div className="form-group">
+                    <label>{t('province.pays')}</label>
+                    <select
                         name="pays_id"
                         value={data.pays_id}
-                        onChange={handleSelectChange}
-                        type="select"
-                        options={pays}
-                        getLabel={getNomPays} 
-                    />
-                    <button className="edit-button" type="submit">{t('province.update_button')}</button>
-                </form>
-            </div>
-            <Footer />
-        </>
+                        onChange={handleChange}
+                        className="form-control"
+                    >
+                        <option value="">{t('province.select_pays')}</option>
+                        {getPaysOptions()}
+                    </select>
+                </div>
+
+                <button type="submit" className="btn btn-primary">
+                    {t('province.update_button')}
+                </button>
+            </form>
+        </div>
     );
 };
 
