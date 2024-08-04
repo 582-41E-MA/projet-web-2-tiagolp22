@@ -20,6 +20,7 @@ import ModeleIndex from '../Modele/ModeleIndex';
 import PaysEdit from '../Pays/PaysEdit/PaysEdit';
 import ProvinceEdit from '../Province/ProvinceEdit/ProvinceEdit';
 import VilleEdit from '../Ville/VilleEdit/VilleEdit';
+import ConstructeurEdit from '../Constructeur/ConstructeurEdit/ConstructeurEdit';
 import ModeleEdit from '../Modele/ModeleEdit/ModeleEdit';
 import VoitureEdit from '../Voiture/VoitureEdit/VoitureEdit';
 import './Dashboard.css'; 
