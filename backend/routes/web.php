@@ -52,6 +52,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/modele/create', [ModeleController::class, 'create'])->name('modele.create');
         Route::post('/modele', [ModeleController::class, 'store'])->name('modele.store');
 
+        Route::get('/constructeur/{id}/edit', [ConstructeurController::class, 'edit'])->name('constructeur.edit');
+        Route::put('/constructeur/{id}', [ConstructeurController::class, 'update'])->name('constructeur.update');
+        Route::delete('constructeur/{id}', [ConstructeurController::class, 'destroy'])->name('constructeur.destroy');
+
         // Route::get('/constructeur', [ConstructeurController::class, 'index'])->name('constructeur.index');
         // Route::get('/constructeur/create', [ConstructeurController::class, 'create'])->name('constructeur.create');
         // Route::post('/constructeur', [ConstructeurController::class, 'store'])->name('constructeur.store');
