@@ -20,6 +20,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FactureController;
 use App\Http\Controllers\TaxeController;
+use App\Http\Controllers\ReservationController;
 use App\Http\Middleware\CheckPrivilege;
 use App\Models\Taxe;
 use Inertia\Inertia;
@@ -28,6 +29,7 @@ use App\Http\Controllers\StripeController;
 // Routes protégées par authentification
 Route::middleware(['auth:sanctum'])->group(function () {
     // Routes pour tous les utilisateurs authentifiés
+    Route::post('/reservations', [ReservationController::class, 'store'])->name('reservations.store');
     Route::get('/user/profile/{id}', [UtilisateurController::class, 'edit'])->name('user.profile');
     Route::put('/user/profile/{id}', [UtilisateurController::class, 'update'])->name('utilisateurs.update');
     Route::delete('/user/profile/delete/{id}', [UtilisateurController::class, 'destroy'])->name('utilisateurs.delete');
@@ -170,5 +172,3 @@ Route::post('/webhook', [StripeController::class, 'webhook']);
 Route::get('/payment/success', [StripeController::class, 'paymentSuccess'])->name('payment.success');
 Route::get('/payment/cancel', [StripeController::class, 'paymentCancel'])->name('payment.cancel');
 Route::post('/process-payment', [StripeController::class, 'processPayment']);
-
-

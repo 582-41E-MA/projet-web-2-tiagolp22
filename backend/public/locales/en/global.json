@@ -93,6 +93,9 @@
       "photos_required": "Please select at least 2 photos."
     }
   },
+  "reservation_modal": {
+    "message": "You are about to reserve the car: {{car_model}} ({{car_year}}). You will have 24 hours to complete the payment at our physical store or finalize the purchase on our website. Do you want to proceed with the reservation?"
+  },
   "confirm_delete": "Are you sure you want to delete the car? ",
   "confirm": "confirm",
   "cancel": "cancel",

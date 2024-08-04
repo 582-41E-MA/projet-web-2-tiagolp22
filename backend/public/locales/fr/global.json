@@ -130,6 +130,9 @@
     "Number of Doors": "Nombre de portes",
     "Apply Filters": "Appliquer les filtres"
   },
+  "reservation_modal": {
+    "message": "Vous êtes sur le point de réserver la voiture : {{car_model}} ({{car_year}}). Vous aurez 24 heures pour finaliser le paiement dans notre magasin physique ou compléter l'achat sur notre site web. Voulez-vous continuer avec la réservation ?"
+  },
   "confirm_delete": "Voulez-vous vraiment supprimer la voiture? ",
   "cancel": "annuler",
   "confirm": "confirm",
