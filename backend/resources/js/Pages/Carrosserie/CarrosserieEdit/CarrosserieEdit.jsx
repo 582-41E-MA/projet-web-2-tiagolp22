@@ -63,6 +63,7 @@ const CarrosserieEdit = ({ id }) => {
                         name="type_carrosserie_en"
                         value={data.type_carrosserie_en}
                         onChange={handleChange}
+                        className="form-control"
                     />
                 </div>
                 <div>
@@ -72,6 +73,7 @@ const CarrosserieEdit = ({ id }) => {
                         name="type_carrosserie_fr"
                         value={data.type_carrosserie_fr}
                         onChange={handleChange}
+                        className="form-control"
                     />
                 </div>
                 <div>
@@ -81,6 +83,7 @@ const CarrosserieEdit = ({ id }) => {
                         name="description_en"
                         value={data.description_en}
                         onChange={handleChange}
+                        className="form-control"
                     />
                 </div>
                 <div>
@@ -90,9 +93,10 @@ const CarrosserieEdit = ({ id }) => {
                         name="description_fr"
                         value={data.description_fr}
                         onChange={handleChange}
+                        className="form-control"
                     />
                 </div>
-                <button type="submit">{t('carrosserie.update_button')}</button>
+                <button type="submit" className="btn">{t('carrosserie.update_button')}</button>
             </form>
         </div>
     );
