@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
+import { Inertia } from "@inertiajs/inertia";
 import { useTranslation } from "react-i18next";
 import Header from "../../Header/Header";
 import Footer from "../../Footer/Footer";
@@ -22,10 +23,15 @@ import {
     faExclamationCircle,
     faCarSide,
 } from "@fortawesome/free-solid-svg-icons";
-
+import Modal from "../../Modal/Modal";
 const VoitureShow = ({ voiture, photos }) => {
     const { t, i18n } = useTranslation();
     const [cartItems, setCartItems] = useState([]);
+    const { auth } = usePage().props;
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+
+    const openModal = () => setModalIsOpen(true);
+    const closeModal = () => setModalIsOpen(false);
 
     useEffect(() => {
         const storedCartItems = localStorage.getItem("cartItems");
@@ -55,6 +61,20 @@ const VoitureShow = ({ voiture, photos }) => {
         } else {
             alert("Deja dans le panier");
         }
+    };
+    const makeReservation = () => {
+        return Inertia.post("/reservations", {
+            id_voiture: voiture.id_voiture,
+            id_utilisateur: auth.user.id,
+            date_reservation: new Date().toISOString().split("T")[0],
+            status: "reservation",
+        })
+            .then(() => {
+                alert(t("reservation_modal.success_message"));
+            })
+            .catch((error) => {
+                alert(t("reservation_modal.error_message") + error.message);
+            });
     };
     const settings = {
         dots: true,
@@ -105,6 +125,18 @@ const VoitureShow = ({ voiture, photos }) => {
                     <button onClick={addToCart} className="btn btn-primary">
                         {t("cart.car_show.add_to_cart")}
                     </button>
+                    <button onClick={openModal} className="btn btn-secondary">
+                        {t("car_show.reserve")}
+                    </button>
+                    <Modal
+                        isOpen={modalIsOpen}
+                        onClose={closeModal}
+                        onConfirm={makeReservation}
+                        message={t("reservation_modal.message", {
+                            car_model: voiture.modele.nom_modele,
+                            car_year: voiture.annee,
+                        })}
+                    />
                 </div>
                 <div className="details-box">
                     <h2>{t("car_show.general_info")}</h2>

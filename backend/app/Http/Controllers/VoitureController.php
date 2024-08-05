@@ -17,14 +17,20 @@ use App\Http\Requests\VoitureRequest;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
+use Illuminate\Support\Facades\DB;
 
 class VoitureController extends Controller
 {
     public function index()
     {
-        $today = now()->toDateString(); 
+        $today = now()->toDateString();
+
+        //voitures réservées
+        $reservedCarIds = DB::table('reservations')->pluck('id_voiture')->toArray();
+
         $voitures = Voiture::with('modele')
             ->where('date_arrivee', '<=', $today)
+            ->whereNotIn('id_voiture', $reservedCarIds) 
             ->get();
 
         $privilege_id = Auth::check() ? Auth::user()->privileges_id : null;
