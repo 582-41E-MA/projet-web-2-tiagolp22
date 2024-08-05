@@ -1,0 +1,28 @@
+.carrosserie-index-container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+}
+
+.carrosserie-index-container h1 {
+    font-size: 24px; 
+    margin-bottom: 20px; 
+}
+
+.carrosserie-list {
+    margin-top: 20px;
+}
+
+.carrosserie-item {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.carrosserie-actions {
+    display: flex;
+    gap: 5px;
+}

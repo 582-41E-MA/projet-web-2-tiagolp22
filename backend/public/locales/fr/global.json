@@ -235,5 +235,16 @@
     "index_title": "Type de carburant",
     "update_button": "Mettre à jour le Type de Carburant"
 
+},
+"carrosserie": {
+  "index_title": "Types de Carrosserie",
+  "edit": "Modifier le Type de Carrosserie",
+  "create": "Créer un Type de Carrosserie",
+  "name": "Nom",
+  "description": "Description",
+  "update_button": "Mettre à jour",
+  "create_button": "Créer",
+  "confirm_delete": "Êtes-vous sûr de vouloir supprimer ce type de carrosserie ?",
+  "delete": "Supprimer"
 }
 }

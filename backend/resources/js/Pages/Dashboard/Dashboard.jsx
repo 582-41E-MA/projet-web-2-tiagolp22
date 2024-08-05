@@ -26,6 +26,9 @@ import VoitureEdit from '../Voiture/VoitureEdit/VoitureEdit';
 import TypeCarburantCreate from '../TypeCarburant/TypeCarburantCreate/TypeCarburantCreate';
 import TypeCarburantEdit from '../TypeCarburant/TypeCarburantEdit/TypeCarburantEdit';
 import TypeCarburantIndex from '../TypeCarburant/TypeCarburantIndex';
+import CarrosserieIndex from '../Carrosserie/CarrosserieIndex';
+import CarrosserieCreate from '../Carrosserie/CarrosserieCreate/CarrosserieCreate';
+import CarrosserieEdit from '../Carrosserie/CarrosserieEdit/CarrosserieEdit';
 import './Dashboard.css';
 
 const Dashboard = ({
@@ -62,6 +65,24 @@ const Dashboard = ({
                                 <FaList className="menu-icon" /> Liste Constructeurs
                             </MenuItem>
                         </SubMenu>
+
+
+
+
+                        <SubMenu
+                            icon={<FaCar className="menu-icon" />}
+                            label={'Carrosserie'}
+                            onClick={() => handleMenuClick('carrosserie')}
+                        >
+                            <MenuItem onClick={() => handleNavigationClick('carrosserieCreate')}>
+                                <FaPlus className="menu-icon" /> Créer Carrosserie
+                            </MenuItem>
+                            <MenuItem onClick={() => handleNavigationClick('carrosserieIndex')}>
+                                <FaList className="menu-icon" /> Liste Carrosseries
+                            </MenuItem>
+                        </SubMenu>
+
+
 
                         <SubMenu
                             icon={<FaGasPump className="menu-icon" />}
@@ -166,7 +187,12 @@ const Dashboard = ({
                             typesCarburant={typesCarburant} 
                             onEdit={(id) => handleNavigationClick('typeCarburantEdit', id)} 
                         />
-                    )}                    
+                    )} 
+
+                    {currentForm === 'carrosserieIndex' && <CarrosserieIndex carrosseries={carrosseries} onEdit={(id) => handleNavigationClick('carrosserieEdit', id)} />}
+                    {currentForm === 'carrosserieCreate' && <CarrosserieCreate />}
+                    {currentForm === 'carrosserieEdit' && <CarrosserieEdit id={editingId} />}
+
                     {currentForm === 'typeCarburantEdit' && <TypeCarburantEdit id={editingId} />}                    
                     {currentForm === 'paysCreate' && <PaysCreate />}
                     {currentForm === 'paysIndex' && <PaysIndex pays={pays} onEdit={(id) => handleNavigationClick('paysEdit', id)} />}
