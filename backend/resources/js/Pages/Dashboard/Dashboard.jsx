@@ -29,6 +29,10 @@ import TypeCarburantIndex from '../TypeCarburant/TypeCarburantIndex';
 import CarrosserieIndex from '../Carrosserie/CarrosserieIndex';
 import CarrosserieCreate from '../Carrosserie/CarrosserieCreate/CarrosserieCreate';
 import CarrosserieEdit from '../Carrosserie/CarrosserieEdit/CarrosserieEdit';
+import GroupeMotopropulseurIndex from '../GroupeMotopropulseur/GroupeMotopropulseurIndex';
+import GroupeMotopropulseurCreate from '../GroupeMotopropulseur/GroupeMotopropulseurCreate/GroupeMotopropulseurCreate';
+import GroupeMotopropulseurEdit from '../GroupeMotopropulseur/GroupeMotopropulseurEdit/GroupeMotopropulseurEdit';
+
 import './Dashboard.css';
 
 const Dashboard = ({
@@ -79,6 +83,18 @@ const Dashboard = ({
                             </MenuItem>
                             <MenuItem onClick={() => handleNavigationClick('carrosserieIndex')}>
                                 <FaList className="menu-icon" /> Liste Carrosseries
+                            </MenuItem>
+                        </SubMenu>
+                        <SubMenu
+                            icon={<FaPlus className="menu-icon" />}
+                            label={'Groupe Motopropulseur'}
+                            onClick={() => handleMenuClick('GroupeMotopropulseur')}
+                        >
+                            <MenuItem onClick={() => handleNavigationClick('groupeMotopropulseurCreate')}>
+                                <FaPlus className="menu-icon" /> Créer Groupe Motopropulseur
+                            </MenuItem>
+                            <MenuItem onClick={() => handleNavigationClick('groupeMotopropulseurIndex')}>
+                                <FaList className="menu-icon" /> Liste Groupe Motopropulseurs
                             </MenuItem>
                         </SubMenu>
 
@@ -192,6 +208,16 @@ const Dashboard = ({
                     {currentForm === 'carrosserieIndex' && <CarrosserieIndex carrosseries={carrosseries} onEdit={(id) => handleNavigationClick('carrosserieEdit', id)} />}
                     {currentForm === 'carrosserieCreate' && <CarrosserieCreate />}
                     {currentForm === 'carrosserieEdit' && <CarrosserieEdit id={editingId} />}
+
+                    {currentForm === 'groupeMotopropulseurIndex' && (
+                        <GroupeMotopropulseurIndex 
+                            groupeMotopropulseurs={groupesMotopropulseur || []} 
+                            onEdit={(id) => handleNavigationClick('groupeMotopropulseurEdit', id)} 
+                        />
+                    )}
+                    {currentForm === 'groupeMotopropulseurCreate' && <GroupeMotopropulseurCreate />}
+                    {currentForm === 'groupeMotopropulseurEdit' && <GroupeMotopropulseurEdit id={editingId} />}
+
 
                     {currentForm === 'typeCarburantEdit' && <TypeCarburantEdit id={editingId} />}                    
                     {currentForm === 'paysCreate' && <PaysCreate />}

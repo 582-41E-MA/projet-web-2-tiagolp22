@@ -248,5 +248,17 @@
   "create_button": "Create",
   "confirm_delete": "Are you sure you want to delete this car body type?",
   "delete": "Delete"
+},
+"groupeMotopropulseur": {
+  "no_data": "No data available",
+  "confirm_delete": "Are you sure you want to delete this powertrain group?",
+  "index_title": "List of Powertrain Groups",
+  "edit": "Edit",
+  "delete": "Delete",
+  "name": "Powertrain Group Name",
+  "description": "Description",
+  "update_button": "Update"
+
 }
+
 }

@@ -12,4 +12,6 @@ class GroupeMotopropulseur extends Model
     protected $table = 'groupesmotopropulseurs';
     protected $primaryKey = 'id_groupe_motopropulseur';
     protected $fillable = ['type_groupe_motopropulseur', 'description'];
+    public $timestamps = false; 
+    
 }

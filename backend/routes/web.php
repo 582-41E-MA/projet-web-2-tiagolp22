@@ -67,6 +67,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/carrosseries/{id}/edit', [CarrosserieController::class, 'edit'])->name('carrosseries.edit');
         Route::put('/carrosseries/{id}', [CarrosserieController::class, 'update'])->name('carrosseries.update');
 
+        Route::get('/groupe-motopropulseurs', [GroupeMotopropulseurController::class, 'index'])->name('groupe-motopropulseurs.index');
+        Route::get('/groupe-motopropulseurs/create', [GroupeMotopropulseurController::class, 'create'])->name('groupe-motopropulseurs.create');
+        Route::post('/groupe-motopropulseurs', [GroupeMotopropulseurController::class, 'store'])->name('groupe-motopropulseurs.store');
+        Route::get('/groupe-motopropulseurs/{id}/edit', [GroupeMotopropulseurController::class, 'edit'])->name('groupe-motopropulseurs.edit');
+        Route::put('/groupe-motopropulseurs/{id}', [GroupeMotopropulseurController::class, 'update'])->name('groupe-motopropulseurs.update');
+
         Route::get('/constructeur/{id}/edit', [ConstructeurController::class, 'edit'])->name('constructeur.edit');
         Route::put('/constructeur/{id}', [ConstructeurController::class, 'update'])->name('constructeur.update');
         Route::delete('constructeur/{id}', [ConstructeurController::class, 'destroy'])->name('constructeur.destroy');
