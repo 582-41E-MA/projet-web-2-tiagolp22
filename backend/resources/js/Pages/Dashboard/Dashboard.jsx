@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
-import { FaUserCog, FaGlobe, FaMapMarkerAlt, FaBuilding, FaCar, FaPlus, FaList } from 'react-icons/fa';
+import { FaUserCog, FaGlobe, FaMapMarkerAlt, FaGasPump, FaBuilding, FaCar, FaPlus, FaList } from 'react-icons/fa';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import ModeleCreate from '../Modele/ModeleCreate/ModeleCreate';
@@ -23,18 +23,30 @@ import VilleEdit from '../Ville/VilleEdit/VilleEdit';
 import ConstructeurEdit from '../Constructeur/ConstructeurEdit/ConstructeurEdit';
 import ModeleEdit from '../Modele/ModeleEdit/ModeleEdit';
 import VoitureEdit from '../Voiture/VoitureEdit/VoitureEdit';
-import './Dashboard.css'; 
+import TypeCarburantCreate from '../TypeCarburant/TypeCarburantCreate/TypeCarburantCreate';
+import TypeCarburantEdit from '../TypeCarburant/TypeCarburantEdit/TypeCarburantEdit';
+import TypeCarburantIndex from '../TypeCarburant/TypeCarburantIndex';
+import CarrosserieIndex from '../Carrosserie/CarrosserieIndex';
+import CarrosserieCreate from '../Carrosserie/CarrosserieCreate/CarrosserieCreate';
+import CarrosserieEdit from '../Carrosserie/CarrosserieEdit/CarrosserieEdit';
+import GroupeMotopropulseurIndex from '../GroupeMotopropulseur/GroupeMotopropulseurIndex';
+import GroupeMotopropulseurCreate from '../GroupeMotopropulseur/GroupeMotopropulseurCreate/GroupeMotopropulseurCreate';
+import GroupeMotopropulseurEdit from '../GroupeMotopropulseur/GroupeMotopropulseurEdit/GroupeMotopropulseurEdit';
 
-const Dashboard = ({ constructeurs, pays, villes, provinces, modeles, transmissions, groupesMotopropulseur, typesCarburant, carrosseries, privilege_id, taxes }) => {
+import './Dashboard.css';
+
+const Dashboard = ({
+    constructeurs, pays, villes, provinces, modeles, transmissions, groupesMotopropulseur, typesCarburant, carrosseries, privilege_id, taxes
+}) => {
     const [currentForm, setCurrentForm] = useState(null);
     const [openMenu, setOpenMenu] = useState(null);
     const [editingId, setEditingId] = useState(null);
 
-    
     const handleNavigationClick = (formName, id = null) => {
         setCurrentForm(formName);
         setEditingId(id);
     };
+
     const handleMenuClick = (menuName) => {
         setOpenMenu(openMenu === menuName ? null : menuName);
     };
@@ -55,6 +67,49 @@ const Dashboard = ({ constructeurs, pays, villes, provinces, modeles, transmissi
                             </MenuItem>
                             <MenuItem onClick={() => handleNavigationClick('constructeurIndex')}>
                                 <FaList className="menu-icon" /> Liste Constructeurs
+                            </MenuItem>
+                        </SubMenu>
+
+
+
+
+                        <SubMenu
+                            icon={<FaCar className="menu-icon" />}
+                            label={'Carrosserie'}
+                            onClick={() => handleMenuClick('carrosserie')}
+                        >
+                            <MenuItem onClick={() => handleNavigationClick('carrosserieCreate')}>
+                                <FaPlus className="menu-icon" /> Créer Carrosserie
+                            </MenuItem>
+                            <MenuItem onClick={() => handleNavigationClick('carrosserieIndex')}>
+                                <FaList className="menu-icon" /> Liste Carrosseries
+                            </MenuItem>
+                        </SubMenu>
+                        <SubMenu
+                            icon={<FaPlus className="menu-icon" />}
+                            label={'Groupe Motopropulseur'}
+                            onClick={() => handleMenuClick('GroupeMotopropulseur')}
+                        >
+                            <MenuItem onClick={() => handleNavigationClick('groupeMotopropulseurCreate')}>
+                                <FaPlus className="menu-icon" /> Créer Groupe Motopropulseur
+                            </MenuItem>
+                            <MenuItem onClick={() => handleNavigationClick('groupeMotopropulseurIndex')}>
+                                <FaList className="menu-icon" /> Liste Groupe Motopropulseurs
+                            </MenuItem>
+                        </SubMenu>
+
+
+
+                        <SubMenu
+                            icon={<FaGasPump className="menu-icon" />}
+                            label={'Types de Carburant'}
+                            onClick={() => handleMenuClick('typesCarburant')}
+                        >
+                            <MenuItem onClick={() => handleNavigationClick('typeCarburantCreate')}>
+                                <FaPlus className="menu-icon" /> Créer Type de Carburant
+                            </MenuItem>
+                            <MenuItem onClick={() => handleNavigationClick('typeCarburantIndex')}>
+                                <FaList className="menu-icon" /> Liste Types de Carburant
                             </MenuItem>
                         </SubMenu>
 
@@ -138,53 +193,76 @@ const Dashboard = ({ constructeurs, pays, villes, provinces, modeles, transmissi
                     </Menu>
                 </Sidebar>
                 <div className="main-content">
-    {currentForm === 'constructeurCreate' && <ConstructeurCreate />}
-    {currentForm === 'constructeurIndex' && <ConstructeurIndex constructeurs={constructeurs} onEdit={(id) => handleNavigationClick('constructeurEdit', id)} />}
-    {currentForm === 'constructeurEdit' && <ConstructeurEdit id={editingId} />}
-    
-    {currentForm === 'paysCreate' && <PaysCreate />}
-    {currentForm === 'paysIndex' && <PaysIndex pays={pays} onEdit={(id) => handleNavigationClick('paysEdit', id)} />}
-    {currentForm === 'paysEdit' && <PaysEdit id={editingId} />}
-    
-    {currentForm === 'provinceCreate' && <ProvinceCreate pays={pays} />}
-    {currentForm === 'provinceIndex' && <ProvinceIndex provinces={provinces} onEdit={(id) => handleNavigationClick('provinceEdit', id)} />}
-    {currentForm === 'provinceEdit' && <ProvinceEdit id={editingId} pays={pays} />}
-    
-    {currentForm === 'villeCreate' && <VilleCreate pays={pays} provinces={provinces} />}
-    {currentForm === 'villeIndex' && <VilleIndex villes={villes} onEdit={(id) => handleNavigationClick('villeEdit', id)} />}
-    {currentForm === 'villeEdit' && <VilleEdit id={editingId} pays={pays} provinces={provinces} />}
-    
-    {currentForm === 'modeleCreate' && <ModeleCreate constructeurs={constructeurs} />}
-    {currentForm === 'modeleIndex' && <ModeleIndex modeles={modeles} onEdit={(id) => handleNavigationClick('modeleEdit', id)} />}
-    {currentForm === 'modeleEdit' && <ModeleEdit id={editingId} constructeurs={constructeurs} />}
-    
-    {currentForm === 'voitureCreate' && (
-        <VoitureCreate
-            typesCarburant={typesCarburant}
-            modeles={modeles}
-            transmissions={transmissions}
-            groupesMotopropulseur={groupesMotopropulseur} 
-            carrosseries={carrosseries}
-            privilege_id={privilege_id}
-        />
-    )}
-    {currentForm === 'voitureIndex' && <VoitureIndex onEdit={(id) => handleNavigationClick('voitureEdit', id)} />}
-    {currentForm === 'voitureEdit' && (
-        <VoitureEdit
-            id={editingId}
-            typesCarburant={typesCarburant}
-            modeles={modeles}
-            transmissions={transmissions}
-            groupesMotopropulseur={groupesMotopropulseur} 
-            carrosseries={carrosseries}
-            privilege_id={privilege_id}
-        />
-    )}
-    
-    {currentForm === 'taxeCreate' && <TaxeCreate provinces={provinces}/>}
-    {currentForm === 'taxeIndex' && <TaxeIndex taxes={taxes} onEdit={(id) => handleNavigationClick('taxeEdit', id)} />}
-    {currentForm === 'taxeEdit' && <TaxeEdit id={editingId} provinces={provinces} />}
-</div>
+                    {currentForm === 'constructeurCreate' && <ConstructeurCreate />}
+                    {currentForm === 'constructeurIndex' && <ConstructeurIndex constructeurs={constructeurs} onEdit={(id) => handleNavigationClick('constructeurEdit', id)} />}
+                    {currentForm === 'constructeurEdit' && <ConstructeurEdit id={editingId} />}
+
+                    {currentForm === 'typeCarburantCreate' && <TypeCarburantCreate />}
+                    {currentForm === 'typeCarburantIndex' && (
+                        <TypeCarburantIndex 
+                            typesCarburant={typesCarburant} 
+                            onEdit={(id) => handleNavigationClick('typeCarburantEdit', id)} 
+                        />
+                    )} 
+
+                    {currentForm === 'carrosserieIndex' && <CarrosserieIndex carrosseries={carrosseries} onEdit={(id) => handleNavigationClick('carrosserieEdit', id)} />}
+                    {currentForm === 'carrosserieCreate' && <CarrosserieCreate />}
+                    {currentForm === 'carrosserieEdit' && <CarrosserieEdit id={editingId} />}
+
+                    {currentForm === 'groupeMotopropulseurIndex' && (
+                        <GroupeMotopropulseurIndex 
+                            groupeMotopropulseurs={groupesMotopropulseur || []} 
+                            onEdit={(id) => handleNavigationClick('groupeMotopropulseurEdit', id)} 
+                        />
+                    )}
+                    {currentForm === 'groupeMotopropulseurCreate' && <GroupeMotopropulseurCreate />}
+                    {currentForm === 'groupeMotopropulseurEdit' && <GroupeMotopropulseurEdit id={editingId} />}
+
+
+                    {currentForm === 'typeCarburantEdit' && <TypeCarburantEdit id={editingId} />}                    
+                    {currentForm === 'paysCreate' && <PaysCreate />}
+                    {currentForm === 'paysIndex' && <PaysIndex pays={pays} onEdit={(id) => handleNavigationClick('paysEdit', id)} />}
+                    {currentForm === 'paysEdit' && <PaysEdit id={editingId} />}
+
+                    {currentForm === 'provinceCreate' && <ProvinceCreate pays={pays} />}
+                    {currentForm === 'provinceIndex' && <ProvinceIndex provinces={provinces} onEdit={(id) => handleNavigationClick('provinceEdit', id)} />}
+                    {currentForm === 'provinceEdit' && <ProvinceEdit id={editingId} pays={pays} />}
+
+                    {currentForm === 'villeCreate' && <VilleCreate pays={pays} provinces={provinces} />}
+                    {currentForm === 'villeIndex' && <VilleIndex villes={villes} onEdit={(id) => handleNavigationClick('villeEdit', id)} />}
+                    {currentForm === 'villeEdit' && <VilleEdit id={editingId} pays={pays} provinces={provinces} />}
+
+                    {currentForm === 'modeleCreate' && <ModeleCreate constructeurs={constructeurs} />}
+                    {currentForm === 'modeleIndex' && <ModeleIndex modeles={modeles} onEdit={(id) => handleNavigationClick('modeleEdit', id)} />}
+                    {currentForm === 'modeleEdit' && <ModeleEdit id={editingId} constructeurs={constructeurs} />}
+
+                    {currentForm === 'voitureCreate' && (
+                        <VoitureCreate
+                            typesCarburant={typesCarburant}
+                            modeles={modeles}
+                            transmissions={transmissions}
+                            groupesMotopropulseur={groupesMotopropulseur}
+                            carrosseries={carrosseries}
+                            privilege_id={privilege_id}
+                        />
+                    )}
+                    {currentForm === 'voitureIndex' && <VoitureIndex onEdit={(id) => handleNavigationClick('voitureEdit', id)} />}
+                    {currentForm === 'voitureEdit' && (
+                        <VoitureEdit
+                            id={editingId}
+                            typesCarburant={typesCarburant}
+                            modeles={modeles}
+                            transmissions={transmissions}
+                            groupesMotopropulseur={groupesMotopropulseur}
+                            carrosseries={carrosseries}
+                            privilege_id={privilege_id}
+                        />
+                    )}
+
+                    {currentForm === 'taxeCreate' && <TaxeCreate provinces={provinces} />}
+                    {currentForm === 'taxeIndex' && <TaxeIndex taxes={taxes} onEdit={(id) => handleNavigationClick('taxeEdit', id)} />}
+                    {currentForm === 'taxeEdit' && <TaxeEdit id={editingId} provinces={provinces} />}
+                </div>
             </div>
             <Footer />
         </>

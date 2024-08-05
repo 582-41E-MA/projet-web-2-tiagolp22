@@ -12,4 +12,6 @@ class Carrosserie extends Model
     protected $table = 'carrosseries';
     protected $primaryKey = 'id_carrosserie';
     protected $fillable = ['type_carrosserie', 'description'];
+    public $timestamps = false; 
+
 }

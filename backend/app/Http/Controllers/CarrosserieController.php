@@ -5,22 +5,26 @@ namespace App\Http\Controllers;
 use App\Models\Carrosserie;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Http\Requests\CarrosserieRequest;
+
 
 class CarrosserieController extends Controller
 {
     public function index()
     {
         $carrosseries = Carrosserie::all();
-
-        return response()->json($carrosseries);
+        return Inertia::render('Carrosserie/CarrosserieIndex', [
+            'carrosseries' => $carrosseries
+        ]);
     }
+    
 
     public function create()
     {
         return Inertia::render('Carrosserie/CarrosserieCreate/CarrosserieCreate');
     }
 
-    public function store(Request $request)
+    public function store(CarrosserieRequest $request)
     {
         $validated = $request->validated();
 
@@ -40,7 +44,7 @@ class CarrosserieController extends Controller
         return Inertia::render('Carrosserie/CarrosserieEdit/CarrosserieEdit', ['carrosserie' => $carrosserie]);
     }
 
-    public function update(Request $request, $id)
+    public function update(CarrosserieRequest $request, $id)
     {
         $validated = $request->validated();
 

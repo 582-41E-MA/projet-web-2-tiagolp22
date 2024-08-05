@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\TypeCarburant;
@@ -11,8 +10,12 @@ class TypeCarburantController extends Controller
     public function index()
     {
         $typeCarburants = TypeCarburant::all();
-
-        return response()->json($typeCarburants);
+        return Inertia::render('TypeCarburant/TypeCarburantIndex/TypeCarburantIndex', ['typesCarburant' => $typeCarburants]);
+    }
+    public function show($id)
+    {
+        $typeCarburant = TypeCarburant::findOrFail($id);
+        return response()->json($typeCarburant);
     }
 
     public function create()
@@ -22,37 +25,53 @@ class TypeCarburantController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validated();
+        $request->validate([
+            'type_carburant' => 'required|json',
+            'description' => 'nullable|json',
+        ]);
 
-        $typeCarburant = TypeCarburant::create($validated);
-        return redirect()->route('typeCarburants.index')->with('success', 'TypeCarburant created successfully.');
-    }
+        $typeCarburant = new TypeCarburant();
+        $typeCarburant->type_carburant = json_decode($request->input('type_carburant'), true);
+        $typeCarburant->description = json_decode($request->input('description'), true);
+        $typeCarburant->save();
 
-    public function show($id)
-    {
-        $typeCarburant = TypeCarburant::findOrFail($id);
-        return Inertia::render('TypeCarburant/TypeCarburantShow/TypeCarburantShow', ['typeCarburant' => $typeCarburant]);
+        return redirect()->route('type-carburants.index');
     }
 
     public function edit($id)
     {
         $typeCarburant = TypeCarburant::findOrFail($id);
-        return Inertia::render('TypeCarburant/TypeCarburantEdit/TypeCarburantEdit', ['typeCarburant' => $typeCarburant]);
+        
+        return Inertia::render('TypeCarburant/TypeCarburantEdit/TypeCarburantEdit', [
+            'typeCarburant' => $typeCarburant
+        ]);
     }
 
     public function update(Request $request, $id)
     {
-        $validated = $request->validated();
-
+        $validated = $request->validate([
+            'type_carburant' => 'required|array',
+            'type_carburant.en' => 'required|string',
+            'type_carburant.fr' => 'required|string',
+            'description' => 'required|array',
+            'description.en' => 'required|string',
+            'description.fr' => 'required|string',
+        ]);
+    
         $typeCarburant = TypeCarburant::findOrFail($id);
-        $typeCarburant->update($validated);
-        return redirect()->route('typeCarburants.index');
+        $typeCarburant->type_carburant = $validated['type_carburant'];
+        $typeCarburant->description = $validated['description'];
+        $typeCarburant->save();
+    
+        return redirect()->route('type-carburants.index')->with('success', 'Type de carburant mis à jour avec succès.');
     }
+    
 
     public function destroy($id)
     {
         $typeCarburant = TypeCarburant::findOrFail($id);
         $typeCarburant->delete();
-        return redirect()->route('typeCarburants.index');
+    
+        return redirect()->route('type-carburants.index')->with('success', 'Type de carburant supprimé avec succès.');
     }
 }

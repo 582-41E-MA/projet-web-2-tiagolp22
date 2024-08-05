@@ -1,15 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { router } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
+import axios from 'axios';
 import './ConstructeurEdit.css';
 
-const ConstructeurEdit = ({ constructeur }) => {
+const ConstructeurEdit = ({ id }) => {
     const { t } = useTranslation();
     const [data, setData] = useState({
-        nom_constructeur: constructeur.nom_constructeur,
-        pays_origine: constructeur.pays_origine,
+        nom_constructeur: '',
+        pays_origine: '',
     });
     const [errors, setErrors] = useState({});
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchConstructeur = async () => {
+            try {
+                const response = await axios.get(`/api/constructeur/${id}`);
+                setData(response.data);
+                setLoading(false);
+            } catch (error) {
+                console.error('Error fetching constructeur:', error);
+                setLoading(false);
+            }
+        };
+
+        if (id) {
+            fetchConstructeur();
+        }
+    }, [id]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -21,13 +40,12 @@ const ConstructeurEdit = ({ constructeur }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('Submitting data for constructeur with ID:', constructeur.id_constructeur, data);
-        router.put(`/constructeur/${constructeur.id_constructeur}`, data, {
+        router.put(`/constructeur/${id}`, data, {
             preserveState: true,
             preserveScroll: true,
             onSuccess: () => {
                 console.log("Constructeur mis à jour avec succès");
-                router.get('/dashboard');
+
             },
             onError: (errors) => {
                 setErrors(errors);
@@ -36,14 +54,19 @@ const ConstructeurEdit = ({ constructeur }) => {
         });
     };
 
+    if (loading) {
+        return <div>Chargement...</div>;
+    }
+
     return (
         <div className="constructeur-edit-container">
             <h1>{t('constructeur.edit_title')}</h1>
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
-                    <label>{t('constructeur.name')}</label>
+                    <label htmlFor="nom_constructeur">{t('constructeur.name')}</label>
                     <input
                         type="text"
+                        id="nom_constructeur"
                         name="nom_constructeur"
                         value={data.nom_constructeur}
                         onChange={handleChange}
@@ -53,9 +76,10 @@ const ConstructeurEdit = ({ constructeur }) => {
                 </div>
 
                 <div className="form-group">
-                    <label>{t('constructeur.origin_country')}</label>
+                    <label htmlFor="pays_origine">{t('constructeur.origin_country')}</label>
                     <input
                         type="text"
+                        id="pays_origine"
                         name="pays_origine"
                         value={data.pays_origine}
                         onChange={handleChange}

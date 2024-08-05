@@ -30,7 +30,7 @@ class DashboardController extends Controller
         // Fetching related data for Voiture creation form
         $modeles = Modele::with('constructeur')->get();
         $transmissions = Transmission::all();
-        $groupesMotopropulseurs = GroupeMotopropulseur::all();
+        $groupesMotopropulseur = GroupeMotopropulseur::all();
         $typesCarburant = TypeCarburant::all();
         $carrosseries = Carrosserie::all();
         $privilege_id = Auth::check() ? Auth::user()->privileges_id : null;
@@ -40,7 +40,7 @@ class DashboardController extends Controller
             'provinces' => $provinces,
             'modeles' => $modeles,
             'transmissions' => $transmissions,
-            'groupesMotopropulseurs' => $groupesMotopropulseurs,
+            'groupesMotopropulseur' => $groupesMotopropulseur,
             'typesCarburant' => $typesCarburant,
             'carrosseries' => $carrosseries,
             'privilege_id' => $privilege_id,
