@@ -33,7 +33,7 @@ class ConstructeurController extends Controller
     public function show($id)
     {
         $constructeur = Constructeur::findOrFail($id);
-        return Inertia::render('Constructeurs/ConstructeurShow/ConstructeurShow', ['constructeur' => $constructeur]);
+        return response()->json($constructeur);
     }
 
     public function edit($id)

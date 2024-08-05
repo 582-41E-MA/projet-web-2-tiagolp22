@@ -4,7 +4,7 @@ import axios from 'axios';
 import { router } from '@inertiajs/react';
 import './ConstructeurIndex.css'; 
 
-const ConstructeurIndex = ({ constructeurs }) => {
+const ConstructeurIndex = ({ constructeurs, onEdit  }) => {
     const { t } = useTranslation();
 
     const handleDelete = async (id) => {
@@ -17,7 +17,9 @@ const ConstructeurIndex = ({ constructeurs }) => {
     };
 
     const handleEdit = (id) => {
-        router.visit(`/constructeur/${id}/edit`);
+        onEdit(id);
+
+        // router.visit(`/constructeur/${id}/edit`);
     };
 
     return (
