@@ -54,6 +54,13 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/modele/create', [ModeleController::class, 'create'])->name('modele.create');
         Route::post('/modele', [ModeleController::class, 'store'])->name('modele.store');
 
+        Route::get('/type-carburants', [TypeCarburantController::class, 'index'])->name('type-carburants.index');
+        Route::get('/type-carburants/create', [TypeCarburantController::class, 'create'])->name('type-carburants.create');
+        Route::post('/type-carburants', [TypeCarburantController::class, 'store'])->name('type-carburants.store');
+        Route::get('/type-carburants/{id}/edit', [TypeCarburantController::class, 'edit'])->name('type-carburants.edit');
+        Route::put('/type-carburants/{id}', [TypeCarburantController::class, 'update'])->name('type-carburants.update');
+        Route::delete('/type-carburants/{id}', [TypeCarburantController::class, 'destroy'])->name('type-carburants.destroy');
+
         Route::get('/constructeur/{id}/edit', [ConstructeurController::class, 'edit'])->name('constructeur.edit');
         Route::put('/constructeur/{id}', [ConstructeurController::class, 'update'])->name('constructeur.update');
         Route::delete('constructeur/{id}', [ConstructeurController::class, 'destroy'])->name('constructeur.destroy');
@@ -106,7 +113,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::resource('/constructeur', ConstructeurController::class)->except(['destroy']);
         Route::resource('/transmissions', TransmissionController::class)->except(['destroy']);
         Route::resource('/status', StatusController::class)->except(['destroy']);
-        Route::resource('/type-carburants', TypeCarburantController::class)->except(['destroy']);
+        Route::resource('type-carburants', TypeCarburantController::class);
+        // Route::resource('/type-carburants', TypeCarburantController::class)->except(['destroy']);
         Route::resource('/modeles', ModeleController::class)->except(['destroy']);
         Route::resource('/groupe-motopropulseurs', GroupeMotopropulseurController::class)->except(['destroy']);
         Route::resource('/carrosseries', CarrosserieController::class)->except(['destroy']);
@@ -147,6 +155,8 @@ Route::get('/contact', function () {
 Route::get('/voitures', [VoitureController::class, 'index'])->name('voitures.index');
 Route::get('/voitures/{id}', [VoitureController::class, 'show'])->name('voitures.show');
 Route::get('/api/voitures/filter', [VoitureController::class, 'filter'])->name('voitures.filter');
+Route::get('/api/type-carburants/{id}', [TypeCarburantController::class, 'show']);
+Route::get('/constructeur/{id}', [ConstructeurController::class, 'show']);
 
 // Routes d'authentification
 Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register');

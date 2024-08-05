@@ -151,6 +151,7 @@
     "update_button": "update"
   },
   "constructeur": {
+    "update_button":"Update",
     "create": "create cunstructor",
     "index_title": "Constructors List",
     "name": "Name",
@@ -225,5 +226,16 @@
     "remove": "Remove",
     "processing": "Processing...",
     "car_show.add_to_cart": "Add to cart"
-  }
+  },   
+   "typeCarburant": {
+    "edit_title": "Edit Fuel Type",
+    "create": "Create Fuel Type",
+    "name": "Fuel Type Name",
+    "description": "Fuel Type Description",
+    "create_button": "Create",
+    "index_title": "Fuel type",
+    "update_button": "Update Fuel Type"
+
+
+}
 }

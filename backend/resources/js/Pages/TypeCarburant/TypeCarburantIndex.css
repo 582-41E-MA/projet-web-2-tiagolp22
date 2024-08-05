@@ -1,0 +1,28 @@
+.type-carburant-index-container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+}
+
+.type-carburant-index-container h1 {
+    font-size: 24px; 
+    margin-bottom: 20px; 
+}
+
+.type-carburant-list {
+    margin-top: 20px;
+}
+
+.type-carburant-item {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.type-carburant-actions {
+    display: flex;
+    gap: 5px;
+}

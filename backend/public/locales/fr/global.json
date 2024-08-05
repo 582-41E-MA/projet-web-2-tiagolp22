@@ -149,6 +149,8 @@
   },
   "Learn_more": "En savoir plus",
   "constructeur": {
+    "update_button":"Modifier",
+
     "create": "créer un constructeur",
     "index_title": "Liste des Constructeurs",
     "name": "Nom",
@@ -223,5 +225,15 @@
   },
   "contact": {
     "title": "Contactez-nous"
-  }
+  },
+  "typeCarburant": {
+    "edit_title": "Modifier le Type de Carburant",
+    "create": "Créer un type de carburant",
+    "name": "Nom du type de carburant",
+    "description": "Description du type de carburant",
+    "create_button": "Créer",
+    "index_title": "Type de carburant",
+    "update_button": "Mettre à jour le Type de Carburant"
+
+}
 }

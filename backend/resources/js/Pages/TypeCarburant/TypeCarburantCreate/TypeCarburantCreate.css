@@ -1,0 +1,60 @@
+.type-carburant-create-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.type-carburant-create-container h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.type-carburant-create-container form {
+    display: flex;
+    flex-direction: column;
+}
+
+.type-carburant-create-container form div {
+    margin-bottom: 15px;
+}
+
+.type-carburant-create-container form label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.type-carburant-create-container form input[type="text"],
+.type-carburant-create-container form select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+}
+
+.type-carburant-create-container form button[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.type-carburant-create-container form button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.type-carburant-create-container form span {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+    display: block;
+}
