@@ -252,26 +252,45 @@
     "create_button": "Créer",
     "index_title": "Type de carburant",
     "update_button": "Mettre à jour le Type de Carburant"
+
+},
+"carrosserie": {
+  "index_title": "Types de Carrosserie",
+  "edit": "Modifier le Type de Carrosserie",
+  "create": "Créer un Type de Carrosserie",
+  "name": "Nom",
+  "description": "Description",
+  "update_button": "Mettre à jour",
+  "create_button": "Créer",
+  "confirm_delete": "Êtes-vous sûr de vouloir supprimer ce type de carrosserie ?",
+  "delete": "Supprimer"
+},
+"groupeMotopropulseur": {
+  "no_data": "Aucune donnée disponible",
+  "confirm_delete": "Êtes-vous sûr de vouloir supprimer ce groupe motopropulseur ?",
+  "index_title": "Liste des groupes motopropulseurs",
+  "edit": "Modifier",
+  "delete": "Supprimer",
+  "name": "Nom du groupe motopropulseur",
+  "description": "Description",
+  "update_button": "Mettre à jour"
+},
+"dashboard": {
+  "voitures": {
+    "list_title": "Liste des Voitures",
+    "confirm_delete": "Êtes-vous sûr de vouloir supprimer cette voiture?",
+    "no_data": "Aucune donnée disponible"
   },
-  "carrosserie": {
-    "index_title": "Types de Carrosserie",
-    "edit": "Modifier le Type de Carrosserie",
-    "create": "Créer un Type de Carrosserie",
-    "name": "Nom",
-    "description": "Description",
-    "update_button": "Mettre à jour",
-    "create_button": "Créer",
-    "confirm_delete": "Êtes-vous sûr de vouloir supprimer ce type de carrosserie ?",
-    "delete": "Supprimer"
+  "filters": {
+    "search_placeholder": "Rechercher par constructeur ou modèle",
+    "select_year": "Sélectionner l'année",
+    "select_model": "Sélectionner le modèle"
   },
-  "groupeMotopropulseur": {
-    "no_data": "Aucune donnée disponible",
-    "confirm_delete": "Êtes-vous sûr de vouloir supprimer ce groupe motopropulseur ?",
-    "index_title": "Liste des groupes motopropulseurs",
-    "edit": "Modifier",
-    "delete": "Supprimer",
-    "name": "Nom du groupe motopropulseur",
-    "description": "Description",
-    "update_button": "Mettre à jour"
-  }
+
+
+"buttons": {
+  "edit": "Edit",
+  "delete": "Delete"
+}
+}
 }

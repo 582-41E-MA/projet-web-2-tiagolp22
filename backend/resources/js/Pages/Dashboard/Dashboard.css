@@ -10,22 +10,36 @@
 
 /* Estilos para o Sidebar */
 .sidebar {
-    width: 250px;
-background-color:darkgrey;
+    background-color:#333333;
+
 }
 
 
 /* Estilos para os ícones do menu */
 .menu-icon {
     margin-right: 10px;
-    
 }
 
 /* Estilos para o conteúdo principal */
 .main-content {
     padding: 20px;
-    background-color: rgba(229, 229, 229, 0.484);
     flex: 1;
-    border-left: 1px solid var(--color-black); /* Cor da borda esquerda */
+    
+}
+@media (max-width: 768px) {
+    .dashboard-container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        display: flex;
+        width: 100%;
+        flex-direction: row;
+    }
+
+    .main-content {
+        margin-left: 0;
+        margin-top: 20px;
+    }
     
 }

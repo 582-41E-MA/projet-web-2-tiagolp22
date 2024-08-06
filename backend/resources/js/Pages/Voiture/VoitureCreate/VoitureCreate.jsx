@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "@inertiajs/inertia-react";
-import Header from "../../Header/Header";
-import Footer from "../../Footer/Footer";
-import axios from "axios";
 import { useTranslation } from "react-i18next";
 import "./VoitureCreate.css";
 
@@ -15,129 +12,87 @@ const VoitureCreate = ({
     privilege_id,
 }) => {
     const { t, i18n } = useTranslation();
-    const { data, setData, post, processing, errors, setError, clearErrors } =
-        useForm({
-            modele_id: "",
-            annee: "",
-            date_arrivee: "",
-            prix_achat: "",
-            prix_vente: "",
-            couleur: {
-                en: "",
-                fr: "",
-            },
-            type_transmission_id: "",
-            groupe_motopropulseur_id: "",
-            type_carburant_id: "",
-            carrosserie_id: "",
-            nombre_portes: "",
-            nombre_places: "",
-            kilometrage: "",
-            description: {
-                en: "",
-                fr: "",
-            },
-            etat_vehicule: {
-                en: "",
-                fr: "",
-            },
-            commandes_id_commande: null,
-            photos: [],
-        });
-        console.log('Types de carburant:', typesCarburant);
-        console.log('Transmissions:', transmissions);
-        console.log('Groupes motopropulseur:', groupesMotopropulseur);
-        console.log('Carrosseries:', carrosseries);
+    const { data, setData, post, processing, errors, setError, clearErrors } = useForm({
+        modele_id: "",
+        annee: "",
+        date_arrivee: "",
+        prix_achat: "",
+        prix_vente: "",
+        couleur: { en: "", fr: "" },
+        type_transmission_id: "",
+        groupe_motopropulseur_id: "",
+        type_carburant_id: "",
+        carrosserie_id: "",
+        nombre_portes: "",
+        nombre_places: "",
+        kilometrage: "",
+        description: { en: "", fr: "" },
+        etat_vehicule: { en: "", fr: "" },
+        commandes_id_commande: null,
+        photos: [],
+    });
 
-        const parseJsonField = (field) => {
-            if (typeof field === 'string') {
-                try {
-                    return JSON.parse(field);
-                } catch (e) {
-                    console.error('Erreur de parsing JSON:', e);
-                    return {};
-                }
-            }
-            return field;
-        };
+    const [thumbnails, setThumbnails] = useState([]);
 
     useEffect(() => {
         const prixAchat = parseFloat(data.prix_achat);
         if (!isNaN(prixAchat)) {
-            const prixVenteDefault = prixAchat * 1.25;
-            setData("prix_vente", prixVenteDefault.toString());
+            setData("prix_vente", (prixAchat * 1.25).toString());
         }
     }, [data.prix_achat]);
-    const [thumbnails, setThumbnails] = useState([]);
 
     const handleFileChange = (e) => {
         const files = Array.from(e.target.files);
         setData("photos", files);
 
-        // miniatures
         const newThumbnails = files.map((file) => ({
             id: URL.createObjectURL(file),
             file,
         }));
-        setThumbnails([...thumbnails, ...newThumbnails]);
+        setThumbnails((prevThumbnails) => [...prevThumbnails, ...newThumbnails]);
     };
+
     const validateFields = () => {
         const newErrors = {};
 
-        if (!data.modele_id)
-            newErrors.modele_id = t("car.errors.model_required");
-        if (
-            !data.annee ||
-            data.annee < 1900 ||
-            data.annee > new Date().getFullYear() + 1
-        )
-            newErrors.annee = t("car.errors.year_invalid");
-        if (!data.date_arrivee)
-            newErrors.date_arrivee = t("car.errors.arrival_date_required");
-        if (!data.prix_achat || isNaN(data.prix_achat) || data.prix_achat < 0)
-            newErrors.prix_achat = t("car.errors.purchase_price_invalid");
-        if (!data.couleur[i18n.language])
-            newErrors.couleur = t("car.errors.color_required");
-        if (!data.type_transmission_id)
-            newErrors.type_transmission_id = t(
-                "car.errors.transmission_type_required"
-            );
-        if (!data.groupe_motopropulseur_id)
-            newErrors.groupe_motopropulseur_id = t(
-                "car.errors.powertrain_group_required"
-            );
-        if (!data.type_carburant_id)
-            newErrors.type_carburant_id = t("car.errors.fuel_type_required");
-        if (!data.carrosserie_id)
-            newErrors.carrosserie_id = t("car.errors.body_type_required");
-        if (
-            !data.nombre_portes ||
-            isNaN(data.nombre_portes) ||
-            data.nombre_portes < 1
-        )
-            newErrors.nombre_portes = t("car.errors.number_of_doors_invalid");
-        if (
-            !data.nombre_places ||
-            isNaN(data.nombre_places) ||
-            data.nombre_places < 1
-        )
-            newErrors.nombre_places = t("car.errors.number_of_seats_invalid");
-        if (
-            !data.kilometrage ||
-            isNaN(data.kilometrage) ||
-            data.kilometrage < 0
-        )
-            newErrors.kilometrage = t("car.errors.mileage_invalid");
-        if (!data.etat_vehicule[i18n.language])
-            newErrors.etat_vehicule = t("car.errors.vehicle_state_required");
+        const fields = [
+            { key: "modele_id", message: "model_required" },
+            { key: "annee", message: "year_invalid", validate: (value) => value >= 1900 && value <= new Date().getFullYear() + 1 },
+            { key: "date_arrivee", message: "arrival_date_required" },
+            { key: "prix_achat", message: "purchase_price_invalid", validate: (value) => !isNaN(value) && value >= 0 },
+            { key: "couleur", message: "color_required" },
+            { key: "type_transmission_id", message: "transmission_type_required" },
+            { key: "groupe_motopropulseur_id", message: "powertrain_group_required" },
+            { key: "type_carburant_id", message: "fuel_type_required" },
+            { key: "carrosserie_id", message: "body_type_required" },
+            { key: "nombre_portes", message: "number_of_doors_invalid", validate: (value) => !isNaN(value) && value >= 1 },
+            { key: "nombre_places", message: "number_of_seats_invalid", validate: (value) => !isNaN(value) && value >= 1 },
+            { key: "kilometrage", message: "mileage_invalid", validate: (value) => !isNaN(value) && value >= 0 },
+            { key: "etat_vehicule", message: "vehicle_state_required" },
+            { key: "photos", message: "minimum_photos_required", validate: (value) => value.length >= 3 }
+        ];
 
-        if (!data.photos || data.photos.length < 3) {
-            newErrors.photos = t("car.errors.minimum_photos_required");
-        }
+        fields.forEach(({ key, message, validate }) => {
+            const value = data[key];
+            if (!value || (validate && !validate(value))) {
+                newErrors[key] = t(`car.errors.${message}`);
+            }
+        });
 
         return newErrors;
     };
-    const handleSubmit = (e) => {
+    const parseJsonField = (field) => {
+        if (typeof field === 'string') {
+            try {
+                return JSON.parse(field);
+            } catch (e) {
+                console.error('Erreur de parsing JSON:', e);
+                return {};
+            }
+        }
+        return field;
+    };
+    const handleSubmit = async (e) => {
         e.preventDefault();
         clearErrors();
 
@@ -158,27 +113,22 @@ const VoitureCreate = ({
             Object.keys(validationErrors).forEach((field) => {
                 setError(field, validationErrors[field]);
             });
-
             return;
         }
 
-        post("/voitures", {
-            data: formData,
-            headers: {
-                "Content-Type": "multipart/form-data",
-            },
-            onSuccess: () => {
-                console.log("Voiture criada com sucesso!");
-            },
-            onError: (errors) => {
-                console.error("Erro ao criar a voiture:", errors);
-            },
-        });
+        try {
+            await post("/voitures", {
+                data: formData,
+                headers: { "Content-Type": "multipart/form-data" },
+            });
+            console.log("Voiture créée avec succès !");
+        } catch (error) {
+            console.error("Erreur lors de la création de la voiture :", error);
+        }
     };
 
     return (
         <>
-            <Header />
             <div className="form-container">
                 <img
                     className="logo_formulaire"
@@ -622,7 +572,6 @@ const VoitureCreate = ({
                     </button>
                 </form>
             </div>
-            <Footer />
         </>
     );
 };
