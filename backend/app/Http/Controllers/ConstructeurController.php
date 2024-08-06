@@ -52,7 +52,6 @@ class ConstructeurController extends Controller
         $constructeur = Constructeur::findOrFail($id);
         $constructeur->update($validated);
     
-        return redirect()->route('constructeur.index')->with('success', 'Modèle mis à jour avec succès.');
     }
     
 

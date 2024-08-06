@@ -57,7 +57,7 @@ class ProvinceController extends Controller
         $province = Province::findOrFail($id);
         $province->update($validated);
     
-        return redirect()->route('provinces.index')->with('success', 'Province mise à jour avec succès.');
+       
     }
 
     public function destroy($id)
