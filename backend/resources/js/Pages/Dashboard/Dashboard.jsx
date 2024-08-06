@@ -16,6 +16,8 @@ import PaysIndex from '../Pays/PaysIndex';
 import ProvinceIndex from '../Province/ProvinceIndex';
 import VilleIndex from '../Ville/VilleIndex';
 import ModeleIndex from '../Modele/ModeleIndex';
+import VoitureIndex from '../Voiture/VoitureIndex/VoitureIndex';
+
 
 import PaysEdit from '../Pays/PaysEdit/PaysEdit';
 import ProvinceEdit from '../Province/ProvinceEdit/ProvinceEdit';
@@ -36,7 +38,7 @@ import GroupeMotopropulseurEdit from '../GroupeMotopropulseur/GroupeMotopropulse
 import './Dashboard.css';
 
 const Dashboard = ({
-    constructeurs, pays, villes, provinces, modeles, transmissions, groupesMotopropulseur, typesCarburant, carrosseries, privilege_id, taxes
+    constructeurs, pays, villes, provinces, modeles, transmissions, groupesMotopropulseur, typesCarburant, carrosseries, privilege_id, taxes, voitures
 }) => {
     const [currentForm, setCurrentForm] = useState(null);
     const [openMenu, setOpenMenu] = useState(null);
@@ -246,7 +248,7 @@ const Dashboard = ({
                             privilege_id={privilege_id}
                         />
                     )}
-                    {currentForm === 'voitureIndex' && <VoitureIndex onEdit={(id) => handleNavigationClick('voitureEdit', id)} />}
+                    {currentForm === 'voitureIndex' && <VoitureIndex voitures={voitures} onEdit={(id) => handleNavigationClick('voitureEdit', id)} />}
                     {currentForm === 'voitureEdit' && (
                         <VoitureEdit
                             id={editingId}

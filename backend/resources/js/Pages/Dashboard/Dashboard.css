@@ -4,8 +4,7 @@
 /* Container do Dashboard */
 .dashboard-container {
     display: flex;
-    height: 100vh;
-
+    min-height: 80vh;
    
 }
 

@@ -1,55 +1,49 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import axios from 'axios';
-import { usePage, router } from '@inertiajs/react';
-
+import { router } from '@inertiajs/react';
 import './VilleIndex.css';
 
-const VilleIndex = ({ villes }) => {
+const VilleIndex = ({ villes, onEdit }) => {
     const { t } = useTranslation();
 
     const handleDelete = async (id) => {
-        try {
-            await axios.delete(`/villes/${id}`);
-            window.location.reload();
-        } catch (error) {
-            console.error('Erro ao excluir ville:', error);
+        if (window.confirm(t('ville.confirm_delete'))) {
+            try {
+                await router.delete(`/villes/${id}`);
+            } catch (error) {
+                console.error('Error deleting ville:', error);
+                alert(t('ville.delete_error'));
+            }
         }
     };
 
-    const handleEdit = (id) => {
-        router.visit(`/villes/${id}/edit`);
-    };
-
     return (
-        <>
-            <div className="dashboard-index-container">
-                <h1>{t('ville.index_title')}</h1>
-                <div className="dashboard-list">
-                    {villes.map((ville) => (
-                        <div key={ville.id_ville} className="dashboard-item">
-                            <div>
-                                <strong>{ville.nom_ville}</strong> - {ville.province.nom_province}
-                            </div>
-                            <div className="dashboard-actions">
-                                <button 
-                                    onClick={() => handleEdit(ville.id_ville)}
-                                    className="edit-button"
-                                >
-                                    {t('ville.edit_button')}
-                                </button>
-                                <button 
-                                    onClick={() => handleDelete(ville.id_ville)}
-                                    className="delete-button"
-                                >
-                                    {t('ville.delete_button')}
-                                </button>
-                            </div>
+        <div className="dashboard-index-container">
+            <h1>{t('ville.index_title')}</h1>
+            <div className="dashboard-list">
+                {villes.map((ville) => (
+                    <div key={ville.id_ville} className="dashboard-item">
+                        <div>
+                            <strong>{ville.nom_ville}</strong> - {ville.province.nom_province}
                         </div>
-                    ))}
-                </div>
+                        <div className="dashboard-actions">
+                            <button 
+                                onClick={() => onEdit(ville.id_ville)}
+                                className="edit-button"
+                            >
+                                {t('ville.edit_button')}
+                            </button>
+                            <button 
+                                onClick={() => handleDelete(ville.id_ville)}
+                                className="delete-button"
+                            >
+                                {t('ville.delete_button')}
+                            </button>
+                        </div>
+                    </div>
+                ))}
             </div>
-        </>
+        </div>
     );
 };
 

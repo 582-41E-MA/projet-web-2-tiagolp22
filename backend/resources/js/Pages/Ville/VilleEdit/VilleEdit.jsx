@@ -1,19 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { usePage, router } from '@inertiajs/react';
-import Header from '../../Header/Header';
-import Footer from '../../Footer/Footer';
 import { useTranslation } from 'react-i18next';
 import InputField from '../../InputField/InputField'; 
-
 import './VilleEdit.css';
 
-const VilleEdit = () => {
+const VilleEdit = ({ id, provinces }) => {
+    
     const { t } = useTranslation();
-    const { ville, provinces } = usePage().props; 
     const [data, setData] = useState({
-        nom_ville: ville.nom_ville || '',
-        province_id: ville.province_id || '',
+        nom_ville: '',
+        province_id: '',
+        
     });
+
+    useEffect(() => {
+        const fetchVille = async () => {
+            try {
+                const response = await axios.get(`/villes/${id}/edit`);
+                const villeData = response.data;
+                
+                setData({
+                    nom_ville: villeData.nom_ville,
+                    province_id: villeData.province_id,
+                });
+            } catch (error) {
+                console.error("Erreur lors du chargement de la ville", error);
+            }
+        };
+
+        fetchVille();
+    }, [id]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -25,7 +41,7 @@ const VilleEdit = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        router.put(`/villes/${ville.id_ville}`, data, {
+        router.put(`/villes/${id}`, data, {
             preserveState: true,
             preserveScroll: true,
             onSuccess: () => {
@@ -39,31 +55,29 @@ const VilleEdit = () => {
 
     return (
         <>
-            <Header />
             <div className="form-container">
                 <h1>{t('ville.edit_title')}</h1>
                 <form onSubmit={handleSubmit}>
-                        <InputField
-                            label={t('ville.name')}
-                            name="nom_ville"
-                            value={data.nom_ville}
-                            onChange={handleChange}
-                        />
-                        <InputField
-                            label={t('ville.province')}
-                            name="province_id"
-                            value={data.province_id}
-                            onChange={handleChange}
-                            type="select"
-                            options={provinces.map(province => ({
-                                value: province.id_province,
-                                label: province.nom_province
-                            }))}
-                        />
+                    <InputField
+                        label={t('ville.name')}
+                        name="nom_ville"
+                        value={data.nom_ville}
+                        onChange={handleChange}
+                    />
+                    <InputField
+                        label={t('ville.province')}
+                        name="province_id"
+                        value={data.province_id}
+                        onChange={handleChange}
+                        type="select"
+                        options={provinces.map(province => ({
+                            value: province.id_province,
+                            label: province.nom_province
+                        }))}
+                    />
                     <button className="edit-button" type="submit">{t('ville.update_button')}</button>
                 </form>
             </div>
-            <Footer />
         </>
     );
 };
