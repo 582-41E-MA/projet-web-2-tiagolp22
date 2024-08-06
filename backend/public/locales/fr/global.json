@@ -72,6 +72,11 @@
     "vehicle_condition": "État du véhicule",
     "order_id": "ID de commande",
     "submit_button": "Soumettre",
+    "current_photos":"photo actuel",
+    "add_photos":"Ajouter des photos",
+    "photo_selected":"photos selectionnées",
+
+
     "errors": {
       "model_required": "Le modèle est requis.",
       "year_invalid": "Année invalide. Veuillez saisir une année valide entre 1900 et l'année en cours.",

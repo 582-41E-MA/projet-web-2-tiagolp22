@@ -25,7 +25,6 @@ class VoitureController extends Controller
     {
         $today = now()->toDateString();
 
-        //voitures réservées
         $reservedCarIds = DB::table('reservations')->pluck('id_voiture')->toArray();
 
         $voitures = Voiture::with('modele')
@@ -45,8 +44,6 @@ class VoitureController extends Controller
             'privilege_id' => $privilege_id,
         ]);
     }
-
-
 
     public function create(Request $request)
     {
@@ -127,7 +124,6 @@ class VoitureController extends Controller
         ]);
     }
 
-
     public function store(VoitureRequest $request)
     {
         $validated = $request->validated();
@@ -158,7 +154,6 @@ class VoitureController extends Controller
         return Inertia::location(route('voitures.index'));
     }
 
-
     public function show($id)
     {
         $voiture = Voiture::with(['modele', 'typeCarburant', 'transmission', 'groupeMotopropulseur', 'carrosserie', 'photos'])->findOrFail($id);
@@ -176,10 +171,9 @@ class VoitureController extends Controller
         ]);
     }
 
-
     public function edit($id)
     {
-        $voiture = Voiture::findOrFail($id);
+        $voiture = Voiture::with('photos')->findOrFail($id);
         $modeles = Modele::all();
 
         return Inertia::render('Voiture/VoitureEdit/VoitureEdit', [
@@ -190,6 +184,9 @@ class VoitureController extends Controller
 
     public function update(Request $request, $id)
     {
+
+    Log::info('Méthode de requête: ' . $request->method());
+    Log::info('Données reçues: ', $request->all());
         $voiture = Voiture::findOrFail($id);
 
         $validated = $request->validate([
@@ -201,13 +198,35 @@ class VoitureController extends Controller
             'nombre_places' => 'required|integer',
             'nombre_portes' => 'required|integer',
             'description' => 'required',
+            'photos' => 'nullable|array',
+            'photos.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'photos_to_delete' => 'nullable|array',
+            'photos_to_delete.*' => 'integer|exists:photos,id',
         ]);
 
-        // Log::info('Données validées:', $validated);
-
         $voiture->update($validated);
-        // Log::info('Voiture mise à jour', ['id' => $voiture->id_voiture]);
-        return redirect()->route('voitures.index');
+
+        if ($request->hasFile('photos')) {
+            foreach ($request->file('photos') as $photo) {
+                $path = $photo->store('public/photos');
+                Photo::create([
+                    'voitures_id_voiture' => $voiture->id_voiture,
+                    'photos' => $path,
+                ]);
+            }
+        }
+    
+        if ($request->has('photos_to_delete')) {
+            foreach ($request->input('photos_to_delete') as $photoId) {
+                $photo = Photo::find($photoId);
+                if ($photo && $photo->voitures_id_voiture == $voiture->id_voiture) {
+                    Storage::delete($photo->photos);
+                    $photo->delete();
+                }
+            }
+        }
+
+        return redirect()->route('voitures.index')->with('success', 'Voiture mise à jour avec succès.');
     }
 
     public function destroy($id)
