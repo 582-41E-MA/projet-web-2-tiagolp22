@@ -57,7 +57,6 @@ class VilleController extends Controller
         $ville = Ville::findOrFail($id);
         $ville->update($validated);
     
-        return redirect()->route('villes.index')->with('success', 'Ville mise à jour avec succès.');
     }
 
     public function destroy($id)
