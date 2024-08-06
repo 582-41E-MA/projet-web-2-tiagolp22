@@ -33,23 +33,28 @@ class ConstructeurController extends Controller
     public function show($id)
     {
         $constructeur = Constructeur::findOrFail($id);
-        return Inertia::render('Constructeurs/ConstructeurShow/ConstructeurShow', ['constructeur' => $constructeur]);
+        return response()->json($constructeur);
     }
 
     public function edit($id)
     {
         $constructeur = Constructeur::findOrFail($id);
-        return Inertia::render('Constructeurs/ConstructeurEdit/ConstructeurEdit', ['constructeur' => $constructeur]);
+        return Inertia::render('Constructeur/ConstructeurEdit/ConstructeurEdit', ['constructeur' => $constructeur]);
     }
 
     public function update(Request $request, $id)
     {
-        $validated = $request->validated(); //tableau contenant les champs validés
+        $validated = $request->validate([
+            'nom_constructeur' => 'required|string|max:255',
+            'pays_origine' => 'required|string|max:255',
+        ]);
+    
         $constructeur = Constructeur::findOrFail($id);
         $constructeur->update($validated);
-
-        return redirect()->route('constructeurs.index')->with('success', 'Constructeur updated successfully.');
+    
+        return redirect()->route('constructeur.index')->with('success', 'Modèle mis à jour avec succès.');
     }
+    
 
     public function destroy($id)
     {

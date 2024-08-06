@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\GroupeMotopropulseur;
+use App\Http\Requests\GroupeMotopropulseurRequest;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -11,8 +12,9 @@ class GroupeMotopropulseurController extends Controller
     public function index()
     {
         $groupeMotopropulseurs = GroupeMotopropulseur::all();
-
-        return response()->json($groupeMotopropulseurs);
+        return Inertia::render('GroupeMotopropulseur/GroupeMotopropulseurIndex', [
+            'groupeMotopropulseurs' => $groupeMotopropulseurs
+        ]);
     }
 
     public function create()
@@ -20,12 +22,11 @@ class GroupeMotopropulseurController extends Controller
         return Inertia::render('GroupeMotopropulseur/GroupeMotopropulseurCreate/GroupeMotopropulseurCreate');
     }
 
-    public function store(Request $request)
+    public function store(GroupeMotopropulseurRequest $request)
     {
         $validated = $request->validated();
-
-        $groupeMotopropulseur = GroupeMotopropulseur::create($validated);
-        return redirect()->route('groupeMotopropulseurs.index')->with('success', 'GroupeMotopropulseur created successfully.');
+        GroupeMotopropulseur::create($validated);
+        return redirect()->route('groupe-motopropulseurs.index')->with('success', 'Groupe motopropulseur créé avec succès.');
     }
 
     public function show($id)
@@ -40,19 +41,18 @@ class GroupeMotopropulseurController extends Controller
         return Inertia::render('GroupeMotopropulseur/GroupeMotopropulseurEdit/GroupeMotopropulseurEdit', ['groupeMotopropulseur' => $groupeMotopropulseur]);
     }
 
-    public function update(Request $request, $id)
+    public function update(GroupeMotopropulseurRequest $request, $id)
     {
         $validated = $request->validated();
-
         $groupeMotopropulseur = GroupeMotopropulseur::findOrFail($id);
         $groupeMotopropulseur->update($validated);
-        return redirect()->route('groupeMotopropulseurs.index');
+        return redirect()->route('groupe-motopropulseurs.index')->with('success', 'Groupe motopropulseur mis à jour avec succès.');
     }
 
     public function destroy($id)
     {
         $groupeMotopropulseur = GroupeMotopropulseur::findOrFail($id);
         $groupeMotopropulseur->delete();
-        return redirect()->route('groupeMotopropulseurs.index');
+        return redirect()->route('groupe-motopropulseurs.index')->with('success', 'Groupe motopropulseur supprimé avec succès.');
     }
 }

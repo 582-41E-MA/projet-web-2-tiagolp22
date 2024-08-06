@@ -42,6 +42,10 @@ class Voiture extends Model
         'couleur' => 'json',
         'etat_vehicule' => 'json',
         'description' => 'json',
+        'type_carburant' => 'json',
+        'type_transmission' => 'json',
+        'type_groupe_motopropulseur' => 'json',
+        'type_carrosserie' => 'json',
     ];
 
     public function modele()

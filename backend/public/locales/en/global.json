@@ -151,6 +151,7 @@
     "update_button": "update"
   },
   "constructeur": {
+    "update_button":"Update",
     "create": "create cunstructor",
     "index_title": "Constructors List",
     "name": "Name",
@@ -225,5 +226,39 @@
     "remove": "Remove",
     "processing": "Processing...",
     "car_show.add_to_cart": "Add to cart"
-  }
+  },   
+   "typeCarburant": {
+    "edit_title": "Edit Fuel Type",
+    "create": "Create Fuel Type",
+    "name": "Fuel Type Name",
+    "description": "Fuel Type Description",
+    "create_button": "Create",
+    "index_title": "Fuel type",
+    "update_button": "Update Fuel Type"
+
+
+},
+"carrosserie": {
+  "index_title": "Car Body Types",
+  "edit": "Edit Car Body Type",
+  "create": "Create Car Body Type",
+  "name": "Name",
+  "description": "Description",
+  "update_button": "Update",
+  "create_button": "Create",
+  "confirm_delete": "Are you sure you want to delete this car body type?",
+  "delete": "Delete"
+},
+"groupeMotopropulseur": {
+  "no_data": "No data available",
+  "confirm_delete": "Are you sure you want to delete this powertrain group?",
+  "index_title": "List of Powertrain Groups",
+  "edit": "Edit",
+  "delete": "Delete",
+  "name": "Powertrain Group Name",
+  "description": "Description",
+  "update_button": "Update"
+
+}
+
 }
