@@ -256,5 +256,23 @@
   "name": "Nom du groupe motopropulseur",
   "description": "Description",
   "update_button": "Mettre à jour"
+},
+"dashboard": {
+  "voitures": {
+    "list_title": "Liste des Voitures",
+    "confirm_delete": "Êtes-vous sûr de vouloir supprimer cette voiture?",
+    "no_data": "Aucune donnée disponible"
+  },
+  "filters": {
+    "search_placeholder": "Rechercher par constructeur ou modèle",
+    "select_year": "Sélectionner l'année",
+    "select_model": "Sélectionner le modèle"
+  },
+
+
+"buttons": {
+  "edit": "Edit",
+  "delete": "Delete"
+}
 }
 }

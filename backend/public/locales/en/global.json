@@ -259,6 +259,22 @@
   "description": "Description",
   "update_button": "Update"
 
-}
+},
+"dashboard": {
+    "voitures": {
+      "list_title": "Car List",
+      "confirm_delete": "Are you sure you want to delete this car?",
+      "no_data": "No data available"
+    },
+    "filters": {
+      "search_placeholder": "Search by manufacturer or model",
+      "select_year": "Select year",
+      "select_model": "Select model"
+    }
+  },
 
+"buttons": {
+  "edit": "Edit",
+  "delete": "Delete"
+}
 }
