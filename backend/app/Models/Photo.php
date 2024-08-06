@@ -11,10 +11,9 @@ class Photo extends Model
 
     protected $table = 'photo';
     protected $primaryKey = 'id';
+    protected $fillable = ['photos', 'voitures_id_voiture', 'ordre'];
     public $timestamps = false; 
-
-    protected $fillable = ['voitures_id_voiture', 'photos', 'ordre'];
-
+    
     public function voiture()
     {
         return $this->belongsTo(Voiture::class, 'voitures_id_voiture', 'id_voiture');

@@ -22,6 +22,8 @@ use App\Http\Controllers\FactureController;
 use App\Http\Controllers\TaxeController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Middleware\CheckPrivilege;
+use App\Http\Controllers\PhotoController;
+
 use App\Models\Taxe;
 use Inertia\Inertia;
 use App\Http\Controllers\StripeController;
@@ -49,6 +51,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/voitures', [VoitureController::class, 'store'])->name('voitures.store');
         Route::get('/voitures/{id}/edit', [VoitureController::class, 'edit'])->name('voitures.edit');
         Route::put('/voitures/{id}', [VoitureController::class, 'update'])->name('voitures.update');
+        Route::post('/voitures/{id}', [VoitureController::class, 'update'])->name('voitures.update'); 
+        Route::delete('/photos/{photo}', [PhotoController::class, 'destroy'])->name('photo.destroy');
+
+       
         //
         Route::get('/modele', [ModeleController::class, 'index'])->name('modele.index');
         Route::get('/modele/create', [ModeleController::class, 'create'])->name('modele.create');

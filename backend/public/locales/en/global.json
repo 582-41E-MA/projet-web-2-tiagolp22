@@ -75,6 +75,11 @@
     "vehicle_condition": "Vehicle Condition",
     "order_id": "Order ID",
     "submit_button": "Submit",
+    "current_photos":"Current photos",
+    "add_photos":"Add photos",
+    "photo_selected":"photos selected",
+
+
     "errors": {
       "model_required": "Model is required.",
       "year_invalid": "Invalid year. Please enter a valid year between 1900 and the current year.",
