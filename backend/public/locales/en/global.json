@@ -254,26 +254,46 @@
     "create_button": "Create",
     "index_title": "Fuel type",
     "update_button": "Update Fuel Type"
+
+
+},
+"carrosserie": {
+  "index_title": "Car Body Types",
+  "edit": "Edit Car Body Type",
+  "create": "Create Car Body Type",
+  "name": "Name",
+  "description": "Description",
+  "update_button": "Update",
+  "create_button": "Create",
+  "confirm_delete": "Are you sure you want to delete this car body type?",
+  "delete": "Delete"
+},
+"groupeMotopropulseur": {
+  "no_data": "No data available",
+  "confirm_delete": "Are you sure you want to delete this powertrain group?",
+  "index_title": "List of Powertrain Groups",
+  "edit": "Edit",
+  "delete": "Delete",
+  "name": "Powertrain Group Name",
+  "description": "Description",
+  "update_button": "Update"
+
+},
+"dashboard": {
+    "voitures": {
+      "list_title": "Car List",
+      "confirm_delete": "Are you sure you want to delete this car?",
+      "no_data": "No data available"
+    },
+    "filters": {
+      "search_placeholder": "Search by manufacturer or model",
+      "select_year": "Select year",
+      "select_model": "Select model"
+    }
   },
-  "carrosserie": {
-    "index_title": "Car Body Types",
-    "edit": "Edit Car Body Type",
-    "create": "Create Car Body Type",
-    "name": "Name",
-    "description": "Description",
-    "update_button": "Update",
-    "create_button": "Create",
-    "confirm_delete": "Are you sure you want to delete this car body type?",
-    "delete": "Delete"
-  },
-  "groupeMotopropulseur": {
-    "no_data": "No data available",
-    "confirm_delete": "Are you sure you want to delete this powertrain group?",
-    "index_title": "List of Powertrain Groups",
-    "edit": "Edit",
-    "delete": "Delete",
-    "name": "Powertrain Group Name",
-    "description": "Description",
-    "update_button": "Update"
-  }
+
+"buttons": {
+  "edit": "Edit",
+  "delete": "Delete"
+}
 }
