@@ -36,35 +36,52 @@ const CheckoutForm = ({ cartItems, clearCart, onClose }) => {
 
         const cardElement = elements.getElement(CardElement);
 
-        const { error, paymentMethod } = await stripe.createPaymentMethod({
-            type: "card",
-            card: cardElement,
-        });
-
-        if (error) {
-            console.error(error);
-            setErrorMessage(error.message);
-            setIsProcessing(false);
-            return;
-        }
-
         try {
-            const response = await axios.post("/process-payment", {
-                paymentMethod: paymentMethod.id,
-                items: cartItems,
+            const { error, paymentMethod } = await stripe.createPaymentMethod({
+                type: "card",
+                card: cardElement,
             });
 
+            if (error) {
+                console.error(
+                    "Erreur lors de la création du mode de paiement :",
+                    error
+                );
+                setErrorMessage(error.message);
+                setIsProcessing(false);
+                return;
+            }
+
+            console.log("Mode de paiement créé :", paymentMethod);
+
+            const requestData = {
+                paymentMethod: paymentMethod.id,
+                items: cartItems,
+            };
+            console.log("Données envoyées au serveur :", requestData);
+
+            const response = await axios.post(
+                "/api/create-new-order",
+                requestData
+            );
+
+            console.log("Réponse du serveur :", response.data);
+
             if (response.data.success) {
+                console.log("Paiement traité avec succès");
                 clearCart();
-                onClose(); // Fechar o modal após o sucesso do pagamento
-                //TODO message de réussite!
+                onClose();
+                // TODO: Ajouter ici un message de réussite ou une redirection
             } else {
-                setErrorMessage("Payment failed: " + response.data.error);
+                setErrorMessage("Échec du paiement : " + response.data.message);
             }
         } catch (error) {
-            console.error("Error during manual checkout:", error);
+            console.error(
+                "Erreur lors du paiement :",
+                error.response ? error.response.data : error
+            );
             setErrorMessage(
-                "An error occurred during checkout. Please try again."
+                "Une erreur est survenue lors du paiement. Veuillez réessayer."
             );
         } finally {
             setIsProcessing(false);
