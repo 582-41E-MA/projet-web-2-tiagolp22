@@ -44,6 +44,22 @@ const VoitureCreate = ({
             commandes_id_commande: null,
             photos: [],
         });
+        console.log('Types de carburant:', typesCarburant);
+        console.log('Transmissions:', transmissions);
+        console.log('Groupes motopropulseur:', groupesMotopropulseur);
+        console.log('Carrosseries:', carrosseries);
+
+        const parseJsonField = (field) => {
+            if (typeof field === 'string') {
+                try {
+                    return JSON.parse(field);
+                } catch (e) {
+                    console.error('Erreur de parsing JSON:', e);
+                    return {};
+                }
+            }
+            return field;
+        };
 
     useEffect(() => {
         const prixAchat = parseFloat(data.prix_achat);
@@ -354,18 +370,14 @@ const VoitureCreate = ({
                                 </option>
                                 {transmissions.map((transmission) => (
                                     <option
-                                        className="form-option"
-                                        key={transmission.id}
-                                        value={transmission.id_transmission}
-                                    >
-                                        {i18n.language === "en"
-                                            ? JSON.parse(
-                                                  transmission.type_transmission
-                                              ).en
-                                            : JSON.parse(
-                                                  transmission.type_transmission
-                                              ).fr}
-                                    </option>
+                                    className="form-option"
+                                    key={transmission.id}
+                                    value={transmission.id_transmission}
+                                >
+                                    {i18n.language === "en"
+                                        ? parseJsonField(transmission.type_transmission).en
+                                        : parseJsonField(transmission.type_transmission).fr}
+                                </option>
                                 ))}
                             </select>
                             {errors.type_transmission_id && (
@@ -398,17 +410,13 @@ const VoitureCreate = ({
                             </option>
                             {groupesMotopropulseur.map((groupe) => (
                                 <option
-                                    key={groupe.id_groupe_motopropulseur}
-                                    value={groupe.id_groupe_motopropulseur}
-                                >
-                                    {i18n.language === "en"
-                                        ? JSON.parse(
-                                              groupe.type_groupe_motopropulseur
-                                          ).en
-                                        : JSON.parse(
-                                              groupe.type_groupe_motopropulseur
-                                          ).fr}
-                                </option>
+                                key={groupe.id_groupe_motopropulseur}
+                                value={groupe.id_groupe_motopropulseur}
+                            >
+                                {i18n.language === "en"
+                                    ? parseJsonField(groupe.type_groupe_motopropulseur).en
+                                    : parseJsonField(groupe.type_groupe_motopropulseur).fr}
+                            </option>
                             ))}
                         </select>
                         {errors.groupe_motopropulseur_id && (
@@ -438,15 +446,13 @@ const VoitureCreate = ({
                             <option value="">{t("car.select_option")}</option>
                             {typesCarburant.map((carburant) => (
                                 <option
-                                    key={carburant.id}
-                                    value={carburant.id_type_carburant}
-                                >
-                                    {i18n.language === "en"
-                                        ? JSON.parse(carburant.type_carburant)
-                                              .en
-                                        : JSON.parse(carburant.type_carburant)
-                                              .fr}
-                                </option>
+                                key={carburant.id}
+                                value={carburant.id_type_carburant}
+                            >
+                                {i18n.language === "en"
+                                    ? parseJsonField(carburant.type_carburant).en
+                                    : parseJsonField(carburant.type_carburant).fr}
+                            </option>
                             ))}
                         </select>
                         {errors.type_carburant_id && (
@@ -476,18 +482,14 @@ const VoitureCreate = ({
                             <option value="">{t("car.select_option")}</option>
                             {carrosseries.map((carrosserie) => (
                                 <option
-                                    className="form-option"
-                                    key={carrosserie.id}
-                                    value={carrosserie.id_carrosserie}
-                                >
-                                    {i18n.language === "en"
-                                        ? JSON.parse(
-                                              carrosserie.type_carrosserie
-                                          ).en
-                                        : JSON.parse(
-                                              carrosserie.type_carrosserie
-                                          ).fr}
-                                </option>
+                                className="form-option"
+                                key={carrosserie.id}
+                                value={carrosserie.id_carrosserie}
+                            >
+                                {i18n.language === "en"
+                                    ? parseJsonField(carrosserie.type_carrosserie).en
+                                    : parseJsonField(carrosserie.type_carrosserie).fr}
+                            </option>
                             ))}
                         </select>
                         {errors.carrosserie_id && (
