@@ -10,6 +10,7 @@ class Commande extends Model
     use HasFactory;
 
     protected $table = 'commandes';
+    public $timestamps = false;
     protected $primaryKey = 'id_commande';
     protected $fillable = [
         'id_utilisateur', 'date_commande', 'prix_total', 'status_commande_id',

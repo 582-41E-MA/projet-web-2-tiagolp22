@@ -198,3 +198,4 @@ Route::post('/webhook', [StripeController::class, 'webhook']);
 Route::get('/payment/success', [StripeController::class, 'paymentSuccess'])->name('payment.success');
 Route::get('/payment/cancel', [StripeController::class, 'paymentCancel'])->name('payment.cancel');
 Route::post('/process-payment', [StripeController::class, 'processPayment']);
+Route::post('/api/create-new-order', [StripeController::class, 'createNewOrder']);
