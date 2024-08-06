@@ -49,7 +49,23 @@
     "delete_button": "Supprimer compte",
     "confirm_delete_message": "Voulez vous vraiment supprimer votre compte?",
     "update_button": "Mettre a jour",
-    "cancel_button": "Canceler"
+    "cancel_button": "Canceler",
+    "reservations": "Réservations",
+    "no_reservations": "Aucune réservation",
+    "car_annee": "Année de la voiture",
+    "car_modele": "Modèle de la voiture"
+  },
+  "reservation": {
+    "id": "ID",
+    "date": "Date",
+    "status": "Statut",
+    "car_annee": "Année de la voiture",
+    "car_modele": "Modèle de la voiture",
+    "prix": "Prix de la voiture",
+    "remaining_time": "Temps restant",
+    "button_reservation": "Réserver",
+    "cancel_reservation": "Annuler reservation",
+    "time_limit_info": "À partir du moment où vous réservez la voiture, vous avez 24 heures pour finaliser l'achat. Si le paiement n'est pas complété dans ce délai, la voiture sera de nouveau listée dans le catalogue et sera disponible pour d'autres clients."
   },
   "car": {
     "edit_title": "Modifier la voiture",
@@ -72,11 +88,9 @@
     "vehicle_condition": "État du véhicule",
     "order_id": "ID de commande",
     "submit_button": "Soumettre",
-    "current_photos":"photo actuel",
-    "add_photos":"Ajouter des photos",
-    "photo_selected":"photos selectionnées",
-
-
+    "current_photos": "photo actuel",
+    "add_photos": "Ajouter des photos",
+    "photo_selected": "photos selectionnées",
     "errors": {
       "model_required": "Le modèle est requis.",
       "year_invalid": "Année invalide. Veuillez saisir une année valide entre 1900 et l'année en cours.",
@@ -154,8 +168,7 @@
   },
   "Learn_more": "En savoir plus",
   "constructeur": {
-    "update_button":"Modifier",
-
+    "update_button": "Modifier",
     "create": "créer un constructeur",
     "index_title": "Liste des Constructeurs",
     "name": "Nom",
@@ -239,27 +252,26 @@
     "create_button": "Créer",
     "index_title": "Type de carburant",
     "update_button": "Mettre à jour le Type de Carburant"
-
-},
-"carrosserie": {
-  "index_title": "Types de Carrosserie",
-  "edit": "Modifier le Type de Carrosserie",
-  "create": "Créer un Type de Carrosserie",
-  "name": "Nom",
-  "description": "Description",
-  "update_button": "Mettre à jour",
-  "create_button": "Créer",
-  "confirm_delete": "Êtes-vous sûr de vouloir supprimer ce type de carrosserie ?",
-  "delete": "Supprimer"
-},
-"groupeMotopropulseur": {
-  "no_data": "Aucune donnée disponible",
-  "confirm_delete": "Êtes-vous sûr de vouloir supprimer ce groupe motopropulseur ?",
-  "index_title": "Liste des groupes motopropulseurs",
-  "edit": "Modifier",
-  "delete": "Supprimer",
-  "name": "Nom du groupe motopropulseur",
-  "description": "Description",
-  "update_button": "Mettre à jour"
-}
+  },
+  "carrosserie": {
+    "index_title": "Types de Carrosserie",
+    "edit": "Modifier le Type de Carrosserie",
+    "create": "Créer un Type de Carrosserie",
+    "name": "Nom",
+    "description": "Description",
+    "update_button": "Mettre à jour",
+    "create_button": "Créer",
+    "confirm_delete": "Êtes-vous sûr de vouloir supprimer ce type de carrosserie ?",
+    "delete": "Supprimer"
+  },
+  "groupeMotopropulseur": {
+    "no_data": "Aucune donnée disponible",
+    "confirm_delete": "Êtes-vous sûr de vouloir supprimer ce groupe motopropulseur ?",
+    "index_title": "Liste des groupes motopropulseurs",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "name": "Nom du groupe motopropulseur",
+    "description": "Description",
+    "update_button": "Mettre à jour"
+  }
 }

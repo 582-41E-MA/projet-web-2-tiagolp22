@@ -32,6 +32,8 @@ use App\Http\Controllers\StripeController;
 Route::middleware(['auth:sanctum'])->group(function () {
     // Routes pour tous les utilisateurs authentifiés
     Route::post('/reservations', [ReservationController::class, 'store'])->name('reservations.store');
+    Route::delete('/reservations/{id}', [ReservationController::class, 'destroy'])->name('reservations.destroy');
+
     Route::get('/user/profile/{id}', [UtilisateurController::class, 'edit'])->name('user.profile');
     Route::put('/user/profile/{id}', [UtilisateurController::class, 'update'])->name('utilisateurs.update');
     Route::delete('/user/profile/delete/{id}', [UtilisateurController::class, 'destroy'])->name('utilisateurs.delete');
@@ -51,10 +53,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/voitures', [VoitureController::class, 'store'])->name('voitures.store');
         Route::get('/voitures/{id}/edit', [VoitureController::class, 'edit'])->name('voitures.edit');
         Route::put('/voitures/{id}', [VoitureController::class, 'update'])->name('voitures.update');
-        Route::post('/voitures/{id}', [VoitureController::class, 'update'])->name('voitures.update'); 
+        Route::post('/voitures/{id}', [VoitureController::class, 'update'])->name('voitures.update');
         Route::delete('/photos/{photo}', [PhotoController::class, 'destroy'])->name('photo.destroy');
 
-       
+
         //
         Route::get('/modele', [ModeleController::class, 'index'])->name('modele.index');
         Route::get('/modele/create', [ModeleController::class, 'create'])->name('modele.create');

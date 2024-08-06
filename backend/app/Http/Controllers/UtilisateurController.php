@@ -9,6 +9,7 @@ use App\Models\Privilege;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use App\Models\Reservation;
 
 class UtilisateurController extends Controller
 {
@@ -52,10 +53,12 @@ class UtilisateurController extends Controller
         $utilisateur = Utilisateur::findOrFail($id);
         $villes = Ville::orderBy('nom_ville')->get();
         $privileges = Privilege::orderBy('nom_privilege')->get();
+        $reservations = Reservation::with(['voiture.modele', 'voiture.transmission', 'voiture.groupeMotopropulseur', 'voiture.typeCarburant', 'voiture.carrosserie', 'voiture.commande', 'voiture.photos'])->where('id_utilisateur', $id)->get();
         return inertia('User/Profile', [
             'utilisateur' => $utilisateur,
             'villes' => $villes,
             'privileges' => $privileges,
+            'reservations' => $reservations,
         ]);
     }
 
@@ -78,7 +81,7 @@ class UtilisateurController extends Controller
         $utilisateur = Utilisateur::findOrFail($id);
         $utilisateur->delete();
 
-        return response()->json(['message' => 'Utilisateur supprimer avec succes']);;
+        return response()->json(['message' => 'Utilisateur supprimer avec succes']);
     }
 
     public function getUtilisateurWithPrivilegeOne()

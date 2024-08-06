@@ -49,7 +49,23 @@
     "delete_button": "Delete account",
     "confirm_delete_message": "Do you really want to delete your account?",
     "update_button": "Update",
-    "cancel_button": "Cancel"
+    "cancel_button": "Cancel",
+    "reservations": "Reservations",
+    "no_reservations": "No reservations",
+    "car_annee": "Car Year",
+    "car_modele": "Car Model"
+  },
+  "reservation": {
+    "id": "ID",
+    "date": "Date",
+    "status": "Status",
+    "car_annee": "Car Year",
+    "car_modele": "Car Model",
+    "prix": "Car price",
+    "remaining_time": "Remaining Time",
+    "button_reservation": "Make a reservation",
+    "cancel_reservation": "Cancel reservation",
+      "time_limit_info": "From the moment you reserve the car, you have 24 hours to complete the purchase. If the payment is not finalized within this period, the car will be relisted in the catalog and will be available for other customers."
   },
   "save_changes": "Save changes",
   "Learn_more": "Learn more",
@@ -75,11 +91,9 @@
     "vehicle_condition": "Vehicle Condition",
     "order_id": "Order ID",
     "submit_button": "Submit",
-    "current_photos":"Current photos",
-    "add_photos":"Add photos",
-    "photo_selected":"photos selected",
-
-
+    "current_photos": "Current photos",
+    "add_photos": "Add photos",
+    "photo_selected": "photos selected",
     "errors": {
       "model_required": "Model is required.",
       "year_invalid": "Invalid year. Please enter a valid year between 1900 and the current year.",
@@ -156,7 +170,7 @@
     "update_button": "update"
   },
   "constructeur": {
-    "update_button":"Update",
+    "update_button": "Update",
     "create": "create cunstructor",
     "index_title": "Constructors List",
     "name": "Name",
@@ -231,8 +245,8 @@
     "remove": "Remove",
     "processing": "Processing...",
     "car_show.add_to_cart": "Add to cart"
-  },   
-   "typeCarburant": {
+  },
+  "typeCarburant": {
     "edit_title": "Edit Fuel Type",
     "create": "Create Fuel Type",
     "name": "Fuel Type Name",
@@ -240,30 +254,26 @@
     "create_button": "Create",
     "index_title": "Fuel type",
     "update_button": "Update Fuel Type"
-
-
-},
-"carrosserie": {
-  "index_title": "Car Body Types",
-  "edit": "Edit Car Body Type",
-  "create": "Create Car Body Type",
-  "name": "Name",
-  "description": "Description",
-  "update_button": "Update",
-  "create_button": "Create",
-  "confirm_delete": "Are you sure you want to delete this car body type?",
-  "delete": "Delete"
-},
-"groupeMotopropulseur": {
-  "no_data": "No data available",
-  "confirm_delete": "Are you sure you want to delete this powertrain group?",
-  "index_title": "List of Powertrain Groups",
-  "edit": "Edit",
-  "delete": "Delete",
-  "name": "Powertrain Group Name",
-  "description": "Description",
-  "update_button": "Update"
-
-}
-
+  },
+  "carrosserie": {
+    "index_title": "Car Body Types",
+    "edit": "Edit Car Body Type",
+    "create": "Create Car Body Type",
+    "name": "Name",
+    "description": "Description",
+    "update_button": "Update",
+    "create_button": "Create",
+    "confirm_delete": "Are you sure you want to delete this car body type?",
+    "delete": "Delete"
+  },
+  "groupeMotopropulseur": {
+    "no_data": "No data available",
+    "confirm_delete": "Are you sure you want to delete this powertrain group?",
+    "index_title": "List of Powertrain Groups",
+    "edit": "Edit",
+    "delete": "Delete",
+    "name": "Powertrain Group Name",
+    "description": "Description",
+    "update_button": "Update"
+  }
 }
