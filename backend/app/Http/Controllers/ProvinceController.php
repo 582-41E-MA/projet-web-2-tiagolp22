@@ -12,9 +12,7 @@ class ProvinceController extends Controller
     public function index()
     {
         $provinces = Province::with('pays')->get(); // Carregar os dados relacionados
-        return Inertia::render('Province/ProvinceIndex', [
-            'provinces' => $provinces,
-        ]);
+        return $provinces;
     }
 
     public function create()
