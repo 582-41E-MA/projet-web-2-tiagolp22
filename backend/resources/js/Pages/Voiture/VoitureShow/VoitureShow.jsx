@@ -24,6 +24,8 @@ import {
     faCarSide,
 } from "@fortawesome/free-solid-svg-icons";
 import Modal from "../../Modal/Modal";
+import moment from "moment-timezone";
+
 const VoitureShow = ({ voiture, photos }) => {
     const { t, i18n } = useTranslation();
     const [cartItems, setCartItems] = useState([]);
@@ -62,20 +64,23 @@ const VoitureShow = ({ voiture, photos }) => {
             alert("Deja dans le panier");
         }
     };
-    const makeReservation = () => {
-        return Inertia.post("/reservations", {
-            id_voiture: voiture.id_voiture,
-            id_utilisateur: auth.user.id,
-            date_reservation: new Date().toISOString().split("T")[0],
-            status: "reservation",
-        })
-            .then(() => {
-                alert(t("reservation_modal.success_message"));
-            })
-            .catch((error) => {
-                alert(t("reservation_modal.error_message") + error.message);
+    const makeReservation = async () => {
+        try {
+            const now = moment()
+                .tz("America/Toronto")
+                .format("YYYY-MM-DD HH:mm:ss");
+            const response = await Inertia.post("/reservations", {
+                id_voiture: voiture.id_voiture,
+                id_utilisateur: auth.user.id,
+                date_reservation: now,
+                status: "reservation",
             });
+            window.location.href = `/user/profile/${auth.user.id}`;
+        } catch (error) {
+            console.log("error const makeReservation ");
+        }
     };
+
     const settings = {
         dots: true,
         infinite: true,
@@ -126,7 +131,7 @@ const VoitureShow = ({ voiture, photos }) => {
                         {t("cart.car_show.add_to_cart")}
                     </button>
                     <button onClick={openModal} className="btn btn-secondary">
-                        {t("car_show.reserve")}
+                        {t("reservation.button_reservation")}
                     </button>
                     <Modal
                         isOpen={modalIsOpen}

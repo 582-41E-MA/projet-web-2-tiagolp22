@@ -70,6 +70,7 @@ select {
 
 .form-container .btn-edit {
     padding: 10px 20px;
+    margin-right: 10px;
     background-color: #28a745; 
     color: white; 
     border: none;

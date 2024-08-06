@@ -38,10 +38,19 @@ class Utilisateur extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'prenom', 'nom', 'date_naissance', 'adresse', 'code_postal',
-        'numero_telephone', 'numero_portable', 'courriel',
-        'privileges_id', 'nom_utilisateur', 'mot_de_passe',
-        'derniere_connexion', 'villes_id_ville'
+        'prenom',
+        'nom',
+        'date_naissance',
+        'adresse',
+        'code_postal',
+        'numero_telephone',
+        'numero_portable',
+        'courriel',
+        'privileges_id',
+        'nom_utilisateur',
+        'mot_de_passe',
+        'derniere_connexion',
+        'villes_id_ville'
     ];
     public $timestamps = false;
     /**
@@ -82,5 +91,9 @@ class Utilisateur extends Authenticatable
     public function journalDeBord()
     {
         return $this->hasMany(JournalDeBord::class, 'utilisateur_id', 'id_utilisateur');
+    }
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class, 'id_utilisateur', 'id_utilisateur');
     }
 }
