@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 use Stripe\Stripe;
 use Stripe\Checkout\Session;
 use App\Models\Commande;
@@ -49,11 +50,19 @@ class StripeController extends Controller
             Log::info('Résultat du traitement :', $paymentResult);
 
             if ($paymentResult['success']) {
+                // Obtenir l'ID de la province de l'utilisateur (ou d'ailleurs selon votre logique)
+                $provinceId = 1; // Remplacer par l'ID correct selon votre logique
+
+                // Calculer le total avec les taxes
+                $totalAmountData = $this->calculateTotalAmount($request->items, $provinceId);
+                $totalAmount = $totalAmountData['total'];
+                $totalTaxes = $totalAmountData['taxes'];
+
                 // Créer une nouvelle commande
                 $order = new Commande();
                 $order->id_utilisateur = auth()->id() ?? 1; // Utiliser 1 si aucun utilisateur n'est authentifié
                 $order->date_commande = now();
-                $order->prix_total = $this->calculateTotalAmount($request->items);
+                $order->prix_total = $totalAmount;
                 $order->status_commande_id = 1;
                 $order->mode_paiement_id = 1;
                 $order->mode_expedition_id = 1;
@@ -65,6 +74,16 @@ class StripeController extends Controller
                 }
 
                 Log::info('Commande créée :', $order->toArray());
+
+                // Enregistrer les taxes dans la table commandes_has_taxes
+                $tax = DB::table('taxes')->where('provinces_id_province', $provinceId)->first();
+                if ($tax) {
+                    DB::table('commandes_has_taxes')->insert([
+                        'commandes_id_commande' => $order->id_commande,
+                        'taxes_id' => $tax->id,
+                        'total_taxes' => $totalTaxes,
+                    ]);
+                }
 
                 return response()->json([
                     'success' => true,
@@ -123,7 +142,7 @@ class StripeController extends Controller
                 }
                 break;
             default:
-                echo 'Reçu un type d\'événement inconnu ' . $event->type;
+                echo 'Received unknown event type ' . $event->type;
         }
 
         return response()->json(['status' => 'success']);
@@ -141,12 +160,12 @@ class StripeController extends Controller
 
     public function processPayment(Request $request)
     {
-        Log::info('Démarrage du traitement de paiement');
+        Log::info('Iniciando processamento de pagamento');
         Stripe::setApiKey(env('STRIPE_SECRET'));
 
         try {
             $paymentIntent = \Stripe\PaymentIntent::create([
-                'amount' => $this->calculateTotalAmount($request->items) * 100,
+                'amount' => $this->calculateSubtotal($request->items) * 100,
                 'currency' => 'cad',
                 'payment_method' => $request->paymentMethod,
                 'confirm' => true,
@@ -156,16 +175,38 @@ class StripeController extends Controller
                 ],
             ]);
 
-            Log::info('PaymentIntent créé :', ['id' => $paymentIntent->id]);
+            Log::info('PaymentIntent créé:', ['id' => $paymentIntent->id]);
 
             return ['success' => true, 'clientSecret' => $paymentIntent->client_secret];
         } catch (\Exception $e) {
-            Log::error('Erreur lors du traitement du paiement :', ['message' => $e->getMessage()]);
+            Log::error('Erro no processamento do pagamento:', ['message' => $e->getMessage()]);
             return ['success' => false, 'error' => $e->getMessage()];
         }
     }
 
-    private function calculateTotalAmount($items)
+    private function calculateTotalAmount($items, $provinceId)
+    {
+        $subtotal = $this->calculateSubtotal($items);
+
+        // Récupérer les taxes de la table des taxes
+        $tax = DB::table('taxes')->where('provinces_id_province', $provinceId)->first();
+
+        $gst_hst = 0;
+        $pst = 0;
+        $totalTaxes = 0;
+
+        if ($tax) {
+            $gst_hst = $subtotal * ($tax->GST_HST / 100);
+            $pst = $subtotal * ($tax->PST / 100);
+            $totalTaxes = $gst_hst + $pst;
+        }
+
+        $total = $subtotal + $totalTaxes;
+
+        return ['total' => $total, 'taxes' => $totalTaxes];
+    }
+
+    private function calculateSubtotal($items)
     {
         return array_reduce($items, function ($carry, $item) {
             return $carry + $item['prix_vente'];
