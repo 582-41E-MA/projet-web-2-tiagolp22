@@ -27,6 +27,8 @@ use App\Http\Controllers\PhotoController;
 use App\Models\Taxe;
 use Inertia\Inertia;
 use App\Http\Controllers\StripeController;
+use App\Http\Controllers\MethodexpediditionController;
+
 
 // Routes protégées par authentification
 Route::middleware(['auth:sanctum'])->group(function () {
@@ -200,6 +202,9 @@ Route::middleware('web')->group(function () {
 //         Route::get('/payment/cancel', [StripeController::class, 'paymentCancel'])->name('payment.cancel');
 //     });
 // });
+
+
+Route::get('/api/methodeExpeditions', [MethodexpediditionController::class, 'index']);
 
 Route::post('/create-checkout-session', [StripeController::class, 'createCheckoutSession']);
 Route::post('/webhook', [StripeController::class, 'webhook']);

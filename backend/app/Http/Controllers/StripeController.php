@@ -10,6 +10,10 @@ use Stripe\Checkout\Session;
 use App\Models\Commande;
 use Inertia\Inertia;
 
+
+use App\Models\MethodeExpedition;
+
+
 class StripeController extends Controller
 {
     public function createCheckoutSession(Request $request)
@@ -44,6 +48,7 @@ class StripeController extends Controller
     public function createNewOrder(Request $request)
     {
         Log::info('Démarrage de createNewOrder', $request->all());
+        $modeExpeditionId = $request->mode_expedition_id;
         try {
             // Traiter le paiement
             $paymentResult = $this->processPayment($request);
@@ -54,18 +59,19 @@ class StripeController extends Controller
                 $provinceId = 1; // Remplacer par l'ID correct selon votre logique
 
                 // Calculer le total avec les taxes
-                $totalAmountData = $this->calculateTotalAmount($request->items, $provinceId);
+                $totalAmountData = $this->calculateTotalAmount($request->items, $provinceId, $modeExpeditionId);
                 $totalAmount = $totalAmountData['total'];
                 $totalTaxes = $totalAmountData['taxes'];
+                $fraisExpedition = $totalAmountData['frais_expedition'];
 
                 // Créer une nouvelle commande
                 $order = new Commande();
-                $order->id_utilisateur = auth()->id() ?? 1; // Utiliser 1 si aucun utilisateur n'est authentifié
+                $order->id_utilisateur = auth()->id() ?? 1;
                 $order->date_commande = now();
                 $order->prix_total = $totalAmount;
                 $order->status_commande_id = 1;
                 $order->mode_paiement_id = 1;
-                $order->mode_expedition_id = 1;
+                $order->mode_expedition_id = $modeExpeditionId;//$modeExpeditionId;
                 $order->date_paiement = now();
                 $order->commentaires = 'Commande réalisée via Stripe';
 
@@ -164,8 +170,12 @@ class StripeController extends Controller
         Stripe::setApiKey(env('STRIPE_SECRET'));
 
         try {
+            $provinceId = 1;
+            $totalAmountData = $this->calculateTotalAmount($request->items, $provinceId, $request->mode_expedition_id);
+            $totalAmount = $totalAmountData['total'];
+
             $paymentIntent = \Stripe\PaymentIntent::create([
-                'amount' => $this->calculateSubtotal($request->items) * 100,
+                'amount' => $totalAmount * 100,
                 'currency' => 'cad',
                 'payment_method' => $request->paymentMethod,
                 'confirm' => true,
@@ -184,7 +194,7 @@ class StripeController extends Controller
         }
     }
 
-    private function calculateTotalAmount($items, $provinceId)
+    private function calculateTotalAmount($items, $provinceId, $modeExpeditionId)
     {
         $subtotal = $this->calculateSubtotal($items);
 
@@ -201,9 +211,13 @@ class StripeController extends Controller
             $totalTaxes = $gst_hst + $pst;
         }
 
-        $total = $subtotal + $totalTaxes;
+        // Récupérer le prix du fret
+        $methodExpedition = MethodeExpedition::find($modeExpeditionId);
+        $fraisExpedition = $methodExpedition ? $methodExpedition->prix_fixe : 0;
 
-        return ['total' => $total, 'taxes' => $totalTaxes];
+        $total = $subtotal + $totalTaxes + $fraisExpedition;
+
+        return ['total' => $total, 'taxes' => $totalTaxes, 'frais_expedition' => $fraisExpedition];
     }
 
     private function calculateSubtotal($items)
