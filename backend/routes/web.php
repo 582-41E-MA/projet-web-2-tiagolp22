@@ -55,6 +55,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::put('/voitures/{id}', [VoitureController::class, 'update'])->name('voitures.update');
         Route::post('/voitures/{id}', [VoitureController::class, 'update'])->name('voitures.update');
         Route::delete('/photos/{photo}', [PhotoController::class, 'destroy'])->name('photo.destroy');
+        Route::delete('/voitures/{id}', 'VoitureController@destroy')->name('voitures.destroy');
+
 
 
         //
