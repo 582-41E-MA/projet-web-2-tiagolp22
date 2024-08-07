@@ -123,7 +123,6 @@ const VoitureEdit = () => {
         });
     };
 
-    console.log("Photos actuelles:", data.currentPhotos);
     return (
         <>
             <Header />
