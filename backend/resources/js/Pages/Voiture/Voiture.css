@@ -2,6 +2,10 @@
   display: flex;
   flex-wrap: wrap;
 }
+.prix-voiture {
+  color: black !important;
+  font-weight: 700;
+}
 
 .filters-section {
   width: 20%;

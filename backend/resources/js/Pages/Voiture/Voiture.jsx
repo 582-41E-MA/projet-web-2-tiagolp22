@@ -99,6 +99,7 @@ function Voiture({ voitures: initialVoitures, privilege_id }) {
                                             <h3 className="car-title">
                                                 {voiture.annee} {voiture.modele.constructeur.nom_constructeur} {voiture.modele.nom_modele}
                                             </h3>
+                                            <p className="prix-voiture"> {voiture.prix_vente} $</p>
                                             <p className="car-description">
                                                 {descriptionObj[i18n.language] || ''}
                                             </p>
