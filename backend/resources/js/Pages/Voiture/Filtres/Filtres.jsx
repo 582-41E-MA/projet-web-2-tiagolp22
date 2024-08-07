@@ -58,18 +58,7 @@ function Filters({ onFilter }) {
     return (
         <div className="filters-container">
             <h3>{t("filters.filters")}</h3>
-            <div>
-                <label>{t("filters.condition")}</label>
-                <select
-                    name="etat"
-                    value={filters.etat}
-                    onChange={handleChange}
-                >
-                    <option value="">{t("filters.All")}</option>
-                    <option value="Neuf">{t("filters.New")}</option>
-                    <option value="Occasion">{t("filters.Used")}</option>
-                </select>
-            </div>
+        
             <div>
                 <label>{t("filters.Manufacturer")}</label>
                 <select
@@ -116,20 +105,7 @@ function Filters({ onFilter }) {
                     onChange={handleChange}
                 />
             </div>
-            <div>
-                <label>{t("filters.Color")}</label>
-                <select
-                    name="couleur"
-                    value={filters.couleur}
-                    onChange={handleChange}
-                >
-                    {options.colors.map((color, index) => (
-                        <option key={index} value={color}>
-                            {color}
-                        </option>
-                    ))}
-                </select>
-            </div>
+            
             <div>
                 <label>{t("filters.Number of Seats")}</label>
                 <select
@@ -139,7 +115,7 @@ function Filters({ onFilter }) {
                 >
                     <option value="">{t("filters.All")}</option>
                     <option value="2">2</option>
-                    <option value="4">5</option>
+                    <option value="4">4</option>
                     <option value="5">5</option>
                 </select>
             </div>
@@ -151,9 +127,10 @@ function Filters({ onFilter }) {
                     onChange={handleChange}
                 >
                     <option value="">{t("filters.All")}</option>
-                    <option value="2">{t("filters.2")}</option>
-                    <option value="3">{t("filters.3")}</option>
-                    <option value="4">{t("filters.4")}</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
                 </select>
             </div>
             <button onClick={applyFilters}>
