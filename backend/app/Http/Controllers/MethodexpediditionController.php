@@ -5,16 +5,19 @@ namespace App\Http\Controllers;
 use App\Models\MethodeExpedition;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Log;
 
-class MethodeExpeditionController extends Controller
+class MethodexpediditionController extends Controller
 {
     public function index()
     {
-        $methodeExpeditions = MethodeExpedition::all();
-
-        return Inertia::render('MethodeExpedition/MethodeExpedition', [
-            'methodeExpeditions' => $methodeExpeditions,
-        ]);
+        try {
+            $methodeExpeditions = MethodeExpedition::all();
+            return response()->json($methodeExpeditions);
+        } catch (\Exception $e) {
+            Log::error('Error fetching shipping methods: ' . $e->getMessage());
+            return response()->json(['error' => 'An error occurred while fetching shipping methods'], 500);
+        }
     }
 
     public function create()

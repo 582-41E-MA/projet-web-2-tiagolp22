@@ -8,18 +8,30 @@ import {
     useElements,
 } from "@stripe/react-stripe-js";
 import axios from "axios";
-import { Button, Modal, Box } from "@mui/material";
+import {
+    Button,
+    Modal,
+    Box,
+    Select,
+    MenuItem,
+    FormControl,
+    InputLabel,
+} from "@mui/material";
 import "./CartIndex.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartArrowDown } from "@fortawesome/free-solid-svg-icons";
-// Config Axios
+
 axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 axios.defaults.withCredentials = true;
 
-// STRIPE KEY PUBLIC
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_KEY);
 
-const CheckoutForm = ({ cartItems, clearCart, onClose }) => {
+const CheckoutForm = ({
+    cartItems,
+    clearCart,
+    onClose,
+    selectedShippingMethod,
+}) => {
     const stripe = useStripe();
     const elements = useElements();
     const [isProcessing, setIsProcessing] = useState(false);
@@ -30,7 +42,9 @@ const CheckoutForm = ({ cartItems, clearCart, onClose }) => {
         event.preventDefault();
         setIsProcessing(true);
 
-        if (!stripe || !elements) {
+        if (!stripe || !elements || !selectedShippingMethod) {
+            setErrorMessage(t("cart.selectShippingMethodError"));
+            setIsProcessing(false);
             return;
         }
 
@@ -57,6 +71,7 @@ const CheckoutForm = ({ cartItems, clearCart, onClose }) => {
             const requestData = {
                 paymentMethod: paymentMethod.id,
                 items: cartItems,
+                mode_expedition_id: selectedShippingMethod,
             };
             console.log("Données envoyées au serveur :", requestData);
 
@@ -107,15 +122,27 @@ const CheckoutForm = ({ cartItems, clearCart, onClose }) => {
 };
 
 const CartIndex = ({ onClose, onClearCart }) => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const [cartItems, setCartItems] = useState([]);
     const [showModal, setShowModal] = useState(false);
+    const [shippingMethods, setShippingMethods] = useState([]);
+    const [selectedShippingMethod, setSelectedShippingMethod] = useState("");
 
     useEffect(() => {
         const storedCartItems = JSON.parse(
             localStorage.getItem("cartItems") || "[]"
         );
         setCartItems(storedCartItems);
+
+        const fetchShippingMethods = async () => {
+            try {
+                const response = await axios.get("/api/methodeExpeditions");
+                setShippingMethods(response.data);
+            } catch (error) {
+                console.error("ErroR fetchShippingMethods :", error);
+            }
+        };
+        fetchShippingMethods();
     }, []);
 
     const clearCart = () => {
@@ -130,9 +157,18 @@ const CartIndex = ({ onClose, onClearCart }) => {
         localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
     };
 
-    const totalPrice = cartItems
-        .reduce((total, item) => total + parseFloat(item.prix_vente || 0), 0)
-        .toFixed(2);
+    const subtotal = cartItems.reduce(
+        (total, item) => total + parseFloat(item.prix_vente || 0),
+        0
+    );
+    const selectedMethod = shippingMethods.find(
+        (method) =>
+            method.id_methode_expedition === parseInt(selectedShippingMethod)
+    );
+    const shippingCost = selectedMethod
+        ? parseFloat(selectedMethod.prix_fixe)
+        : 0;
+    const totalPrice = (subtotal + shippingCost).toFixed(2);
 
     return (
         <div>
@@ -151,58 +187,99 @@ const CartIndex = ({ onClose, onClearCart }) => {
                 {cartItems.length === 0 ? (
                     <p>{t("cart.empty")}</p>
                 ) : (
-                    <ul>
-                        {cartItems.map((item, index) => (
-                            <li key={index}>
-                                <h3>{item.modele.nom_modele}</h3>
-                                <p>
-                                    {t("cart.year")}:{" "}
-                                    <strong>{item.annee}</strong>
-                                </p>
-                                <p>
-                                    {t("cart.km")}:
-                                    <strong> {item.kilometrage} km</strong>
-                                </p>
-                                <p>
-                                    {t("cart.price")}:
-                                    <strong> {item.prix_vente}</strong>
-                                </p>
-                                <Button
-                                    variant="contained"
-                                    sx={{
-                                        backgroundColor: "#c9c9c9",
-                                    }}
-                                    onClick={() => handleRemoveItem(index)}
-                                >
-                                    {t("cart.remove")}
-                                </Button>
-                            </li>
-                        ))}
-                    </ul>
-                )}
-                <p>
-                    {t("cart.total")}: ${totalPrice}
-                </p>
-                {cartItems.length > 0 && (
-                    <div>
-                        <Button
-                            variant="contained"
-                            sx={{
-                                backgroundColor: "#003AA7",
-                                marginRight: "10px",
-                            }}
-                            onClick={() => setShowModal(true)}
+                    <>
+                        <ul>
+                            {cartItems.map((item, index) => (
+                                <li key={index}>
+                                    <h3>{item.modele.nom_modele}</h3>
+                                    <p>
+                                        {t("cart.year")}:{" "}
+                                        <strong>{item.annee}</strong>
+                                    </p>
+                                    <p>
+                                        {t("cart.km")}:{" "}
+                                        <strong>{item.kilometrage} km</strong>
+                                    </p>
+                                    <p>
+                                        {t("cart.price")}:{" "}
+                                        <strong>${item.prix_vente}</strong>
+                                    </p>
+                                    <Button
+                                        variant="contained"
+                                        sx={{ backgroundColor: "#c9c9c9" }}
+                                        onClick={() => handleRemoveItem(index)}
+                                    >
+                                        {t("cart.remove")}
+                                    </Button>
+                                </li>
+                            ))}
+                        </ul>
+
+                        <FormControl
+                            fullWidth
+                            sx={{ marginTop: 2, marginBottom: 2 }}
                         >
-                            {t("cart.checkout")}
-                        </Button>
-                        <Button
-                            variant="contained"
-                            sx={{ backgroundColor: "#DE9800" }}
-                            onClick={clearCart}
-                        >
-                            {t("cart.clear")}
-                        </Button>
-                    </div>
+                            <InputLabel id="shipping-method-label">
+                                {t("cart.shippingMethod")}
+                            </InputLabel>
+                            <Select
+                                labelId="shipping-method-label"
+                                value={selectedShippingMethod}
+                                onChange={(e) =>
+                                    setSelectedShippingMethod(e.target.value)
+                                }
+                                label={t("cart.shippingMethod")}
+                            >
+                                <MenuItem value="">
+                                    {t("cart.selectShippingMethod")}
+                                </MenuItem>
+                                {shippingMethods.map((method) => (
+                                    <MenuItem
+                                        key={method.id_methode_expedition}
+                                        value={method.id_methode_expedition}
+                                    >
+                                        {
+                                            JSON.parse(
+                                                method.nom_methode_expedition
+                                            )[i18n.language]
+                                        }{" "}
+                                        - ${method.prix_fixe}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+
+                        <p>
+                            {t("cart.subtotal")}: ${subtotal.toFixed(2)}
+                        </p>
+                        <p>
+                            {t("cart.shipping")}: ${shippingCost.toFixed(2)}
+                        </p>
+                        <p>
+                            {t("cart.total")}: ${totalPrice}
+                        </p>
+
+                        <div>
+                            <Button
+                                variant="contained"
+                                sx={{
+                                    backgroundColor: "#003AA7",
+                                    marginRight: "10px",
+                                }}
+                                onClick={() => setShowModal(true)}
+                                disabled={!selectedShippingMethod}
+                            >
+                                {t("cart.checkout")}
+                            </Button>
+                            <Button
+                                variant="contained"
+                                sx={{ backgroundColor: "#DE9800" }}
+                                onClick={clearCart}
+                            >
+                                {t("cart.clear")}
+                            </Button>
+                        </div>
+                    </>
                 )}
             </div>
             <Modal
@@ -231,6 +308,7 @@ const CartIndex = ({ onClose, onClearCart }) => {
                             cartItems={cartItems}
                             clearCart={clearCart}
                             onClose={() => setShowModal(false)}
+                            selectedShippingMethod={selectedShippingMethod}
                         />
                     </Elements>
                 </Box>
