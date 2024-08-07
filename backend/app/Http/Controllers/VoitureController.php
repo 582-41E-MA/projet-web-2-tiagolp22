@@ -246,4 +246,11 @@ class VoitureController extends Controller
             return back()->withErrors(['error' => 'Une erreur est survenue lors de la mise à jour: ' . $e->getMessage()]);
         }
     }
+    public function destroy($id)
+    {
+        $voiture = Voiture::findOrFail($id);
+        $voiture->delete();
+    
+        return response()->json(['success' => 'Voiture supprimée avec succès.']);
+    }
 }

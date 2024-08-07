@@ -2,39 +2,54 @@ import React, { useState, useMemo } from 'react';
 import { Link, router } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
 import Pagination from '../../Pagination/Pagination';
+import Modal from '../../Modal/Modal';
 import './VoitureIndex.css';
 
 const VoitureIndex = ({ voitures = [], onEdit }) => {
     const { t } = useTranslation();
+    const [carList, setCarList] = useState(voitures);
     const [currentPage, setCurrentPage] = useState(1);
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedYear, setSelectedYear] = useState('');
     const [selectedModel, setSelectedModel] = useState('');
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [carToDelete, setCarToDelete] = useState(null);
 
     const itemsPerPage = 5;
 
+    const openModal = (car) => {
+        setCarToDelete(car);
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+        setCarToDelete(null);
+    };
+
     const handleDelete = (id) => {
-        if (confirm(t('dashboard.voitures.confirm_delete'))) {
-            router.delete(`/voitures/${id}`, {
-                onSuccess: () => {
-                    console.log("Voiture supprimée avec succès");
-                },
-                onError: (errors) => {
-                    console.error("Erreur lors de la suppression de la voiture", errors);
-                },
-            });
-        }
+        router.delete(`/voitures/${id}`, {
+            onSuccess: () => {
+                console.log("Voiture supprimée avec succès");
+                // Mettre à jour la liste des voitures en local
+                setCarList((prevCarList) => prevCarList.filter((voiture) => voiture.id_voiture !== id));
+                closeModal();
+            },
+            onError: (errors) => {
+                console.error("Erreur lors de la suppression de la voiture", errors);
+            },
+        });
     };
 
     const filteredVoitures = useMemo(() => {
-        return voitures.filter(voiture => {
+        return carList.filter(voiture => {
             const matchesSearchTerm = voiture.modele.nom_modele.toLowerCase().includes(searchTerm.toLowerCase()) ||
                                       voiture.modele.constructeur.nom_constructeur.toLowerCase().includes(searchTerm.toLowerCase());
             const matchesYear = selectedYear ? voiture.annee === parseInt(selectedYear) : true;
             const matchesModel = selectedModel ? voiture.modele.nom_modele === selectedModel : true;
             return matchesSearchTerm && matchesYear && matchesModel;
         });
-    }, [voitures, searchTerm, selectedYear, selectedModel]);
+    }, [carList, searchTerm, selectedYear, selectedModel]);
 
     const paginatedVoitures = filteredVoitures.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
     const totalPages = Math.ceil(filteredVoitures.length / itemsPerPage);
@@ -56,7 +71,7 @@ const VoitureIndex = ({ voitures = [], onEdit }) => {
                     className="filter-select"
                 >
                     <option value="">{t('dashboard.filters.select_year')}</option>
-                    {Array.from(new Set(voitures.map(v => v.annee))).map(year => (
+                    {Array.from(new Set(carList.map(v => v.annee))).map(year => (
                         <option key={year} value={year}>{year}</option>
                     ))}
                 </select>
@@ -66,7 +81,7 @@ const VoitureIndex = ({ voitures = [], onEdit }) => {
                     className="filter-select"
                 >
                     <option value="">{t('dashboard.filters.select_model')}</option>
-                    {Array.from(new Set(voitures.map(v => v.modele.nom_modele))).map(model => (
+                    {Array.from(new Set(carList.map(v => v.modele.nom_modele))).map(model => (
                         <option key={model} value={model}>{model}</option>
                     ))}
                 </select>
@@ -95,7 +110,7 @@ const VoitureIndex = ({ voitures = [], onEdit }) => {
                                     {t('buttons.edit')}
                                 </button>
                                 <button
-                                    onClick={() => handleDelete(voiture.id_voiture)}
+                                    onClick={() => openModal(voiture)}
                                     className="delete-button"
                                 >
                                     {t('buttons.delete')}
@@ -112,6 +127,14 @@ const VoitureIndex = ({ voitures = [], onEdit }) => {
                 totalPages={totalPages}
                 onPageChange={setCurrentPage}
             />
+            {carToDelete && (
+                <Modal
+                    isOpen={isModalOpen}
+                    onClose={closeModal}
+                    onConfirm={() => handleDelete(carToDelete.id_voiture)}
+                    message={t('dashboard.voitures.confirm_delete')}
+                />
+            )}
         </div>
     );
 };

@@ -2,17 +2,15 @@ import React from 'react';
 import './Modal.css';
 import { useTranslation } from "react-i18next";
 
-
-
 const Modal = ({ isOpen, onClose, onConfirm, message }) => {
+  const { t, i18n } = useTranslation();
+
   if (!isOpen) return null;
 
   const handleConfirmAndReload = async () => {
-    await onConfirm(); 
+    await onConfirm();
     onClose();
   };
-  const { t, i18n } = useTranslation();
-
 
   return (
     <div className="modal-overlay">
