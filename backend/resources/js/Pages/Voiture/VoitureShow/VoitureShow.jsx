@@ -127,9 +127,8 @@ const VoitureShow = ({ voiture, photos }) => {
                             </div>
                         ))}
                     </Slider>
-                    <button onClick={addToCart} className="btn btn-primary">
-                        {t("cart.car_show.add_to_cart")}
-                    </button>
+                </div>
+                <div className="btn-add-reservation">
                     <button onClick={openModal} className="btn btn-secondary">
                         {t("reservation.button_reservation")}
                     </button>
@@ -142,6 +141,9 @@ const VoitureShow = ({ voiture, photos }) => {
                             car_year: voiture.annee,
                         })}
                     />
+                    <button onClick={addToCart} className="btn-cart">
+                        {t("cart.car_show.add_to_cart")}
+                    </button>
                 </div>
                 <div className="details-box">
                     <h2>{t("car_show.general_info")}</h2>

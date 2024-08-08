@@ -42,7 +42,29 @@ h3 {
     overflow: hidden;
     transition: background-color 0.3s ease;
 }
+.btn-add-reservation {
+    display: flex;
+    justify-content: end;
+    gap: var(--space-xsmall);
+}
 
+.btn-cart {
+    color: var(--color-white);
+    cursor: pointer;
+    background-color: var(--color-tertiary);
+    border: none;
+    border-radius: 0.25rem;
+    padding: 0 var(--space-medium);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.btn-cart:hover {
+    background-color: var(--color-tertiary);
+    border: none;
+    padding: 0 var(--space-medium);
+    box-shadow: 0 0 5px var(--color-tertiary);
+    transform: scale(1);
+}
 .back-button::before {
     content: " ←";
     padding-left: 10px;
@@ -53,6 +75,10 @@ h3 {
     transition: transform 0.3s ease;
 }
 
+.voiture-show-banner {
+    margin-top: var(--space-small);
+    margin-bottom: var(--space-small);
+}
 .back-button:hover::before {
     transform: scale(1.7);
 }
@@ -61,12 +87,10 @@ h3 {
     background-color: var(--color-tertiary);
     color: var(--color-white);
 }
-.voiture-show-banner {
-    padding-top: 30px;
-}
+
 .voiture-show-banner .slick-slide img {
     border-radius: 5px;
-    max-height: 60vh;
+    max-height: 50vh;
     width: auto;
     margin: 0 auto;
 }
@@ -79,7 +103,8 @@ h3 {
 }
 
 .voiture-show-banner .slick-slide:not(.slick-center) {
-    transform: scale(0.8);
+    transform: scale(0.6);
+    filter: blur(4px);
 }
 
 @media screen and (max-width: 600px) {
