@@ -172,7 +172,7 @@ class StripeController extends Controller
         try {
             $provinceId = 1;
             $totalAmountData = $this->calculateTotalAmount($request->items, $provinceId, $request->mode_expedition_id);
-            $totalAmount = $totalAmountData['total'];
+            $totalAmount = (int) $totalAmountData['total'];
 
             $paymentIntent = \Stripe\PaymentIntent::create([
                 'amount' => $totalAmount * 100,
@@ -193,6 +193,7 @@ class StripeController extends Controller
             return ['success' => false, 'error' => $e->getMessage()];
         }
     }
+
 
     private function calculateTotalAmount($items, $provinceId, $modeExpeditionId)
     {
@@ -217,8 +218,13 @@ class StripeController extends Controller
 
         $total = $subtotal + $totalTaxes + $fraisExpedition;
 
-        return ['total' => $total, 'taxes' => $totalTaxes, 'frais_expedition' => $fraisExpedition];
+        return [
+            'total' => (int) $total, 
+            'taxes' => $totalTaxes,
+            'frais_expedition' => $fraisExpedition
+        ];
     }
+
 
     private function calculateSubtotal($items)
     {
