@@ -7,19 +7,15 @@ import { Inertia } from "@inertiajs/inertia";
 import CartIndex from "../Cart/CartIndex";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartArrowDown } from "@fortawesome/free-solid-svg-icons";
-import {
-    Drawer,
-    IconButton,
-    Badge,
-} from "@mui/material";
-
+import { Drawer, IconButton, Badge } from "@mui/material";
+import { useModal } from "../ModalContext/ModalContext";
 function Header() {
     const { t, i18n } = useTranslation();
     const { auth } = usePage().props;
     const [showModal, setShowModal] = useState(false);
     const [showCartDrawer, setShowCartDrawer] = useState(false);
     const [cartItemCount, setCartItemCount] = useState(0);
-
+    const { openLoginModal } = useModal();
     useEffect(() => {
         const storedCartItems = JSON.parse(
             localStorage.getItem("cartItems") || "[]"

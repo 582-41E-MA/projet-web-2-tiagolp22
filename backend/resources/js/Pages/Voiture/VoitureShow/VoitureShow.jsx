@@ -25,13 +25,13 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Modal from "../../Modal/Modal";
 import moment from "moment-timezone";
-
+import { useModal } from "../../ModalContext/ModalContext";
 const VoitureShow = ({ voiture, photos }) => {
     const { t, i18n } = useTranslation();
     const [cartItems, setCartItems] = useState([]);
     const { auth } = usePage().props;
     const [modalIsOpen, setModalIsOpen] = useState(false);
-
+    const { openLoginModal } = useModal();
     const openModal = () => setModalIsOpen(true);
     const closeModal = () => setModalIsOpen(false);
 
@@ -61,10 +61,18 @@ const VoitureShow = ({ voiture, photos }) => {
             const updatedCart = [...cartItems, voiture];
             setCartItems(updatedCart);
         } else {
-            alert("Deja dans le panier");
+            alert(t("cart.already_in_cart")); // Usar tradução para mensagens
         }
     };
+    const redirectLogin = () => {
+        openLoginModal();
+        return;
+    };
     const makeReservation = async () => {
+        if (!auth.user) {
+            openLoginModal();
+            return;
+        }
         try {
             const now = moment()
                 .tz("America/Toronto")
@@ -128,23 +136,35 @@ const VoitureShow = ({ voiture, photos }) => {
                         ))}
                     </Slider>
                 </div>
-                <div className="btn-add-reservation">
-                    <button onClick={openModal} className="btn btn-secondary">
-                        {t("reservation.button_reservation")}
-                    </button>
-                    <Modal
-                        isOpen={modalIsOpen}
-                        onClose={closeModal}
-                        onConfirm={makeReservation}
-                        message={t("reservation_modal.message", {
-                            car_model: voiture.modele.nom_modele,
-                            car_year: voiture.annee,
-                        })}
-                    />
-                    <button onClick={addToCart} className="btn-cart">
-                        {t("cart.car_show.add_to_cart")}
-                    </button>
+                <div className="action-user">
+                    <div className="btn-add-reservation">
+                        <button
+                            onClick={auth.user ? openModal : redirectLogin}
+                            className={`btn btn-secondary`}
+                        >
+                             {t("reservation.button_reservation")}
+                        </button>
+
+                        <Modal
+                            isOpen={modalIsOpen}
+                            onClose={closeModal}
+                            onConfirm={makeReservation}
+                            message={t("reservation_modal.message", {
+                                car_model: voiture.modele.nom_modele,
+                                car_year: voiture.annee,
+                            })}
+                        />
+                        <button
+                            onClick={auth.user ? addToCart : redirectLogin}
+                            className={`btn-cart ${
+                                !auth.user ? "disabled-btn" : ""
+                            }`}
+                        >
+                            {t("cart.car_show.add_to_cart")}
+                        </button>
+                    </div>
                 </div>
+
                 <div className="details-box">
                     <h2>{t("car_show.general_info")}</h2>
                     <div className="details-section">
