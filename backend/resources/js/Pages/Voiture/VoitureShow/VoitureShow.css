@@ -42,10 +42,13 @@ h3 {
     overflow: hidden;
     transition: background-color 0.3s ease;
 }
-.btn-add-reservation {
+.action-user p {
+    text-align: end;
+}
+.action-user .btn-add-reservation {
     display: flex;
     justify-content: end;
-    gap: var(--space-xsmall);
+    gap: var(--space-small);
 }
 
 .btn-cart {
@@ -65,6 +68,7 @@ h3 {
     box-shadow: 0 0 5px var(--color-tertiary);
     transform: scale(1);
 }
+
 .back-button::before {
     content: " ←";
     padding-left: 10px;
