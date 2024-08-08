@@ -1,5 +1,5 @@
 import React from "react";
-import { InertiaLink } from "@inertiajs/inertia-react";
+import { Link } from "@inertiajs/react";
 import "./Footer.css";
 import { useTranslation } from "react-i18next";
 import MapComponent from "./MapComponent/MapComponent";
@@ -21,45 +21,39 @@ function Footer() {
                     </div>
                     <div className="footer-column">
                         <h4>{t("footer.search")}</h4>
-                        <InertiaLink href="/search" className="footer-link">
+                        <Link href="/voitures" className="footer-link">
                             {t("footer.suv")}
-                        </InertiaLink>
-                        <InertiaLink
-                            href="/search/trucks"
-                            className="footer-link"
-                        >
+                        </Link>
+                        <Link href="/voitures" className="footer-link">
                             {t("footer.trucks")}
-                        </InertiaLink>
-                        <InertiaLink
-                            href="/search/cars"
-                            className="footer-link"
-                        >
+                        </Link>
+                        <Link href="/voitures" className="footer-link">
                             {t("footer.cars")}
-                        </InertiaLink>
+                        </Link>
                     </div>
                     <div className="footer-column">
                         <h4>{t("footer.good_to_know")}</h4>
-                        <InertiaLink href="/faq" className="footer-link">
+                        <Link href="/contact" className="footer-link">
                             {t("footer.faq")}
-                        </InertiaLink>
-                        <InertiaLink href="/tips" className="footer-link">
+                        </Link>
+                        <Link href="/contact" className="footer-link">
                             {t("footer.tips")}
-                        </InertiaLink>
-                        <InertiaLink href="/guides" className="footer-link">
+                        </Link>
+                        <Link href="/about" className="footer-link">
                             {t("footer.guides")}
-                        </InertiaLink>
+                        </Link>
                     </div>
                     <div className="footer-column">
                         <h4>{t("footer.about")}</h4>
-                        <InertiaLink href="/about" className="footer-link">
+                        <Link href="/about" className="footer-link">
                             {t("footer.our_story")}
-                        </InertiaLink>
-                        <InertiaLink href="/team" className="footer-link">
+                        </Link>
+                        <Link href="/about" className="footer-link">
                             {t("footer.team")}
-                        </InertiaLink>
-                        <InertiaLink href="/contact" className="footer-link">
+                        </Link>
+                        <Link href="/contact" className="footer-link">
                             {t("footer.contact_us")}
-                        </InertiaLink>
+                        </Link>
                     </div>
                 </div>
             </div>
