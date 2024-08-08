@@ -22,6 +22,7 @@ class HomeController extends Controller
             ->where('date_arrivee', '<=', $today)
             ->where('date_arrivee', '>=', $thirtyDaysAgo) // les nouvelles voitures
             ->whereNotIn('id_voiture', $reservedCarIds)
+            ->whereNull('commandes_id_commande')
             ->orderBy('date_arrivee', 'desc')
             ->get();
 

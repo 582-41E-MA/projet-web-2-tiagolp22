@@ -53,17 +53,17 @@ class StripeController extends Controller
             // Traiter le paiement
             $paymentResult = $this->processPayment($request);
             Log::info('Résultat du traitement :', $paymentResult);
-
+    
             if ($paymentResult['success']) {
                 // Obtenir l'ID de la province de l'utilisateur (ou d'ailleurs selon votre logique)
                 $provinceId = 1; // Remplacer par l'ID correct selon votre logique
-
+    
                 // Calculer le total avec les taxes
                 $totalAmountData = $this->calculateTotalAmount($request->items, $provinceId, $modeExpeditionId);
                 $totalAmount = $totalAmountData['total'];
                 $totalTaxes = $totalAmountData['taxes'];
                 $fraisExpedition = $totalAmountData['frais_expedition'];
-
+    
                 // Créer une nouvelle commande
                 $order = new Commande();
                 $order->id_utilisateur = auth()->id() ?? 1;
@@ -71,16 +71,16 @@ class StripeController extends Controller
                 $order->prix_total = $totalAmount;
                 $order->status_commande_id = 1;
                 $order->mode_paiement_id = 1;
-                $order->mode_expedition_id = $modeExpeditionId;//$modeExpeditionId;
+                $order->mode_expedition_id = $modeExpeditionId;
                 $order->date_paiement = now();
                 $order->commentaires = 'Commande réalisée via Stripe';
-
+    
                 if (!$order->save()) {
                     throw new \Exception("Échec de l'enregistrement de la commande dans la base de données.");
                 }
-
+    
                 Log::info('Commande créée :', $order->toArray());
-
+    
                 // Enregistrer les taxes dans la table commandes_has_taxes
                 $tax = DB::table('taxes')->where('provinces_id_province', $provinceId)->first();
                 if ($tax) {
@@ -90,7 +90,13 @@ class StripeController extends Controller
                         'total_taxes' => $totalTaxes,
                     ]);
                 }
-
+    
+                // Mise à jour des voitures avec le ID de la commande
+                foreach ($request->items as $item) {
+                    DB::table('voitures')->where('id_voiture', $item['id_voiture'])
+                        ->update(['commandes_id_commande' => $order->id_commande]);
+                }
+    
                 return response()->json([
                     'success' => true,
                     'message' => 'Commande créée avec succès',
@@ -117,6 +123,7 @@ class StripeController extends Controller
             ], 500);
         }
     }
+    
 
     public function webhook(Request $request)
     {
