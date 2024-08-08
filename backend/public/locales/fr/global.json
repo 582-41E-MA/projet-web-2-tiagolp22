@@ -252,45 +252,64 @@
     "create_button": "Créer",
     "index_title": "Type de carburant",
     "update_button": "Mettre à jour le Type de Carburant"
-
-},
-"carrosserie": {
-  "index_title": "Types de Carrosserie",
-  "edit": "Modifier le Type de Carrosserie",
-  "create": "Créer un Type de Carrosserie",
-  "name": "Nom",
-  "description": "Description",
-  "update_button": "Mettre à jour",
-  "create_button": "Créer",
-  "confirm_delete": "Êtes-vous sûr de vouloir supprimer ce type de carrosserie ?",
-  "delete": "Supprimer"
-},
-"groupeMotopropulseur": {
-  "no_data": "Aucune donnée disponible",
-  "confirm_delete": "Êtes-vous sûr de vouloir supprimer ce groupe motopropulseur ?",
-  "index_title": "Liste des groupes motopropulseurs",
-  "edit": "Modifier",
-  "delete": "Supprimer",
-  "name": "Nom du groupe motopropulseur",
-  "description": "Description",
-  "update_button": "Mettre à jour"
-},
-"dashboard": {
-  "voitures": {
-    "list_title": "Liste des Voitures",
-    "confirm_delete": "Êtes-vous sûr de vouloir supprimer cette voiture?",
-    "no_data": "Aucune donnée disponible"
   },
-  "filters": {
-    "search_placeholder": "Rechercher par constructeur ou modèle",
-    "select_year": "Sélectionner l'année",
-    "select_model": "Sélectionner le modèle"
+  "carrosserie": {
+    "index_title": "Types de Carrosserie",
+    "edit": "Modifier le Type de Carrosserie",
+    "create": "Créer un Type de Carrosserie",
+    "name": "Nom",
+    "description": "Description",
+    "update_button": "Mettre à jour",
+    "create_button": "Créer",
+    "confirm_delete": "Êtes-vous sûr de vouloir supprimer ce type de carrosserie ?",
+    "delete": "Supprimer"
   },
-
-
-"buttons": {
-  "edit": "Edit",
-  "delete": "Delete"
-}
-}
+  "groupeMotopropulseur": {
+    "no_data": "Aucune donnée disponible",
+    "confirm_delete": "Êtes-vous sûr de vouloir supprimer ce groupe motopropulseur ?",
+    "index_title": "Liste des groupes motopropulseurs",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "name": "Nom du groupe motopropulseur",
+    "description": "Description",
+    "update_button": "Mettre à jour"
+  },
+  "dashboard": {
+    "voitures": {
+      "list_title": "Liste des Voitures",
+      "confirm_delete": "Êtes-vous sûr de vouloir supprimer cette voiture?",
+      "no_data": "Aucune donnée disponible"
+    },
+    "filters": {
+      "search_placeholder": "Rechercher par constructeur ou modèle",
+      "select_year": "Sélectionner l'année",
+      "select_model": "Sélectionner le modèle"
+    },
+    "buttons": {
+      "edit": "Edit",
+      "delete": "Delete"
+    }
+  },
+  "politique": {
+    "title": "Politique de Ventes - Quebecar",
+    "intro": "Chez Quebecar, nous nous engageons à offrir des voitures d'occasion de haute qualité tout en assurant une transparence totale à nos clients. Notre politique de vente est conçue pour vous guider à travers chaque étape de l'achat d'une voiture d'occasion.",
+    "guarantee": {
+      "title": "Garantie et Assurance",
+      "content": "Nous offrons une garantie limitée sur toutes nos voitures d'occasion. Cette garantie couvre les défauts de fabrication et les réparations nécessaires pendant une période déterminée après l'achat. Les détails complets de la garantie sont disponibles lors de l'achat."
+    },
+    "return_conditions": {
+      "title": "Conditions de Retour",
+      "content": "Chez Quebecar, nous souhaitons que vous soyez entièrement satisfait de votre achat. Si pour une raison quelconque vous n'êtes pas satisfait, vous pouvez demander un retour dans un délai de 7 jours à compter de la date d'achat. Les véhicules retournés doivent être en bon état et dans leur état d'origine."
+    },
+    "purchase_process": {
+      "title": "Processus d'Achat",
+      "content": "Pour acheter une voiture chez Quebecar, veuillez visiter notre showroom ou contacter notre équipe de vente. Nous vous guiderons à travers le processus d'achat, de la sélection du véhicule à la finalisation de la transaction."
+    },
+    "financing": {
+      "title": "Financement",
+      "content": "Nous offrons des options de financement flexibles pour vous aider à acquérir la voiture de vos rêves. Contactez notre département financier pour discuter des différentes options de financement disponibles."
+    },
+    "cta": "Pour plus d'informations ou pour planifier une visite, contactez-nous dès aujourd'hui !",
+    "cta_button": "Contactez-nous"
+  }
 }

@@ -65,7 +65,7 @@
     "remaining_time": "Remaining Time",
     "button_reservation": "Make a reservation",
     "cancel_reservation": "Cancel reservation",
-      "time_limit_info": "From the moment you reserve the car, you have 24 hours to complete the purchase. If the payment is not finalized within this period, the car will be relisted in the catalog and will be available for other customers."
+    "time_limit_info": "From the moment you reserve the car, you have 24 hours to complete the purchase. If the payment is not finalized within this period, the car will be relisted in the catalog and will be available for other customers."
   },
   "save_changes": "Save changes",
   "Learn_more": "Learn more",
@@ -254,32 +254,29 @@
     "create_button": "Create",
     "index_title": "Fuel type",
     "update_button": "Update Fuel Type"
-
-
-},
-"carrosserie": {
-  "index_title": "Car Body Types",
-  "edit": "Edit Car Body Type",
-  "create": "Create Car Body Type",
-  "name": "Name",
-  "description": "Description",
-  "update_button": "Update",
-  "create_button": "Create",
-  "confirm_delete": "Are you sure you want to delete this car body type?",
-  "delete": "Delete"
-},
-"groupeMotopropulseur": {
-  "no_data": "No data available",
-  "confirm_delete": "Are you sure you want to delete this powertrain group?",
-  "index_title": "List of Powertrain Groups",
-  "edit": "Edit",
-  "delete": "Delete",
-  "name": "Powertrain Group Name",
-  "description": "Description",
-  "update_button": "Update"
-
-},
-"dashboard": {
+  },
+  "carrosserie": {
+    "index_title": "Car Body Types",
+    "edit": "Edit Car Body Type",
+    "create": "Create Car Body Type",
+    "name": "Name",
+    "description": "Description",
+    "update_button": "Update",
+    "create_button": "Create",
+    "confirm_delete": "Are you sure you want to delete this car body type?",
+    "delete": "Delete"
+  },
+  "groupeMotopropulseur": {
+    "no_data": "No data available",
+    "confirm_delete": "Are you sure you want to delete this powertrain group?",
+    "index_title": "List of Powertrain Groups",
+    "edit": "Edit",
+    "delete": "Delete",
+    "name": "Powertrain Group Name",
+    "description": "Description",
+    "update_button": "Update"
+  },
+  "dashboard": {
     "voitures": {
       "list_title": "Car List",
       "confirm_delete": "Are you sure you want to delete this car?",
@@ -291,9 +288,30 @@
       "select_model": "Select model"
     }
   },
-
-"buttons": {
-  "edit": "Edit",
-  "delete": "Delete"
-}
+  "buttons": {
+    "edit": "Edit",
+    "delete": "Delete"
+  },
+  "politique": {
+    "title": "Sales Policy - Quebecar",
+    "intro": "At Quebecar, we are committed to providing high-quality used cars while ensuring complete transparency to our customers. Our sales policy is designed to guide you through every step of purchasing a used car.",
+    "guarantee": {
+      "title": "Warranty and Insurance",
+      "content": "We offer a limited warranty on all our used cars. This warranty covers manufacturing defects and necessary repairs for a specified period after purchase. Full warranty details are available at the time of purchase."
+    },
+    "return_conditions": {
+      "title": "Return Conditions",
+      "content": "At Quebecar, we want you to be completely satisfied with your purchase. If for any reason you are not satisfied, you may request a return within 7 days of the purchase date. Returned vehicles must be in good condition and in their original state."
+    },
+    "purchase_process": {
+      "title": "Purchase Process",
+      "content": "To buy a car from Quebecar, please visit our showroom or contact our  sales team. We will guide you through the buying process, from selecting the vehicle to finalizing the transaction."
+    },
+    "financing": {
+      "title": "Financing",
+      "content": "We offer flexible financing options to help you acquire the car of your dreams. Contact our finance department to discuss the different financing options available."
+    },
+    "cta": "For more information or to schedule a visit, contact us today!",
+    "cta_button": "Contact Us"
+  }
 }

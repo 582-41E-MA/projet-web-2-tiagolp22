@@ -173,6 +173,9 @@ Route::get('/', [HomeController::class, 'index'])->name('Accueil');
 Route::get('/about', function () {
     return inertia('About');
 })->name('about');
+Route::get('/policy', function () {
+    return inertia('SalesPolicy');
+})->name('policy');
 Route::get('/contact', function () {
     return inertia('Contact');
 })->name('contact');

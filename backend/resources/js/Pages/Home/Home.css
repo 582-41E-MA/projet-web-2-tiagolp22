@@ -153,6 +153,10 @@
     object-fit: cover;
     object-position: center;
 }
+.single-slide .slide img {
+    height: 400px;
+    max-height: 600px; 
+}
 
 
   .slide:hover {

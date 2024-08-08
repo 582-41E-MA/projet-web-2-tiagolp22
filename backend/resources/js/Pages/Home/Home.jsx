@@ -11,31 +11,29 @@ function Home({ voitures }) {
 
   const settings = {
     dots: true,
-    infinite: true,
+    infinite: voitures.length > 1,
     speed: 500,
-    slidesToShow: 4,
+    slidesToShow: voitures.length === 1 ? 1 : 4,
     slidesToScroll: 1,
     responsive: [
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 3,
+          slidesToShow: voitures.length === 1 ? 1 : 3,
           slidesToScroll: 1,
-          infinite: true,
+          infinite: voitures.length > 1,
           dots: true,
         },
       },
       {
         breakpoint: 600,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: voitures.length === 1 ? 1 : 2,
           slidesToScroll: 1,
         },
       },
     ],
   };
-
-  console.log(voitures);
 
   return (
     <>
@@ -56,7 +54,7 @@ function Home({ voitures }) {
       <div className="slider-container wrapper">
         <div className="carousel">
           <h2 className='Nouveautes'>{t('home.new_arrivals')}</h2>
-          <Slider {...settings}>
+          <Slider {...settings} className={voitures.length === 1 ? 'single-slide' : ''}>
             {voitures.map((voiture, index) => (
               <div key={index} className="slide">
                 <img src={voiture.photo_url ? voiture.photo_url : "../../../img/car/default_car.png"} alt={voiture.modele.nom_modele} />

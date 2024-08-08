@@ -1,0 +1,60 @@
+.politique-container {
+    padding: var(--space-base);
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.introduction {
+    margin-bottom: var(--space-medium);
+}
+.title {
+    font-size: max(40px, 3vw);
+    text-align: center;
+    color: var(--color-primary);
+    margin: var(--space-small);
+}
+.sections h2 {
+    font-size: max(25.6px, 2vw);
+    color: var(--color-primary);
+    margin-bottom: var(--space-xsmall);
+}
+
+.sections p {
+    line-height: 1.6;
+    margin-bottom: var(--space-small);
+}
+
+.sections ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sections ul li {
+    margin-bottom: var(--space-xsmall);
+}
+
+.cta {
+    border-radius: 5px;
+    background-color: var(--color-white);
+    text-align: center;
+    margin-top: var(--space-medium);
+    margin-bottom: var(--space-medium);
+    padding: var(--space-small);
+}
+.cta p {
+    color: var(--color-black);
+    font-size: large;
+}
+.cta-button {
+    background-color: var(--color-secondary);
+    color: var(--color-white);
+    padding: var(--space-xsmall) var(--space-small);
+    text-decoration: none;
+    border-radius: var(--space-xsmall);
+    margin-top: var(--space-small);
+}
+
+.cta-button:hover {
+    background-color: var(--color-primary);
+    color: var(--color-tertiary);
+}
