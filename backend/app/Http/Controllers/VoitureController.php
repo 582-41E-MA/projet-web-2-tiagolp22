@@ -176,10 +176,20 @@ class VoitureController extends Controller
     {
         $voiture = Voiture::with('photos')->findOrFail($id);
         $modeles = Modele::all();
-
+        $typesCarburant = TypeCarburant::all();
+        $transmissions = Transmission::all();
+        $groupesMotopropulseur = GroupeMotopropulseur::all();
+        $carrosseries = Carrosserie::all();
+        $privilege_id = Auth::check() ? Auth::user()->privileges_id : null;
+    
         return Inertia::render('Voiture/VoitureEdit/VoitureEdit', [
             'voiture' => $voiture,
             'modeles' => $modeles,
+            'typesCarburant' => $typesCarburant,
+            'transmissions' => $transmissions,
+            'groupesMotopropulseur' => $groupesMotopropulseur,
+            'carrosseries' => $carrosseries,
+            'privilege_id' => $privilege_id,
         ]);
     }
 
