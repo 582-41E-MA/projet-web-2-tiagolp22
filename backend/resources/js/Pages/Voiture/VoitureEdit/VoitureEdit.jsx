@@ -5,20 +5,18 @@ import './VoitureEdit.css';
 
 const VoitureEdit = ({
     voiture,
-    typesCarburant,
-    modeles,
-    transmissions,
-    groupesMotopropulseur,
-    carrosseries,
+    typesCarburant = [],
+    modeles = [],
+    transmissions = [],
+    groupesMotopropulseur = [],
+    carrosseries = [],
     privilege_id
 }) => {
-    
-    
+    // console.log('Props reçues:', { voiture, typesCarburant, modeles, transmissions, groupesMotopropulseur, carrosseries, privilege_id });
     const { t, i18n } = useTranslation();
+    const [currentPhotos, setCurrentPhotos] = useState(voiture.photos || []);
     const [newPhotosPreviews, setNewPhotosPreviews] = useState([]);
     const [newPhotoCount, setNewPhotoCount] = useState(0);
-   
-    
 
     const parseJsonField = (field) => {
         if (typeof field === 'string') {
@@ -32,6 +30,43 @@ const VoitureEdit = ({
         return field;
     };
 
+    const fields = [
+        { key: "modele_id", message: "model_required" },
+        { 
+            key: "annee", 
+            message: "year_invalid", 
+            validate: (value) => value && parseInt(value) >= 1900 && parseInt(value) <= new Date().getFullYear() + 1 
+        },
+        { key: "date_arrivee", message: "arrival_date_required" },
+        { 
+            key: "prix_vente", 
+            message: "sale_price_invalid", 
+            validate: (value) => value && !isNaN(value) && parseFloat(value) > 0 
+        },
+        { key: "prix_achat", message: "purchase_price_invalid", validate: (value) => !isNaN(value) && value >= 0 },
+        { 
+            key: "couleur", 
+            message: "color_required", 
+            validate: (value) => value && value[i18n.language] && value[i18n.language].trim() !== '' 
+        },
+        { 
+            key: "etat_vehicule", 
+            message: "vehicle_condition_required", 
+            validate: (value) => value && value[i18n.language] && value[i18n.language].trim() !== '' 
+        },
+        { key: "type_transmission_id", message: "transmission_type_required" },
+        { key: "groupe_motopropulseur_id", message: "powertrain_group_required" },
+        { key: "type_carburant_id", message: "fuel_type_required" },
+        { key: "carrosserie_id", message: "body_type_required" },
+        { key: "nombre_portes", message: "number_of_doors_invalid", validate: (value) => !isNaN(value) && value >= 1 },
+        { key: "nombre_places", message: "number_of_seats_invalid", validate: (value) => !isNaN(value) && value >= 1 },
+        { key: "kilometrage", message: "mileage_invalid", validate: (value) => !isNaN(value) && value >= 0 },
+        { 
+            key: "description", 
+            message: "description_required", 
+            validate: (value) => value && value[i18n.language] && value[i18n.language].trim() !== '' 
+        },
+    ];
 
     const { data, setData, post, processing, errors, setError, clearErrors } = useForm({
         modele_id: voiture.modele_id || '',
@@ -53,6 +88,23 @@ const VoitureEdit = ({
         carrosserie_id: voiture.carrosserie_id || '',
         type_transmission_id: voiture.type_transmission_id || '',
     });
+    const validateFields = () => {
+        const newErrors = {};
+        
+        if (data.currentPhotos.length + data.photos.length < 3) {
+            newErrors.photos = t('car.errors.minimum_photos_required');
+        }
+    
+        fields.forEach(({ key, message, validate }) => {
+            const value = data[key];
+            if (!value || (validate && !validate(value))) {
+                newErrors[key] = t(`car.errors.${message}`);
+            }
+        });
+    
+        return newErrors;
+    };
+
     const handleChange = (e) => {
         const { name, value, type, files } = e.target;
         if (type === 'file') {
@@ -64,29 +116,24 @@ const VoitureEdit = ({
             }));
             setNewPhotosPreviews([...newPhotosPreviews, ...previews]);
             setNewPhotoCount(newFiles.length);
+        } else if (name === 'couleur' || name === 'etat_vehicule' || name === 'description') {
+            setData(name, { ...data[name], [i18n.language]: value });
+        } else {
+            setData(name, value);
         }
     };
 
     const handleDeletePhoto = (photoId) => {
-        console.log('delete photo');
         if (confirm('Voulez-vous vraiment supprimer cette photo ?')) {
-            const url = `/photos/${photoId}`;
-            router.delete(url, {
-                preserveState: true,
-                preserveScroll: true,
-                onSuccess: () => {
-                    setData(prevData => ({
-                        ...prevData,
-                        currentPhotos: prevData.currentPhotos.filter(photo => photo.id !== photoId),
-                        photos_to_delete: [...prevData.photos_to_delete, photoId]
-                    }));
-                },
-            });
+            setData(prevData => ({
+                ...prevData,
+                currentPhotos: prevData.currentPhotos.filter(photo => photo.id !== photoId),
+                photos_to_delete: [...prevData.photos_to_delete, photoId]
+            }));
         }
     };
 
     const handleRemoveNewPhoto = (index) => {
-        
         const newPreviews = [...newPhotosPreviews];
         newPreviews.splice(index, 1);
         setNewPhotosPreviews(newPreviews);
@@ -97,82 +144,43 @@ const VoitureEdit = ({
         setNewPhotoCount(newPhotos.length);
     };
 
-    const validateFields = () => {
-        const newErrors = {};
-
-        const fields = [
-            { key: "modele_id", message: "model_required" },
-            { key: "annee", message: "year_invalid", validate: (value) => value >= 1900 && value <= new Date().getFullYear() + 1 },
-            { key: "date_arrivee", message: "arrival_date_required" },
-            { key: "prix_achat", message: "purchase_price_invalid", validate: (value) => !isNaN(value) && value >= 0 },
-            { key: "couleur", message: "color_required" },
-            { key: "type_transmission_id", message: "transmission_type_required" },
-            { key: "groupe_motopropulseur_id", message: "powertrain_group_required" },
-            { key: "type_carburant_id", message: "fuel_type_required" },
-            { key: "carrosserie_id", message: "body_type_required" },
-            { key: "nombre_portes", message: "number_of_doors_invalid", validate: (value) => !isNaN(value) && value >= 1 },
-            { key: "nombre_places", message: "number_of_seats_invalid", validate: (value) => !isNaN(value) && value >= 1 },
-            { key: "kilometrage", message: "mileage_invalid", validate: (value) => !isNaN(value) && value >= 0 },
-            { key: "etat_vehicule", message: "vehicle_state_required" },
-            { key: "photos", message: "minimum_photos_required", validate: (value) => value.length >= 3 }
-        ];
-
-        fields.forEach(({ key, message, validate }) => {
-            const value = data[key];
-            if (!value || (validate && !validate(value))) {
-                newErrors[key] = t(`car.errors.${message}`);
-            }
-        });
-
-        return newErrors;
-    };
     const handleSubmit = (e) => {
         e.preventDefault();
         clearErrors();
-       
-            const formData = new FormData();
 
-            formData.append('modele_id', data.modele_id);
-            formData.append('annee', data.annee);
-            formData.append('date_arrivee', data.date_arrivee);
-            formData.append('prix_achat', data.prix_achat);
-            formData.append('prix_vente', data.prix_vente);
-            formData.append('couleur', JSON.stringify(data.couleur));
-            formData.append('etat_vehicule', JSON.stringify(data.etat_vehicule));
-            formData.append('nombre_places', data.nombre_places);
-            formData.append('nombre_portes', data.nombre_portes);
-            formData.append('description', JSON.stringify(data.description));
-            formData.append('kilometrage', data.kilometrage);
-            formData.append('type_carburant_id', data.type_carburant_id);
-            formData.append('groupe_motopropulseur_id', data.groupe_motopropulseur_id);
-            formData.append('carrosserie_id', data.carrosserie_id);
-            formData.append('type_transmission_id', data.type_transmission_id);
+        const validationErrors = validateFields();
 
-            data.photos.forEach((photo, index) => {
-                formData.append(`photos[${index}]`, photo);
+        if (Object.keys(validationErrors).length > 0) {
+            Object.keys(validationErrors).forEach((field) => {
+                setError(field, validationErrors[field]);
             });
-
-            data.photos_to_delete.forEach((id, index) => {
-                formData.append(`photos_to_delete[${index}]`, id);
-            });
-            const validationErrors = validateFields();
-            
-            if (Object.keys(validationErrors).length > 0) {
-                Object.keys(validationErrors).forEach((field) => {
-                    setError(field, validationErrors[field]);
-                });
-                
-            }
-            
-            
-            
-            router.post(`/voitures/${voiture.id_voiture}`, formData, {
-            
-                forceFormData: true,
-                preserveState: true,
-                preserveScroll: true,
-            });
+            return;
         }
+    
+        const formData = new FormData();
+        Object.keys(data).forEach(key => {
+            if (key === 'photos') {
+                data.photos.forEach((photo, index) => {
+                    formData.append(`photos[${index}]`, photo);
+                });
+            } else if (key === 'photos_to_delete') {
+                data.photos_to_delete.forEach((id, index) => {
+                    formData.append(`photos_to_delete[${index}]`, id);
+                });
+            } else if (typeof data[key] === 'object' && data[key] !== null) {
+                formData.append(key, JSON.stringify(data[key]));
+            } else {
+                formData.append(key, data[key]);
+            }
+        });
+    
+
+        router.post(`/voitures/${voiture.id_voiture}`, formData, {
+            forceFormData: true,
+            preserveState: true,
+            preserveScroll: true,
+        });
+    };
 
     return (
         <>
@@ -180,33 +188,33 @@ const VoitureEdit = ({
                 <h1 className="voiture-edit-title">{t('car.edit_title', { id: voiture.id_voiture })}</h1>
                 <form className="voiture-edit-form" onSubmit={handleSubmit}>
                 <div className="form-group">
-                        <label>{t('car.current_photos')}</label>
-                        <div className="current-photos">
-                            {data.currentPhotos.map((photo) => (
-                                <div key={photo.id} className="photo-item">
-                                    <img
-                                        src={`/storage/${photo.photos.replace('public/', '')}`}
-                                        alt="Voiture"
-                                        className="thumbnail"
-                                    />
-                                    <button
-                                        type="button"
-                                        onClick={() => handleDeletePhoto(photo.id)}
-                                        className="delete-photo"
-                                    >
-                                        X
-                                    </button>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                <div className="form-group">
+    <label>{t('car.current_photos')}</label>
+    <div className="current-photos">
+        {data.currentPhotos && data.currentPhotos.map((photo) => (
+            <div key={photo.id} className="photo-item">
+                <img
+                    src={`/storage/${photo.photos.replace('public/', '')}`}
+                    alt="Voiture"
+                    className="thumbnail"
+                />
+                <button
+                    type="button"
+                    onClick={() => handleDeletePhoto(photo.id)}
+                    className="delete-photo"
+                >
+                    X
+                </button>
+            </div>
+        ))}
+    </div>
+</div>
+                    <div className="form-group">
                         <label>{t('car.add_photos')}</label>
                         <input
                             type="file"
                             name="photos"
                             multiple
-                            onClick={handleChange}
+                            onChange={handleChange}
                         />
                         <span>{newPhotoCount} {t('car.photo_selected')}</span>
                         <div className="new-photos-preview">
@@ -227,10 +235,7 @@ const VoitureEdit = ({
                             name="modele_id"
                             id="modele_id"
                             value={data.modele_id}
-                            onChange={(e) => {
-                                const selectedModelId = e.target.value;
-                                setData("modele_id", selectedModelId);
-                            }}
+                            onChange={(e) => setData("modele_id", e.target.value)}
                         >
                             <option value="">{t("car.select_option")}</option>
                             {modeles.map((modele) => (
@@ -243,9 +248,7 @@ const VoitureEdit = ({
                                 </option>
                             ))}
                         </select>
-                        {errors.modele_id && (
-                            <span className="error">{errors.modele_id}</span>
-                        )}
+                        {errors.modele_id && <div className="error">{errors.modele_id}</div>}
                     </div>
                     <div className="form-group">
                         <label>{t('car.year')}</label>
@@ -278,16 +281,14 @@ const VoitureEdit = ({
                         {t("car.sale_price")}
                         </label>
                         <input
-                            type="number"
-                            id="prix_vente"
-                            name="prix_vente"
-                            className="form-control"
-                            value={data.prix_vente}
-                            onChange={(e) =>
-                                setData("prix_vente", e.target.value)
-                            }
-                            disabled={privilege_id !== 1}
-                        />
+    type="number"
+    id="prix_vente"
+    name="prix_vente"
+    className="form-control"
+    value={data.prix_vente}
+    onChange={(e) => setData("prix_vente", e.target.value)}
+    disabled={privilege_id !== undefined && privilege_id !== 1}
+/>
                         {errors.prix_vente && (
                             <div className="invalid-feedback">
                                 {errors.prix_vente}
@@ -433,34 +434,28 @@ const VoitureEdit = ({
                         )}
                     </div>
                     <div className="form-group">
-                        <label>{t('car.fuel_type')}</label>
-                        <select
-                            className="form-select"
-                            name="type_carburant_id"
-                            id="type_carburant_id"
-                            value={data.type_carburant_id}
-                            onChange={(e) => {
-                                const selectedCarburantId = e.target.value;
-                                setData(
-                                    "type_carburant_id",
-                                    selectedCarburantId
-                                );
-                            }}
-                        >
-                            <option value="">{t("car.select_option")}</option>
-                            {typesCarburant.map((carburant) => (
-                                <option
-                                key={carburant.id}
-                                value={carburant.id_type_carburant}
-                            >
-                                {i18n.language === "en"
-                                    ? parseJsonField(carburant.type_carburant).en
-                                    : parseJsonField(carburant.type_carburant).fr}
-                            </option>
-                            ))}
-                        </select>
-                        {errors.type_carburant_id && <div className="error">{errors.type_carburant_id}</div>}
-                    </div>
+    <label>{t('car.fuel_type')}</label>
+    <select
+        className="form-select"
+        name="type_carburant_id"
+        id="type_carburant_id"
+        value={data.type_carburant_id}
+        onChange={(e) => setData("type_carburant_id", e.target.value)}
+    >
+        <option value="">{t("car.select_option")}</option>
+        {typesCarburant.map((carburant) => (
+            <option
+                key={carburant.id}
+                value={carburant.id_type_carburant}
+            >
+                {i18n.language === "en"
+                    ? parseJsonField(carburant.type_carburant).en
+                    : parseJsonField(carburant.type_carburant).fr}
+            </option>
+        ))}
+    </select>
+    {errors.type_carburant_id && <div className="error">{errors.type_carburant_id}</div>}
+</div>
 
                     <div className="form-group">
                         <label>{t('car.engine_group')}</label>
@@ -560,9 +555,8 @@ const VoitureEdit = ({
                   
 
               
-
                     <div className="form-actions">
-                        <button className ="edit-button" type="submit" disabled={processing}>
+                        <button className="edit-button" type="submit" disabled={processing}>
                             {t('buttons.update')}
                         </button>
                     </div>
