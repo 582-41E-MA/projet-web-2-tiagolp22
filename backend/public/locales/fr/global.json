@@ -68,6 +68,7 @@
     "time_limit_info": "À partir du moment où vous réservez la voiture, vous avez 24 heures pour finaliser l'achat. Si le paiement n'est pas complété dans ce délai, la voiture sera de nouveau listée dans le catalogue et sera disponible pour d'autres clients."
   },
   "car": {
+    "engine_group":"transmission",
     "edit_title": "Modifier la voiture",
     "select_option": "Sélectionner",
     "title": "Créer une voiture",
@@ -295,10 +296,6 @@
       "search_placeholder": "Rechercher par constructeur ou modèle",
       "select_year": "Sélectionner l'année",
       "select_model": "Sélectionner le modèle"
-    },
-    "buttons": {
-      "edit": "Edit",
-      "delete": "Delete"
     }
   },
   "politique": {
@@ -340,5 +337,10 @@
     "title": "Erreur {{status}}",
     "message": "Désolé, une erreur s'est produite.",
     "back_to_home": "Retour à l'accueil"
+  },
+  "buttons": {
+    "update":"Mettre a jour",
+    "edit": "Edit",
+    "delete": "Delete"
   }
 }

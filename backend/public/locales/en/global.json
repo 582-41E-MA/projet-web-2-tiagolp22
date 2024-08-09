@@ -70,6 +70,7 @@
   "save_changes": "Save changes",
   "Learn_more": "Learn more",
   "car": {
+    "engine_group":"transmission",
     "save_changes": "Save changes",
     "edit_title": "Edit car",
     "select_option": "Select",
@@ -296,10 +297,7 @@
       "select_model": "Select model"
     }
   },
-  "buttons": {
-    "edit": "Edit",
-    "delete": "Delete"
-  },
+
   "politique": {
     "title": "Sales Policy - Quebecar",
     "intro": "At Quebecar, we are committed to providing high-quality used cars while ensuring complete transparency to our customers. Our sales policy is designed to guide you through every step of purchasing a used car.",
@@ -338,5 +336,9 @@
     "title": "Error {{status}}",
     "message": "Sorry, an error has occurred.",
     "back_to_home": "Back to Home"
+  } , "buttons": {
+    "update":"update",
+    "edit": "Edit",
+    "delete": "Delete"
   }
 }
