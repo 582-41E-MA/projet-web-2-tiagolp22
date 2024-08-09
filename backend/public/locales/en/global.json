@@ -321,5 +321,18 @@
     },
     "cta": "For more information or to schedule a visit, contact us today!",
     "cta_button": "Contact Us"
+  },
+  "commande_list": {
+    "title": "Completed Orders",
+    "id": "ID",
+    "date_commande": "Order Date",
+    "date_expedition": "Shipping Date",
+    "date_paiement": "Payment Date",
+    "prix_total": "Total Price",
+    "status": "Status",
+    "mode_paiement": "Payment Method",
+    "mode_expedition": "Shipping Method",
+    "commentaires": "Comments",
+    "details": "Details"
   }
 }

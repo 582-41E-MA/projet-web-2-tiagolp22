@@ -12,4 +12,5 @@ class MethodePaiement extends Model
     protected $table = 'methodespaiement';
     protected $primaryKey = 'id_methode_paiement';
     protected $fillable = ['nom_methode_paiement', 'description'];
+    
 }

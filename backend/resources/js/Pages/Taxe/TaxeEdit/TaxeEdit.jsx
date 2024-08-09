@@ -1,32 +1,42 @@
-import React from 'react';
-import { useForm } from '@inertiajs/react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useForm } from '@inertiajs/react';
 
-const TaxeCreate = ({ provinces }) => {
+const TaxeEdit = ({ taxe, provinces }) => {
+    console.log(taxe);
+
     const { t } = useTranslation();
-    const { data, setData, post, errors } = useForm({
-        GST_HST: '',
-        PST: '',
-        provinces_id_province: '',
+    const { data, setData, put, errors } = useForm({
+        GST_HST: taxe.GST_HST || '',
+        PST: taxe.PST || '',
+        provinces_id_province: taxe.provinces_id_province || '',
     });
+
+    useEffect(() => {
+        setData({
+            GST_HST: taxe.GST_HST || '',
+            PST: taxe.PST || '',
+            provinces_id_province: taxe.provinces_id_province || '',
+        });
+    }, [taxe]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        post("/taxes", {
-            data,
+        console.log(data)
+        put(`/taxes/${taxe.id}`, {
+            
             onSuccess: () => {
-                console.log("Taxe créée avec succès");
+                console.log('Taxe mise à jour avec succès');
             },
             onError: (errors) => {
-                console.error("Erreur lors de la création de la taxe", errors);
-                // Optionally display errors to the user
+                console.error('Erreur lors de la mise à jour de la taxe', errors);
             },
         });
     };
 
     return (
         <div className="form-container">
-            <h1>{t('tax.create')}</h1>
+            <h1>{t('tax.edit_title')}</h1>
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
                     <label htmlFor="GST_HST">{t('tax.gst_hst')}</label>
@@ -73,10 +83,10 @@ const TaxeCreate = ({ provinces }) => {
                     {errors.provinces_id_province && <span className="error-text">{errors.provinces_id_province}</span>}
                 </div>
 
-                <button className="create-button" type="submit">{t('tax.create_button')}</button>
+                <button className="edit-button" type="submit">{t('tax.update_button')}</button>
             </form>
         </div>
     );
 };
 
-export default TaxeCreate;
+export default TaxeEdit;

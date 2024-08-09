@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { usePage, router } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
-import axios from 'axios';
-import InputField from '../../InputField/InputField';
 import './PaysEdit.css';
 
 const PaysEdit = ({ pays }) => {
     const { t } = useTranslation();
     const { errors } = usePage().props;
+
     const [data, setData] = useState({
         nom_pays: {
             en: '',
@@ -17,26 +16,30 @@ const PaysEdit = ({ pays }) => {
 
     useEffect(() => {
         if (pays) {
-            const { id_pays, nom_pays } = pays;
-            setData({ nom_pays: JSON.parse(nom_pays) });
-            setId(id_pays);  
+            setData({
+                nom_pays: {
+                    en: pays.nom_pays.en || '',
+                    fr: pays.nom_pays.fr || ''
+                }
+            });
         }
     }, [pays]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setData({
+        setData(prevData => ({
             nom_pays: {
-                ...data.nom_pays,
+                ...prevData.nom_pays,
                 [name]: value
             }
-        });
+        }));
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        
-        router.put(`/pays/${id}`, {
+        console.log(data);
+
+        router.put(`/pays/${pays.id_pays}`, {
             nom_pays: JSON.stringify(data.nom_pays),
         }, {
             preserveState: true,
@@ -54,20 +57,30 @@ const PaysEdit = ({ pays }) => {
         <div className="form-container">
             <h1>{t('pays.edit_title')}</h1>
             <form onSubmit={handleSubmit}>
-                <InputField
-                    label={t('pays.name_en')}
-                    name="en"
-                    value={data.nom_pays.en}
-                    onChange={handleChange}
-                    error={errors.nom_pays}
-                />
-                <InputField
-                    label={t('pays.name_fr')}
-                    name="fr"
-                    value={data.nom_pays.fr}
-                    onChange={handleChange}
-                    error={errors.nom_pays}
-                />
+                <div className="form-group">
+                    <label htmlFor="en">{t('pays.name_en')}</label>
+                    <input
+                        id="en"
+                        type="text"
+                        name="en"
+                        value={data.nom_pays.en}
+                        onChange={handleChange}
+                        className="form-control"
+                    />
+                    {errors.nom_pays?.en && <span className="error-text">{errors.nom_pays.en}</span>}
+                </div>
+                <div className="form-group">
+                    <label htmlFor="fr">{t('pays.name_fr')}</label>
+                    <input
+                        id="fr"
+                        type="text"
+                        name="fr"
+                        value={data.nom_pays.fr}
+                        onChange={handleChange}
+                        className="form-control"
+                    />
+                    {errors.nom_pays?.fr && <span className="error-text">{errors.nom_pays.fr}</span>}
+                </div>
                 <button type="submit" className="edit-button">
                     {t('pays.update_button')}
                 </button>

@@ -27,6 +27,8 @@ import ModeleEdit from '../Modele/ModeleEdit/ModeleEdit';
 import VoitureEdit from '../Voiture/VoitureEdit/VoitureEdit';
 import TypeCarburantCreate from '../TypeCarburant/TypeCarburantCreate/TypeCarburantCreate';
 import TypeCarburantEdit from '../TypeCarburant/TypeCarburantEdit/TypeCarburantEdit';
+import TaxeEdit from '../Taxe/TaxeEdit/TaxeEdit';
+
 import TypeCarburantIndex from '../TypeCarburant/TypeCarburantIndex';
 import CarrosserieIndex from '../Carrosserie/CarrosserieIndex';
 import CarrosserieCreate from '../Carrosserie/CarrosserieCreate/CarrosserieCreate';
@@ -35,20 +37,22 @@ import GroupeMotopropulseurIndex from '../GroupeMotopropulseur/GroupeMotopropuls
 import GroupeMotopropulseurCreate from '../GroupeMotopropulseur/GroupeMotopropulseurCreate/GroupeMotopropulseurCreate';
 import GroupeMotopropulseurEdit from '../GroupeMotopropulseur/GroupeMotopropulseurEdit/GroupeMotopropulseurEdit';
 
+import CommandeList from '../CommandeList/CommandeList';
+
 import './Dashboard.css';
 
 const Dashboard = ({
-    constructeurs, pays, villes, provinces, modeles, transmissions, groupesMotopropulseur, typesCarburant, carrosseries, privilege_id, taxes, voitures, photos
+    constructeurs, pays, villes, provinces, modeles,commandes, transmissions, groupesMotopropulseur, typesCarburant, carrosseries, privilege_id, taxes, voitures
 }) => {
     
     
-    const [currentForm, setCurrentForm] = useState(null);
+    const [currentForm, setCurrentForm] = useState('commandelist');
     const [openMenu, setOpenMenu] = useState(null);
     const [editingId, setEditingId] = useState(null);
-
     const handleNavigationClick = (formName, id = null) => {
         setCurrentForm(formName);
         setEditingId(id);
+        
     };
 
     const handleMenuClick = (menuName) => {
@@ -197,6 +201,7 @@ const Dashboard = ({
                     </Menu>
                 </Sidebar>
                 <div className="main-content">
+                {currentForm === 'commandelist' && <CommandeList commandes={commandes} />}
                     {currentForm === 'constructeurCreate' && <ConstructeurCreate />}
                     {currentForm === 'constructeurIndex' && <ConstructeurIndex constructeurs={constructeurs} onEdit={(id) => handleNavigationClick('constructeurEdit', id)} />}
                     {currentForm === 'constructeurEdit' && <ConstructeurEdit id={editingId} />}
@@ -226,15 +231,22 @@ const Dashboard = ({
                     {currentForm === 'typeCarburantEdit' && <TypeCarburantEdit id={editingId} />}                    
                     {currentForm === 'paysCreate' && <PaysCreate />}
                     {currentForm === 'paysIndex' && <PaysIndex pays={pays} onEdit={(id) => handleNavigationClick('paysEdit', id)} />}
-                    {currentForm === 'paysEdit' && <PaysEdit id={editingId} />}
+                    {currentForm === 'paysEdit' && <PaysEdit pays={pays.find(p => p.id_pays === editingId)} />}
+
 
                     {currentForm === 'provinceCreate' && <ProvinceCreate pays={pays} />}
                     {currentForm === 'provinceIndex' && <ProvinceIndex provinces={provinces} onEdit={(id) => handleNavigationClick('provinceEdit', id)} />}
-                    {currentForm === 'provinceEdit' && <ProvinceEdit id={editingId} pays={pays} />}
+                    {currentForm === 'provinceEdit' && <ProvinceEdit province={provinces.find(p => p.id_province === editingId)} pays={pays} />}
 
                     {currentForm === 'villeCreate' && <VilleCreate pays={pays} provinces={provinces} />}
                     {currentForm === 'villeIndex' && <VilleIndex villes={villes} onEdit={(id) => handleNavigationClick('villeEdit', id)} />}
-                    {currentForm === 'villeEdit' && <VilleEdit id={editingId} pays={pays} provinces={provinces} />}
+                    {currentForm === 'villeEdit' && (
+                    <VilleEdit 
+                    ville={villes.find(v => v.id_ville === editingId)} 
+                    provinces={provinces} 
+                    pays={pays}
+                    />
+)}
 
                     {currentForm === 'modeleCreate' && <ModeleCreate constructeurs={constructeurs} />}
                     {currentForm === 'modeleIndex' && <ModeleIndex modeles={modeles} onEdit={(id) => handleNavigationClick('modeleEdit', id)} />}
@@ -266,8 +278,8 @@ const Dashboard = ({
 
                     {currentForm === 'taxeCreate' && <TaxeCreate provinces={provinces} />}
                     {currentForm === 'taxeIndex' && <TaxeIndex taxes={taxes} onEdit={(id) => handleNavigationClick('taxeEdit', id)} />}
-                    {currentForm === 'taxeEdit' && <TaxeEdit id={editingId} provinces={provinces} />}
-                </div>
+                    {currentForm === 'taxeEdit' && <TaxeEdit taxe={taxes.find(t => t.id === editingId)} provinces={provinces}/>}
+                    </div>
             </div>
             <Footer />
         </>

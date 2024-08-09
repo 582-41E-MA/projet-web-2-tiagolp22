@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { usePage, router } from '@inertiajs/react';
 import Header from '../../Header/Header';
 import Footer from '../../Footer/Footer';
-import InputField from '../../InputField/InputField';
 import './PaysCreate.css';
 
 const PaysCreate = () => {
@@ -29,9 +28,11 @@ const PaysCreate = () => {
         e.preventDefault();
 
         const formData = {
-            nom_pays: JSON.stringify(data.nom_pays), 
+            nom_pays: data.nom_pays
         };
-    
+
+        console.log(formData);
+        
         router.post("/pays", formData, {
             preserveState: true,
             preserveScroll: true,
@@ -50,23 +51,33 @@ const PaysCreate = () => {
             <div className="form-container">
                 <h1>Créer un Pays</h1>
                 <form onSubmit={handleSubmit}>
-                        <InputField
-                            label="Nom du Pays (EN)"
+                    <div className="form-group">
+                        <label htmlFor="en">Nom du Pays (EN)</label>
+                        <input
+                            id="en"
+                            type="text"
                             name="en"
                             value={data.nom_pays.en}
                             onChange={handleChange}
-                            error={errors.nom_pays}
+                            className="form-control"
                         />
-                        <InputField
-                            label="Nom du Pays (FR)"
+                        {errors.nom_pays?.en && <span className="error-text">{errors.nom_pays.en}</span>}
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="fr">Nom du Pays (FR)</label>
+                        <input
+                            id="fr"
+                            type="text"
                             name="fr"
                             value={data.nom_pays.fr}
                             onChange={handleChange}
-                            error={errors.nom_pays}
+                            className="form-control"
                         />
-                    <button className="create-button"type="submit">Créer</button>
+                        {errors.nom_pays?.fr && <span className="error-text">{errors.nom_pays.fr}</span>}
+                    </div>
+                    <button className="create-button" type="submit">Créer</button>
                 </form>
-            </div> 
+            </div>
         </>
     );
 };

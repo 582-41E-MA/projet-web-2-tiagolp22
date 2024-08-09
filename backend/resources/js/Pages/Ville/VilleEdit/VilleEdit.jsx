@@ -4,32 +4,16 @@ import { useTranslation } from 'react-i18next';
 import InputField from '../../InputField/InputField'; 
 import './VilleEdit.css';
 
-const VilleEdit = ({ id, provinces }) => {
+const VilleEdit = ({ provinces, ville }) => {
+    console.log(ville);
     
     const { t } = useTranslation();
     const [data, setData] = useState({
-        nom_ville: '',
-        province_id: '',
+        nom_ville: ville ? ville.nom_ville : '',
+        province_id: ville ? ville.province_id : '',
         
     });
 
-    useEffect(() => {
-        const fetchVille = async () => {
-            try {
-                const response = await axios.get(`/villes/${id}/edit`);
-                const villeData = response.data;
-                
-                setData({
-                    nom_ville: villeData.nom_ville,
-                    province_id: villeData.province_id,
-                });
-            } catch (error) {
-                console.error("Erreur lors du chargement de la ville", error);
-            }
-        };
-
-        fetchVille();
-    }, [id]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -41,7 +25,9 @@ const VilleEdit = ({ id, provinces }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        router.put(`/villes/${id}`, data, {
+        console.log(data);
+        
+        router.put(`/villes/${ville.id_ville}`, data, {
             preserveState: true,
             preserveScroll: true,
             onSuccess: () => {

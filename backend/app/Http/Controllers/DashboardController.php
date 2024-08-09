@@ -12,13 +12,17 @@ use App\Models\GroupeMotopropulseur;
 use App\Models\TypeCarburant;
 use App\Models\Carrosserie;
 use App\Models\Voiture;
+use App\Models\Status; 
 use Illuminate\Support\Facades\Auth;
 use App\Models\Privilege;
+use App\Models\Commande;
 use App\Models\Taxe;
 use App\Models\Ville;
 use Inertia\Inertia;
+
 use Illuminate\Support\Facades\Storage;
 use App\Models\Photo;
+
 
 class DashboardController extends Controller
 {
@@ -27,6 +31,8 @@ class DashboardController extends Controller
         // Fetching all data from constructeurs, pays, and provinces
         $constructeurs = Constructeur::all();
         $pays = Pays::all();
+        // Fetching status data
+        $statuses = Status::all(); // Adicione esta linha
         
         // Fetching all voitures with related data
         $voitures = Voiture::with([
@@ -50,6 +56,13 @@ class DashboardController extends Controller
         $carrosseries = Carrosserie::all();
         $privilege_id = Auth::check() ? Auth::user()->privileges_id : null;
         
+        $commandes = Commande::with([
+            'utilisateur', 
+            'status',
+            'methodespaiement',
+            'methodesexpedition'
+        ])->get();
+
         return Inertia::render('Dashboard/Dashboard', [
             'constructeurs' => $constructeurs,
             'pays' => $pays,
@@ -66,6 +79,8 @@ class DashboardController extends Controller
             'photos' => $voitures->flatMap(function ($voiture) {
                 return $voiture->photos;
             }),
+            'commandes' => $commandes,
+            'statuses' => $statuses,
         ]);
     }
 }

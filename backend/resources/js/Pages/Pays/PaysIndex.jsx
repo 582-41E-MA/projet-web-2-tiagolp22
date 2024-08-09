@@ -9,6 +9,7 @@ const PaysIndex = ({ pays, onEdit }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 5;
 
+
     const handleDelete = async (id) => {
         if (window.confirm(t('pays.confirm_delete'))) {
             try {
@@ -22,11 +23,9 @@ const PaysIndex = ({ pays, onEdit }) => {
             }
         }
     };
-
     const handleEdit = (pays) => {
         onEdit(pays);
     };
-
     const paginatedPays = pays.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
     const totalPages = Math.ceil(pays.length / itemsPerPage);
 
@@ -35,37 +34,27 @@ const PaysIndex = ({ pays, onEdit }) => {
             <h1>{t('pays.list_title')}</h1>
             <div className="dashboard-list">
                 {paginatedPays.length > 0 ? (
-                    paginatedPays.map(p => {
-                        let nomPays = {};
-                        try {
-                            nomPays = JSON.parse(p.nom_pays);
-                        } catch (error) {
-                            console.error("Erreur lors de l'analyse du nom du pays:", error);
-                            nomPays = { en: 'Invalid JSON', fr: 'JSON invalide' };
-                        }
-
-                        return (
-                            <div key={p.id_pays} className="dashboard-item">
-                                <div className="dashboard-name">
-                                    {i18n.language === 'en' ? nomPays.en : nomPays.fr}
-                                </div>
-                                <div className="dashboard-actions">
-                                    <button
-                                        onClick={() => handleEdit(p)}
-                                        className="edit-button"
-                                    >
-                                        {t('buttons.edit')}
-                                    </button>
-                                    <button
-                                        onClick={() => handleDelete(p.id_pays)}
-                                        className="delete-button"
-                                    >
-                                        {t('buttons.delete')}
-                                    </button>
-                                </div>
+                    paginatedPays.map(p => (
+                        <div key={p.id_pays} className="dashboard-item">
+                            <div className="dashboard-name">
+                                {i18n.language === 'en' ? p.nom_pays.en : p.nom_pays.fr}
                             </div>
-                        );
-                    })
+                            <div className="dashboard-actions">
+                                <button
+                                    onClick={() => onEdit(p.id_pays)}
+                                    className="edit-button"
+                                >
+                                    {t('buttons.edit')}
+                                </button>
+                                <button
+                                    onClick={() => handleDelete(p.id_pays)}
+                                    className="delete-button"
+                                >
+                                    {t('buttons.delete')}
+                                </button>
+                            </div>
+                        </div>
+                    ))
                 ) : (
                     <p>{t('pays.no_data')}</p>
                 )}

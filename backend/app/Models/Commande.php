@@ -2,43 +2,39 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Commande extends Model
 {
-    use HasFactory;
-
     protected $table = 'commandes';
-    public $timestamps = false;
     protected $primaryKey = 'id_commande';
+    public $timestamps = false;
+    
     protected $fillable = [
         'id_utilisateur', 'date_commande', 'prix_total', 'status_commande_id',
         'mode_paiement_id', 'mode_expedition_id', 'date_paiement', 'date_expedition',
         'commentaires'
     ];
-
     public function utilisateur()
     {
-        return $this->belongsTo(Utilisateur::class, 'id_utilisateur', 'id_utilisateur');
+        return $this->belongsTo(Utilisateur::class, 'id_utilisateur');
     }
 
     public function status()
     {
-        return $this->belongsTo(Status::class, 'status_commande_id', 'id_status');
+        return $this->belongsTo(Status::class, 'status_commande_id');
     }
 
-    public function methodePaiement()
+    public function methodespaiement()
     {
-        return $this->belongsTo(MethodePaiement::class, 'mode_paiement_id', 'id_methode_paiement');
+        return $this->belongsTo(MethodePaiement::class, 'mode_paiement_id');
     }
 
-    public function methodeExpedition()
+    public function methodesexpedition()
     {
-        return $this->belongsTo(MethodeExpedition::class, 'mode_expedition_id', 'id_methode_expedition');
+        return $this->belongsTo(MethodeExpedition::class, 'mode_expedition_id');
     }
-
-    public function voitures()
+      public function voitures()
     {
         return $this->hasMany(Voiture::class, 'commandes_id_commande', 'id_commande');
     }
@@ -47,5 +43,4 @@ class Commande extends Model
     {
         return $this->belongsToMany(Taxe::class, 'commandes_has_taxes', 'commandes_id_commande', 'taxes_id');
     }
-    
 }
