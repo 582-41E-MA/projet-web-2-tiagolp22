@@ -184,74 +184,88 @@ class VoitureController extends Controller
     }
 
     public function update(Request $request, $id)
-    {
-
-
+{
+    // Validation des données
+    $validated = $request->validate([
+        'modele_id' => 'required|exists:modeles,id_modele',
+        'annee' => 'required|integer|min:1900|max:' . (date('Y') + 1),
+        'date_arrivee' => 'required|date',
+        'prix_achat' => 'required|numeric|min:0',
+        'prix_vente' => 'required|numeric|min:0',
+        'couleur' => 'required|json',
+        'etat_vehicule' => 'required|json',
+        'nombre_places' => 'required|integer|min:1|max:10',
+        'nombre_portes' => 'required|integer|min:1|max:5',
+        'kilometrage' => 'required|integer|min:0',
+        'description' => 'required|json',
+        'type_carburant_id' => 'required|exists:typescarburant,id_type_carburant',
+        'groupe_motopropulseur_id' => 'required|exists:groupesmotopropulseurs,id_groupe_motopropulseur',
+        'carrosserie_id' => 'required|exists:carrosseries,id_carrosserie',
+        'type_transmission_id' => 'required|exists:transmissions,id_transmission',
+        'photos' => 'nullable|array',
+        'photos.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+        'photos_to_delete' => 'nullable|array',
+        'photos_to_delete.*' => 'integer',
+    ]);
+    DB::beginTransaction();
+    try {
+        // Trouver le voiture par ID
         $voiture = Voiture::findOrFail($id);
 
-        $validated = $request->validate([
-            'modele_id' => 'required|exists:modeles,id_modele',
-            'annee' => 'required|integer|min:1900|max:' . (date('Y') + 1),
-            'prix_vente' => 'required|numeric|min:0',
-            'couleur' => 'required|json',
-            'etat_vehicule' => 'required|json',
-            'nombre_places' => 'required|integer|min:1|max:10',
-            'nombre_portes' => 'required|integer|min:1|max:5',
-            'description' => 'required|json',
-            'photos' => 'nullable|array',
-            'photos.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-            'photos_to_delete' => 'nullable|array',
-            'photos_to_delete.*' => 'integer',
+        // Mettre à jour les données du voiture
+        $voiture->update([
+            'modele_id' => $validated['modele_id'],
+            'annee' => $validated['annee'],
+            'date_arrivee' => $validated['date_arrivee'],
+            'prix_achat' => $validated['prix_achat'],
+            'prix_vente' => $validated['prix_vente'],
+            'couleur' => $validated['couleur'],
+            'etat_vehicule' => $validated['etat_vehicule'],
+            'nombre_places' => $validated['nombre_places'],
+            'nombre_portes' => $validated['nombre_portes'],
+            'kilometrage' => $validated['kilometrage'],
+            'description' => $validated['description'],
+            'type_carburant_id' => $validated['type_carburant_id'],
+            'groupe_motopropulseur_id' => $validated['groupe_motopropulseur_id'],
+            'carrosserie_id' => $validated['carrosserie_id'],
+            'type_transmission_id' => $validated['type_transmission_id'],
         ]);
 
-        DB::beginTransaction();
-        try {
-            // Mise à jour des données de base
-            $voiture->update([
-                'modele_id' => $validated['modele_id'],
-                'annee' => $validated['annee'],
-                'prix_vente' => $validated['prix_vente'],
-                'couleur' => $validated['couleur'],
-                'etat_vehicule' => $validated['etat_vehicule'],
-                'nombre_places' => $validated['nombre_places'],
-                'nombre_portes' => $validated['nombre_portes'],
-                'description' => $validated['description'],
-            ]);
-
-            // Suppression des photos
-            if (isset($validated['photos_to_delete'])) {
-                foreach ($validated['photos_to_delete'] as $photoId) {
-                    $photo = Photo::find($photoId);
-                    if ($photo && $photo->voitures_id_voiture == $voiture->id_voiture) {
-                        Storage::delete($photo->photos);
-                        $photo->delete();
-                    }
+        // Supprimer les photos
+        if (!empty($validated['photos_to_delete'])) {
+            foreach ($validated['photos_to_delete'] as $photoId) {
+                $photo = Photo::find($photoId);
+                if ($photo && $photo->voitures_id_voiture == $voiture->id_voiture) {
+                    Storage::delete($photo->photos);
+                    $photo->delete();
                 }
             }
-
-            // Ajout de nouvelles photos
-            if ($request->hasFile('photos')) {
-                foreach ($request->file('photos') as $index => $photo) {
-                    $path = $photo->store('public/photos');
-                    Photo::create([
-                        'voitures_id_voiture' => $voiture->id_voiture,
-                        'photos' => $path,
-                    ]);
-                }
-            }
-
-            DB::commit();
-            return redirect()->route('voitures.index')->with('success', 'Voiture mise à jour avec succès.');
-        } catch (\Exception $e) {
-            DB::rollback();
-            return back()->withErrors(['error' => 'Une erreur est survenue lors de la mise à jour: ' . $e->getMessage()]);
         }
+
+        // Ajouter de nouvelles photos
+        if ($request->hasFile('photos')) {
+            foreach ($request->file('photos') as $photo) {
+                $path = $photo->store('public/photos');
+                Photo::create([
+                    'voitures_id_voiture' => $voiture->id_voiture,
+                    'photos' => $path,
+                ]);
+            }
+        }
+
+        DB::commit();
+        return redirect()->route('voitures.index')->with('success', 'Voiture mise à jour avec succès.');
+    } catch (\Exception $e) {
+        DB::rollback();
+        return back()->withErrors(['error' => 'Une erreur est survenue lors de la mise à jour: ' . $e->getMessage()]);
     }
+}
+
+
     public function destroy($id)
     {
         $voiture = Voiture::findOrFail($id);
         $voiture->delete();
-
-        return response()->json(['success' => 'Voiture supprimée avec succès.']);
+    
     }
 }
