@@ -445,7 +445,7 @@ const VoitureEdit = ({
         <option value="">{t("car.select_option")}</option>
         {typesCarburant.map((carburant) => (
             <option
-                key={carburant.id}
+                key={carburant.id_type_carburant}
                 value={carburant.id_type_carburant}
             >
                 {i18n.language === "en"
@@ -508,7 +508,7 @@ const VoitureEdit = ({
                             {carrosseries.map((carrosserie) => (
                                 <option
                                 className="form-option"
-                                key={carrosserie.id}
+                                key={carrosserie.id_carrosserie}
                                 value={carrosserie.id_carrosserie}
                             >
                                 {i18n.language === "en"
@@ -540,7 +540,7 @@ const VoitureEdit = ({
                                 {transmissions.map((transmission) => (
                                     <option
                                     className="form-option"
-                                    key={transmission.id}
+                                    key={transmission.id_transmission}
                                     value={transmission.id_transmission}
                                 >
                                     {i18n.language === "en"
