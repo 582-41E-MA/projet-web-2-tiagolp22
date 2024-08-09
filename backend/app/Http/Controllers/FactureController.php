@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Commande;
-use App\Models\MethodePaiement;
-use App\Models\MethodeExpedition;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -16,27 +14,19 @@ class FactureController extends Controller
     {
         Log::info('Début de la génération du PDF pour la commande ' . $commandeId);
         try {
+            // Récupération de la commande avec ses relations
             $commande = Commande::with(['utilisateur', 'voitures', 'taxes', 'methodePaiement', 'methodeExpedition'])->findOrFail($commandeId);
             Log::info('Commande trouvée');
 
+            // Génération du PDF
             $pdf = PDF::loadView('factures.template', ['commande' => $commande]);
             Log::info('Vue chargée');
 
-            $directory = storage_path('app/public/factures');
-            Log::info('Répertoire de destination : ' . $directory);
+            // Création du fichier PDF et retour en tant que téléchargement
+            $pdfName = 'facture_' . $commandeId . '.pdf';
+            Log::info('Nom du fichier PDF : ' . $pdfName);
 
-            if (!File::isDirectory($directory)) {
-                Log::info('Le répertoire n\'existe pas, tentative de création');
-                File::makeDirectory($directory, 0755, true, true);
-            }
-
-            $pdfPath = $directory . '/facture_' . $commandeId . '.pdf';
-            Log::info('Chemin complet du fichier PDF : ' . $pdfPath);
-
-            $pdf->save($pdfPath);
-            Log::info('PDF sauvegardé');
-
-            return response()->json(['pdfUrl' => asset('storage/factures/facture_' . $commandeId . '.pdf')]);
+            return $pdf->download($pdfName);
         } catch (\Exception $e) {
             Log::error('Erreur lors de la génération du PDF: ' . $e->getMessage());
             Log::error('Trace: ' . $e->getTraceAsString());

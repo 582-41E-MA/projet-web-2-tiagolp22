@@ -1,32 +1,39 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 
 const Facture = ({ commandeId }) => {
-  const [pdfUrl, setPdfUrl] = useState(null);
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   useEffect(() => {
-    const generatePDF = async () => {
+    const downloadPDF = async () => {
       try {
-        const response = await axios.get(`/generate-facture/${commandeId}`);
-        setPdfUrl(response.data.pdfUrl);
+        const response = await axios({
+          url: `/generate-facture/${commandeId}`,
+          method: 'GET',
+          responseType: 'blob',
+        });
+
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', `facture_${commandeId}.pdf`);
+        document.body.appendChild(link);
+        link.click();
+
+        window.URL.revokeObjectURL(url);
       } catch (error) {
-        console.error('Erreur lors de la génération du PDF:', error);
+        console.error('Erreur lors du téléchargement du PDF:', error);
       }
     };
 
-    generatePDF();
+    downloadPDF();
   }, [commandeId]);
-
-  if (!pdfUrl) {
-    return <div>{t('invoice_loading')}</div>;
-  }
 
   return (
     <div>
       <h2>{t('invoice_title', { orderId: commandeId })}</h2>
-      <iframe src={pdfUrl} width="100%" height="600px" />
+      <p>{t('invoice_loading')}</p>
     </div>
   );
 };

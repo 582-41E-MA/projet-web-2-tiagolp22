@@ -80,13 +80,13 @@
             <h3>Vehicle #{{ $voiture->id_voiture }}</h3>
             <p><strong>Model:</strong> {{ $voiture->modele ? json_decode($voiture->modele->nom_modele, true) : 'N/A' }}</p>
             <p><strong>Year:</strong> {{ $voiture->annee }}</p>
-            <p><strong>Sale Price:</strong> {{ $voiture->prix_vente }} €</p>
+            <p><strong>Sale Price:</strong> {{ $voiture->prix_vente }} $</p>
         @endforeach
     @else
         <p>No vehicle associated with this order.</p>
     @endif
 
-    <p><strong>Total Paid:</strong> {{ $commande->prix_total }} €</p>
+    <p><strong>Total Paid:</strong> {{ $commande->prix_total }} $</p>
     <p>Thank you for your purchase!</p>
 </body>
 </html>
