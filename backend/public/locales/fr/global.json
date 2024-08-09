@@ -67,7 +67,16 @@
     "cancel_reservation": "Annuler reservation",
     "time_limit_info": "À partir du moment où vous réservez la voiture, vous avez 24 heures pour finaliser l'achat. Si le paiement n'est pas complété dans ce délai, la voiture sera de nouveau listée dans le catalogue et sera disponible pour d'autres clients."
   },
+  "tax":{
+    "index_title":"Liste des taxes"
+
+    },
   "car": {
+    "subtotal":"sous total",
+    "shipping":"livraison",
+    "selectShippingMethod":"Selectionner La Methode de livraison",
+    "title_create":"Creer une voiture",
+    "photos":"Photos",
     "engine_group":"transmission",
     "edit_title": "Modifier la voiture",
     "select_option": "Sélectionner",
