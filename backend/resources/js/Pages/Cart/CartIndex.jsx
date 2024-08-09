@@ -20,6 +20,7 @@ import {
 import "./CartIndex.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartArrowDown } from "@fortawesome/free-solid-svg-icons";
+import Facture from '../Facture/Facture'; // Importez le composant Facture
 
 axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 axios.defaults.withCredentials = true;
@@ -31,6 +32,7 @@ const CheckoutForm = ({
     clearCart,
     onClose,
     selectedShippingMethod,
+    onOrderComplete,
 }) => {
     const stripe = useStripe();
     const elements = useElements();
@@ -57,10 +59,7 @@ const CheckoutForm = ({
             });
 
             if (error) {
-                console.error(
-                    "Erreur lors de la création du mode de paiement :",
-                    error
-                );
+                console.error("Erreur lors de la création du mode de paiement :", error);
                 setErrorMessage(error.message);
                 setIsProcessing(false);
                 return;
@@ -75,29 +74,20 @@ const CheckoutForm = ({
             };
             console.log("Données envoyées au serveur :", requestData);
 
-            const response = await axios.post(
-                "/api/create-new-order",
-                requestData
-            );
+            const response = await axios.post("/api/create-new-order", requestData);
 
             console.log("Réponse du serveur :", response.data);
 
             if (response.data.success) {
                 console.log("Paiement traité avec succès");
                 clearCart();
-                onClose();
-                // TODO: Ajouter ici un message de réussite ou une redirection
+                onOrderComplete(response.data.order_id);
             } else {
                 setErrorMessage("Échec du paiement : " + response.data.message);
             }
         } catch (error) {
-            console.error(
-                "Erreur lors du paiement :",
-                error.response ? error.response.data : error
-            );
-            setErrorMessage(
-                "Une erreur est survenue lors du paiement. Veuillez réessayer."
-            );
+            console.error("Erreur lors du paiement :", error.response ? error.response.data : error);
+            setErrorMessage("Une erreur est survenue lors du paiement. Veuillez réessayer.");
         } finally {
             setIsProcessing(false);
         }
@@ -106,9 +96,7 @@ const CheckoutForm = ({
     return (
         <form onSubmit={handleSubmit}>
             <CardElement />
-            {errorMessage && (
-                <div className="error-message">{errorMessage}</div>
-            )}
+            {errorMessage && <div className="error-message">{errorMessage}</div>}
             <Button
                 type="submit"
                 variant="contained"
@@ -127,11 +115,11 @@ const CartIndex = ({ onClose, onClearCart }) => {
     const [showModal, setShowModal] = useState(false);
     const [shippingMethods, setShippingMethods] = useState([]);
     const [selectedShippingMethod, setSelectedShippingMethod] = useState("");
+    const [orderCompleted, setOrderCompleted] = useState(false);
+    const [orderId, setOrderId] = useState(null);
 
     useEffect(() => {
-        const storedCartItems = JSON.parse(
-            localStorage.getItem("cartItems") || "[]"
-        );
+        const storedCartItems = JSON.parse(localStorage.getItem("cartItems") || "[]");
         setCartItems(storedCartItems);
 
         const fetchShippingMethods = async () => {
@@ -139,7 +127,7 @@ const CartIndex = ({ onClose, onClearCart }) => {
                 const response = await axios.get("/api/methodeExpeditions");
                 setShippingMethods(response.data);
             } catch (error) {
-                console.error("ErroR fetchShippingMethods :", error);
+                console.error("Erreur fetchShippingMethods :", error);
             }
         };
         fetchShippingMethods();
@@ -157,17 +145,19 @@ const CartIndex = ({ onClose, onClearCart }) => {
         localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
     };
 
+    const handleOrderComplete = (newOrderId) => {
+        setOrderCompleted(true);
+        setOrderId(newOrderId);
+    };
+
     const subtotal = cartItems.reduce(
         (total, item) => total + parseFloat(item.prix_vente || 0),
         0
     );
     const selectedMethod = shippingMethods.find(
-        (method) =>
-            method.id_methode_expedition === parseInt(selectedShippingMethod)
+        (method) => method.id_methode_expedition === parseInt(selectedShippingMethod)
     );
-    const shippingCost = selectedMethod
-        ? parseFloat(selectedMethod.prix_fixe)
-        : 0;
+    const shippingCost = selectedMethod ? parseFloat(selectedMethod.prix_fixe) : 0;
     const totalPrice = (subtotal + shippingCost).toFixed(2);
 
     return (
@@ -193,16 +183,13 @@ const CartIndex = ({ onClose, onClearCart }) => {
                                 <li key={index}>
                                     <h3>{item.modele.nom_modele}</h3>
                                     <p>
-                                        {t("cart.year")}:{" "}
-                                        <strong>{item.annee}</strong>
+                                        {t("cart.year")}: <strong>{item.annee}</strong>
                                     </p>
                                     <p>
-                                        {t("cart.km")}:{" "}
-                                        <strong>{item.kilometrage} km</strong>
+                                        {t("cart.km")}: <strong>{item.kilometrage} km</strong>
                                     </p>
                                     <p>
-                                        {t("cart.price")}:{" "}
-                                        <strong>${item.prix_vente}</strong>
+                                        {t("cart.price")}: <strong>${item.prix_vente}</strong>
                                     </p>
                                     <Button
                                         variant="contained"
@@ -215,49 +202,32 @@ const CartIndex = ({ onClose, onClearCart }) => {
                             ))}
                         </ul>
 
-                        <FormControl
-                            fullWidth
-                            sx={{ marginTop: 2, marginBottom: 2 }}
-                        >
+                        <FormControl fullWidth sx={{ marginTop: 2, marginBottom: 2 }}>
                             <InputLabel id="shipping-method-label">
                                 {t("cart.shippingMethod")}
                             </InputLabel>
                             <Select
                                 labelId="shipping-method-label"
                                 value={selectedShippingMethod}
-                                onChange={(e) =>
-                                    setSelectedShippingMethod(e.target.value)
-                                }
+                                onChange={(e) => setSelectedShippingMethod(e.target.value)}
                                 label={t("cart.shippingMethod")}
                             >
-                                <MenuItem value="">
-                                    {t("cart.selectShippingMethod")}
-                                </MenuItem>
+                                <MenuItem value="">{t("cart.selectShippingMethod")}</MenuItem>
                                 {shippingMethods.map((method) => (
                                     <MenuItem
                                         key={method.id_methode_expedition}
                                         value={method.id_methode_expedition}
                                     >
-                                        {
-                                            JSON.parse(
-                                                method.nom_methode_expedition
-                                            )[i18n.language]
-                                        }{" "}
-                                        - ${method.prix_fixe}
+                                        {JSON.parse(method.nom_methode_expedition)[i18n.language]} - $
+                                        {method.prix_fixe}
                                     </MenuItem>
                                 ))}
                             </Select>
                         </FormControl>
 
-                        <p>
-                            {t("cart.subtotal")}: ${subtotal.toFixed(2)}
-                        </p>
-                        <p>
-                            {t("cart.shipping")}: ${shippingCost.toFixed(2)}
-                        </p>
-                        <p>
-                            {t("cart.total")}: ${totalPrice}
-                        </p>
+                        <p>{t("cart.subtotal")}: ${subtotal.toFixed(2)}</p>
+                        <p>{t("cart.shipping")}: ${shippingCost.toFixed(2)}</p>
+                        <p>{t("cart.total")}: ${totalPrice}</p>
 
                         <div>
                             <Button
@@ -284,7 +254,11 @@ const CartIndex = ({ onClose, onClearCart }) => {
             </div>
             <Modal
                 open={showModal}
-                onClose={() => setShowModal(false)}
+                onClose={() => {
+                    if (!orderCompleted) {
+                        setShowModal(false);
+                    }
+                }}
                 aria-labelledby="checkout-modal-title"
                 aria-describedby="checkout-modal-description"
             >
@@ -295,22 +269,33 @@ const CartIndex = ({ onClose, onClearCart }) => {
                         left: "50%",
                         transform: "translate(-50%, -50%)",
                         width: 400,
-                        height: 200,
+                        height: orderCompleted ? 600 : 200,
                         bgcolor: "background.paper",
                         border: "2px solid #000",
                         boxShadow: 24,
                         p: 4,
                     }}
                 >
-                    <h2 id="checkout-modal-title">{t("cart.checkout")}</h2>
-                    <Elements stripe={stripePromise}>
-                        <CheckoutForm
-                            cartItems={cartItems}
-                            clearCart={clearCart}
-                            onClose={() => setShowModal(false)}
-                            selectedShippingMethod={selectedShippingMethod}
-                        />
-                    </Elements>
+                    {orderCompleted ? (
+                        <>
+                            <h2>{t("cart.orderConfirmation")}</h2>
+                            <Facture commandeId={orderId} />
+                            <Button onClick={() => setShowModal(false)}>{t("cart.close")}</Button>
+                        </>
+                    ) : (
+                        <>
+                            <h2 id="checkout-modal-title">{t("cart.checkout")}</h2>
+                            <Elements stripe={stripePromise}>
+                                <CheckoutForm
+                                    cartItems={cartItems}
+                                    clearCart={clearCart}
+                                    onClose={() => setShowModal(false)}
+                                    selectedShippingMethod={selectedShippingMethod}
+                                    onOrderComplete={handleOrderComplete}
+                                />
+                            </Elements>
+                        </>
+                    )}
                 </Box>
             </Modal>
         </div>
