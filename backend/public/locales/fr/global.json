@@ -319,5 +319,18 @@
     },
     "cta": "Pour plus d'informations ou pour planifier une visite, contactez-nous dès aujourd'hui !",
     "cta_button": "Contactez-nous"
+  },
+  "commande_list": {
+    "title": "Commandes Réalisées",
+    "id": "ID",
+    "date_commande": "Date Commande",
+    "date_expedition": "Date Expédition",
+    "date_paiement": "Date Paiement",
+    "prix_total": "Prix Total",
+    "status": "Status",
+    "mode_paiement": "Mode Paiement",
+    "mode_expedition": "Mode Expédition",
+    "commentaires": "Commentaires",
+    "details": "Détails"
   }
 }

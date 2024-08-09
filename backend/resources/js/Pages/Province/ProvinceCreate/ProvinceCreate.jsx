@@ -1,8 +1,6 @@
 import React from 'react';
 import { useForm } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
-import Header from '../../Header/Header';
-import Footer from '../../Footer/Footer';
 import InputField from '../../InputField/InputField'; // Verifique o caminho correto do seu InputField
 import './ProvinceCreate.css';
 
@@ -13,14 +11,9 @@ const ProvinceCreate = ({ pays }) => {
         pays_id: '',
     });
 
-    const getPaysOptions = () => {
+    const renderPaysOptions = () => {
         return pays.map((paysItem) => {
-            let nomPays = { en: 'Invalid JSON', fr: 'JSON invalide' };
-            try {
-                nomPays = JSON.parse(paysItem.nom_pays);
-            } catch (error) {
-                console.error("Erreur lors de l'analyse du nom du pays:", error);
-            }
+            const nomPays = paysItem.nom_pays;
 
             return (
                 <option key={paysItem.id_pays} value={paysItem.id_pays}>
@@ -31,6 +24,8 @@ const ProvinceCreate = ({ pays }) => {
     };
 
     const handleSubmit = (e) => {
+        console.log(data);
+        
         e.preventDefault();
         post("/provinces", {
             data,
@@ -64,7 +59,7 @@ const ProvinceCreate = ({ pays }) => {
                             className="form-control"
                         >
                             <option value="">{t('province.select_country')}</option>
-                            {getPaysOptions()}
+                            {renderPaysOptions()}
                         </select>
                         {errors.pays_id && <span className="error-text">{errors.pays_id}</span>}
                     </div>

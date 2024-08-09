@@ -12,25 +12,17 @@ const ProvinceIndex = ({ provinces, onEdit }) => {
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`/provinces/${id}`);
-            window.location.reload();
+            await router.delete(`/provinces/${id}`, {
+                preserveState: true,
+                preserveScroll: true,
+            });
         } catch (error) {
             console.error('Erro ao excluir province:', error);
         }
     };
 
     const handleEdit = (id) => {
-       onEdit(id)
-    };
-
-    const getPaysNom = (nom_pays) => {
-        try {
-            const parsedNomPays = JSON.parse(nom_pays);
-            return parsedNomPays[i18n.language];
-        } catch (error) {
-            console.error('Erreur lors de l\'analyse de nom_pays:', error);
-            return '';
-        }
+        onEdit(id);
     };
 
     const paginatedProvinces = provinces.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
@@ -44,7 +36,8 @@ const ProvinceIndex = ({ provinces, onEdit }) => {
                     {paginatedProvinces.map((province) => (
                         <div key={province.id_province} className="dashboard-item">
                             <div>
-                                <strong>{province.nom_province}</strong> - {getPaysNom(province.pays.nom_pays) || 'Nom de pays indisponible'}
+                                <strong>{province.nom_province}</strong> - 
+                                {province.pays.nom_pays[i18n.language] || ''}
                             </div>
                             <div className="dashboard-actions">
                                 <button 

@@ -31,13 +31,15 @@ class TaxeController extends Controller
 
     public function store(Request $request)
     {
-        dd($request);
-        $validated = $request->validated();
-
+        $validated = $request->validate([
+            'GST_HST' => ['required', 'numeric', 'min:0', 'max:100'],
+            'PST' => ['required', 'numeric', 'min:0', 'max:100'],
+            'provinces_id_province' => ['required', 'exists:provinces,id_province'],
+        ]);
+    
         $taxe = Taxe::create($validated);
-        return redirect()->route('taxes.index')->with('success', 'Taxe created successfully.');
+        
     }
-
     public function show($id)
     {
         $taxe = Taxe::findOrFail($id);
@@ -49,15 +51,20 @@ class TaxeController extends Controller
         $taxe = Taxe::findOrFail($id);
         return Inertia::render('Taxe/TaxeEdit/TaxeEdit', ['taxe' => $taxe]);
     }
-
     public function update(Request $request, $id)
     {
-        $validated = $request->validated();
-
+        $validated = $request->validate([
+            'GST_HST' => 'required|numeric|min:0',
+            'PST' => 'required|numeric|min:0',
+            'provinces_id_province' => 'required|exists:provinces,id_province',
+        ]);
+    
         $taxe = Taxe::findOrFail($id);
         $taxe->update($validated);
+    
         return redirect()->route('taxes.index');
     }
+    
 
     public function destroy($id)
     {

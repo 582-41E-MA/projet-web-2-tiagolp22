@@ -20,10 +20,11 @@ class PaysRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
+    public function rules()
     {
         return [
-            'nom_pays' => ['required', 'json', Rule::unique('pays')->ignore($this->pays)],
+            'nom_pays.en' => 'required|string|max:255',
+            'nom_pays.fr' => 'required|string|max:255',
         ];
     }
 }

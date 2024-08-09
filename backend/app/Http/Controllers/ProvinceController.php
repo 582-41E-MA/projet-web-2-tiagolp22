@@ -32,7 +32,7 @@ class ProvinceController extends Controller
 
         $province = Province::create($validatedData);
 
-        return redirect()->route('provinces.index')->with('success', 'Province créée avec succès.');
+        
     }
 
     public function edit($id)

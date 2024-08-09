@@ -1,33 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { router } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
-import axios from 'axios';
 import './ProvinceEdit.css';
 
-const ProvinceEdit = ({ id, pays }) => {
+const ProvinceEdit = ({ pays, province }) => {
+    
     const { t, i18n } = useTranslation();
     const [data, setData] = useState({
-        nom_province: '',
-        id_pays: '',
+        nom_province: province ? province.nom_province : '',
+        pays_id: province ? province.pays_id : '',
     });
 
     useEffect(() => {
-        const fetchProvince = async () => {
-            try {
-                const response = await axios.get(`/provinces/${id}/edit`);
-                const fetchedData = response.data;
-
-                setData({
-                    nom_province: fetchedData.nom_province,
-                    id_pays: fetchedData.id_pays,
-                });
-            } catch (error) {
-                console.error("Erreur lors du chargement de la province", error);
-            }
-        };
-
-        fetchProvince();
-    }, [id]);
+        if (province) {
+            setData({
+                nom_province: province.nom_province || '',
+                pays_id: province.pays_id || '',
+            });
+        }
+    }, [province]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -40,7 +31,8 @@ const ProvinceEdit = ({ id, pays }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(data);
-        router.put(`/provinces/${id}`, data, {
+        
+        router.put(`/provinces/${province.id_province}`, data, {
             preserveState: true,
             preserveScroll: true,
             onSuccess: () => {
@@ -52,21 +44,12 @@ const ProvinceEdit = ({ id, pays }) => {
         });
     };
 
-    const getPaysOptions = () => {
-        return pays.map((paysItem) => {
-            let nomPays = { en: 'Invalid JSON', fr: 'JSON invalide' };
-            try {
-                nomPays = JSON.parse(paysItem.nom_pays);
-            } catch (error) {
-                console.error("Erreur lors de l'analyse du nom du pays:", error);
-            }
-
-            return (
-                <option key={paysItem.id_pays} value={paysItem.id_pays}>
-                    {i18n.language === 'en' ? nomPays.en : nomPays.fr}
-                </option>
-            );
-        });
+    const renderPaysOptions = () => {
+        return pays.map((paysItem) => (
+            <option key={paysItem.id_pays} value={paysItem.id_pays}>
+                {paysItem.nom_pays[i18n.language] || 'Nom indisponible'}
+            </option>
+        ));
     };
 
     return (
@@ -93,7 +76,7 @@ const ProvinceEdit = ({ id, pays }) => {
                         className="form-control"
                     >
                         <option value="">{t('province.select_pays')}</option>
-                        {getPaysOptions()}
+                        {renderPaysOptions()}
                     </select>
                 </div>
 

@@ -1,51 +1,67 @@
-import React from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { usePage, Link } from '@inertiajs/react';
+import { usePage, router } from '@inertiajs/react';
+import Pagination from '../Pagination/Pagination'; // Ensure this component exists and is correctly implemented
 
-const TaxeIndex = ({ taxes }) => {
-    const { t } = useTranslation();
-    const { reload } = usePage();
+const TaxeIndex = ({ taxes, onEdit }) => {
+    const { t, i18n } = useTranslation();
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 5; 
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`/taxes/${id}`);
-            reload();
+            await router.delete(`/taxes/${id}`, {
+                preserveState: true,
+                preserveScroll: true,
+            });
         } catch (error) {
-            console.error('Erro ao deletar a taxa:', error);
+            console.error('Erreur lors de la suppression de la taxe:', error);
         }
     };
 
+    const handleEdit = (id) => {
+        onEdit(id);
+    };
+
+    const paginatedTaxes = taxes.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+    const totalPages = Math.ceil(taxes.length / itemsPerPage);
+
     return (
-        <div className="taxe-index-container">
-            <h1>{t('tax.index_title')}</h1>
-            <div className="taxe-list">
-                {taxes.map((taxe) => (
-                    <div key={taxe.id} className="taxe-item">
-                        <div>
-                            <strong>{t('tax.gst_hst')}: {taxe.GST_HST}</strong>
+        <>
+            <div className="dashboard-index-container">
+                <h1>{t('tax.index_title')}</h1>
+                <div className="dashboard-list">
+                    {paginatedTaxes.map((tax) => (
+                        <div key={tax.id} className="dashboard-item">
+                            <div>
+                                <strong>{tax.GST_HST}% GST/HST</strong> - 
+                                {tax.PST}% PST - 
+                                {tax.province ? tax.province.nom_province : t('tax.no_province')}
+                            </div>
+                            <div className="dashboard-actions">
+                                <button 
+                                    onClick={() => handleEdit(tax.id)}
+                                    className="edit-button"
+                                >
+                                    {t('buttons.edit')}
+                                </button>
+                                <button 
+                                    onClick={() => handleDelete(tax.id)}
+                                    className="delete-button"
+                                >
+                                    {t('buttons.delete')}
+                                </button>
+                            </div>
                         </div>
-                        <div>
-                            <strong>{t('tax.pst')}: {taxe.PST}</strong>
-                        </div>
-                        <div>
-                            <strong>{t('tax.province')}: {taxe.province ? taxe.province.nom_province : '-'}</strong>
-                        </div>
-                        <div className="taxe-actions">
-                            <Link href={`/taxes/${taxe.id}/edit`} className="edit-button">
-                                {t('tax.edit_button')}
-                            </Link>
-                            <button
-                                onClick={() => handleDelete(taxe.id)}
-                                className="delete-button"
-                            >
-                                {t('tax.delete_button')}
-                            </button>
-                        </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
+                <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={setCurrentPage}
+                />
             </div>
-        </div>
+        </>
     );
 };
 

@@ -166,6 +166,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
         // Gestion des utilisateurs (y compris les employés)
         Route::resource('/utilisateurs', UtilisateurController::class);
+
+        Route::resource('taxes', TaxeController::class);
+        
     });
 });
 
