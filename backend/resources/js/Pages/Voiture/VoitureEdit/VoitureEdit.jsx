@@ -163,7 +163,6 @@ const VoitureEdit = ({
                 });
                 
             }
-            console.log(formData);
             
             
             
@@ -222,22 +221,32 @@ const VoitureEdit = ({
                         </div>
                     </div>
                     <div className="form-group">
-                        <label>{t('car.model')}</label>
+                        <label htmlFor="modele_id">{t("car.model")}</label>
                         <select
+                            className="form-select"
                             name="modele_id"
+                            id="modele_id"
                             value={data.modele_id}
-                            onChange={handleChange}
-                            
+                            onChange={(e) => {
+                                const selectedModelId = e.target.value;
+                                setData("modele_id", selectedModelId);
+                            }}
                         >
+                            <option value="">{t("car.select_option")}</option>
                             {modeles.map((modele) => (
-                                <option key={modele.id_modele} value={modele.id_modele}>
+                                <option
+                                    className="form-option"
+                                    key={modele.id_modele}
+                                    value={modele.id_modele}
+                                >
                                     {modele.nom_modele}
                                 </option>
                             ))}
                         </select>
-                        {errors.modele_id && <div className="error">{errors.modele_id}</div>}
+                        {errors.modele_id && (
+                            <span className="error">{errors.modele_id}</span>
+                        )}
                     </div>
-
                     <div className="form-group">
                         <label>{t('car.year')}</label>
                         <select
@@ -303,11 +312,19 @@ const VoitureEdit = ({
                         )}
                     </div>
                     <div className="form-group">
-                        <label>{t('car.mileage')}</label>
-                        <input type="text" name="kilometrage"
-                         value={data.kilometrage} 
-                         onChange={handleChange} />
-                        {errors.kilometrage && <div className="error">{errors.kilometrage}</div>}
+                        <label htmlFor="kilometrage">{t("car.mileage")}</label>
+                        <input
+                            type="text"
+                            name="kilometrage"
+                            id="kilometrage"
+                            value={data.kilometrage}
+                            onChange={(e) =>
+                                setData("kilometrage", e.target.value)
+                            }
+                        />
+                        {errors.kilometrage && (
+                            <span className="error">{errors.kilometrage}</span>
+                        )}
                     </div>
                     <div className="form-group">
                         <label>{t('car.arrival_date')}</label>
@@ -333,16 +350,25 @@ const VoitureEdit = ({
                             <span className="error">{errors.couleur}</span>
                         )}
                     </div>
-
                     <div className="form-group">
-                        <label>{t('car.vehicle_condition')}</label>
+                        <label htmlFor="etat_vehicule">{t('car.vehicle_condition')}</label>
                         <input
                             type="text"
                             name="etat_vehicule"
-                            value={data.etat_vehicule[i18n.language] || ''}
-                            onChange={handleChange}
+                            id="etat_vehicule"
+                            value={data.etat_vehicule[i18n.language]}
+                            onChange={(e) => {
+                                setData("etat_vehicule", {
+                                    ...data.etat_vehicule,
+                                    [i18n.language]: e.target.value,
+                                });
+                            }}
                         />
-                        {errors.etat_vehicule && <div className="error">{errors.etat_vehicule}</div>}
+                        {errors.etat_vehicule && (
+                            <span className="error">
+                                {errors.etat_vehicule}
+                            </span>
+                        )}
                     </div>
 
                     <div className="form-group">
@@ -536,8 +562,8 @@ const VoitureEdit = ({
               
 
                     <div className="form-actions">
-                        <button type="submit" disabled={processing}>
-                            {t('car.save')}
+                        <button className ="edit-button" type="submit" disabled={processing}>
+                            {t('buttons.update')}
                         </button>
                     </div>
                 </form>
