@@ -70,6 +70,8 @@
   "save_changes": "Save changes",
   "Learn_more": "Learn more",
   "car": {
+    "title_create":"Create a car",
+    "photos":"Pictures",
     "engine_group":"transmission",
     "save_changes": "Save changes",
     "edit_title": "Edit car",
@@ -170,6 +172,10 @@
     "edit_title": "Edit Model",
     "update_button": "update"
   },
+  "tax":{
+    "index_title":"Tax List"
+
+    },
   "constructeur": {
     "update_button": "Update",
     "create": "create cunstructor",
@@ -243,6 +249,10 @@
     "followUs": "Suivez-nous sur les réseaux sociaux"
   },
   "cart": {
+    "subtotal":"Sub total",
+    "shipping":"Delivery",
+    "shippingMethod":"Delivery Method",
+    "selectShippingMethod":"Select Shipping Method",
     "title": "Shopping Cart",
     "empty": "Your cart is empty.",
     "year": "Year",
