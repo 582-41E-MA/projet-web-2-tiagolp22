@@ -30,6 +30,7 @@ use App\Http\Controllers\StripeController;
 use App\Http\Controllers\MethodexpediditionController;
 
 
+
 // Routes protégées par authentification
 Route::middleware(['auth:sanctum'])->group(function () {
     // Routes pour tous les utilisateurs authentifiés
@@ -208,7 +209,7 @@ Route::middleware('web')->group(function () {
 //     });
 // });
 
-
+Route::get('/generate-facture/{commandeId}', [FactureController::class, 'generatePDF']);
 Route::get('/api/methodeExpeditions', [MethodexpediditionController::class, 'index']);
 
 Route::post('/create-checkout-session', [StripeController::class, 'createCheckoutSession']);
