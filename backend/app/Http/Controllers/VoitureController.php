@@ -29,7 +29,8 @@ class VoitureController extends Controller
 
         $voitures = Voiture::with('modele')
             ->where('date_arrivee', '<=', $today)
-            ->whereNotIn('id_voiture', $reservedCarIds) 
+            ->whereNotIn('id_voiture', $reservedCarIds)
+            ->whereNull('commandes_id_commande')
             ->get();
 
         $privilege_id = Auth::check() ? Auth::user()->privileges_id : null;
@@ -185,9 +186,9 @@ class VoitureController extends Controller
     public function update(Request $request, $id)
     {
 
-    
+
         $voiture = Voiture::findOrFail($id);
-    
+
         $validated = $request->validate([
             'modele_id' => 'required|exists:modeles,id_modele',
             'annee' => 'required|integer|min:1900|max:' . (date('Y') + 1),
@@ -202,7 +203,7 @@ class VoitureController extends Controller
             'photos_to_delete' => 'nullable|array',
             'photos_to_delete.*' => 'integer',
         ]);
-    
+
         DB::beginTransaction();
         try {
             // Mise à jour des données de base
@@ -216,7 +217,7 @@ class VoitureController extends Controller
                 'nombre_portes' => $validated['nombre_portes'],
                 'description' => $validated['description'],
             ]);
-    
+
             // Suppression des photos
             if (isset($validated['photos_to_delete'])) {
                 foreach ($validated['photos_to_delete'] as $photoId) {
@@ -227,7 +228,7 @@ class VoitureController extends Controller
                     }
                 }
             }
-    
+
             // Ajout de nouvelles photos
             if ($request->hasFile('photos')) {
                 foreach ($request->file('photos') as $index => $photo) {
@@ -238,7 +239,7 @@ class VoitureController extends Controller
                     ]);
                 }
             }
-    
+
             DB::commit();
             return redirect()->route('voitures.index')->with('success', 'Voiture mise à jour avec succès.');
         } catch (\Exception $e) {
@@ -250,7 +251,7 @@ class VoitureController extends Controller
     {
         $voiture = Voiture::findOrFail($id);
         $voiture->delete();
-    
+
         return response()->json(['success' => 'Voiture supprimée avec succès.']);
     }
 }
