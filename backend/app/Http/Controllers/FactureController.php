@@ -15,7 +15,14 @@ class FactureController extends Controller
         Log::info('Début de la génération du PDF pour la commande ' . $commandeId);
         try {
             // Récupération de la commande avec ses relations
-            $commande = Commande::with(['utilisateur', 'voitures', 'taxes', 'methodePaiement', 'methodeExpedition'])->findOrFail($commandeId);
+            $commande = Commande::with([
+                'utilisateur',
+                'voitures.modele',
+                'taxes',
+                'methodespaiement',
+                'methodesexpedition'
+            ])->findOrFail($commandeId);
+
             Log::info('Commande trouvée');
 
             // Génération du PDF

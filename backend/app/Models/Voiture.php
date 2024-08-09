@@ -84,6 +84,6 @@ class Voiture extends Model
 
     public function constructeur()
     {
-        return $this->hasOneThrough(Constructeur::class, Modele::class, 'id_modele', 'id_constructeur', 'modele_id', 'constructeur_id','nom_constructeur');
+        return $this->hasOneThrough(Constructeur::class, Modele::class, 'id_modele', 'id_constructeur', 'modele_id', 'constructeur_id', 'nom_constructeur');
     }
 }
