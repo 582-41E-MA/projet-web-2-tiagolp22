@@ -231,7 +231,15 @@
     }
   },
   "contact": {
-    "title": "Contact Us"
+    "title": "Contactez-Nous",
+    "welcome": "Bienvenue à Quebecar!",
+    "welcomeMessage": "Nous sommes ici pour vous aider avec toutes vos questions ou préoccupations. N'hésitez pas à nous contacter.",
+    "hours": {
+      "weekday": "Lundi - Vendredi",
+      "saturday": "Samedi",
+      "sunday": "Dimanche"
+    },
+    "followUs": "Suivez-nous sur les réseaux sociaux"
   },
   "cart": {
     "title": "Shopping Cart",
