@@ -15,7 +15,7 @@ const VoitureIndex = ({ voitures = [], onEdit }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [carToDelete, setCarToDelete] = useState(null);
 
-    const itemsPerPage = 5;
+    const itemsPerPage = 3;
 
     const openModal = (car) => {
         setCarToDelete(car);
@@ -26,7 +26,9 @@ const VoitureIndex = ({ voitures = [], onEdit }) => {
         setIsModalOpen(false);
         setCarToDelete(null);
     };
-
+    const handleEdit = (id) => {
+        onEdit(id)
+     };
     const handleDelete = (id) => {
         router.delete(`/voitures/${id}`, {
             onSuccess: () => {
@@ -43,6 +45,7 @@ const VoitureIndex = ({ voitures = [], onEdit }) => {
 
     const filteredVoitures = useMemo(() => {
         return carList.filter(voiture => {
+            
             const matchesSearchTerm = voiture.modele.nom_modele.toLowerCase().includes(searchTerm.toLowerCase()) ||
                                       voiture.modele.constructeur.nom_constructeur.toLowerCase().includes(searchTerm.toLowerCase());
             const matchesYear = selectedYear ? voiture.annee === parseInt(selectedYear) : true;
@@ -91,11 +94,11 @@ const VoitureIndex = ({ voitures = [], onEdit }) => {
                     paginatedVoitures.map(voiture => (
                         <div key={voiture.id_voiture} className="dashboard-item">
                             <div className="dashboard-car-info">
-                                <img
-                                    src={voiture.photo_url || "../../../img/car/default_car.png"}
-                                    alt={voiture.modele.nom_modele}
-                                    className="car-photo"
-                                />
+                            <img
+    src={voiture.photos.length > 0 ? `/storage/${voiture.photos[0].photos.replace('public/', '')}` : "../../../img/car/default_car.png"}
+    alt={voiture.modele.nom_modele}
+    className="car-photo"
+/>
                                 <div className="car-details">
                                     <h3 className="car-title">
                                         {voiture.annee} {voiture.modele.constructeur.nom_constructeur} {voiture.modele.nom_modele}
@@ -104,7 +107,7 @@ const VoitureIndex = ({ voitures = [], onEdit }) => {
                             </div>
                             <div className="dashboard-actions">
                                 <button
-                                    onClick={() => onEdit(voiture)}
+                                    onClick={() => handleEdit(voiture.id_voiture)}
                                     className="edit-button"
                                 >
                                     {t('buttons.edit')}

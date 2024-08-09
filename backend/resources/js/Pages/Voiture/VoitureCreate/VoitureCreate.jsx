@@ -60,6 +60,7 @@ const VoitureCreate = ({
             { key: "annee", message: "year_invalid", validate: (value) => value >= 1900 && value <= new Date().getFullYear() + 1 },
             { key: "date_arrivee", message: "arrival_date_required" },
             { key: "prix_achat", message: "purchase_price_invalid", validate: (value) => !isNaN(value) && value >= 0 },
+            { key: "prix_vente", message: "sell_price_invalid", validate: (value) => !isNaN(value) && value >= 0 },
             { key: "couleur", message: "color_required" },
             { key: "type_transmission_id", message: "transmission_type_required" },
             { key: "groupe_motopropulseur_id", message: "powertrain_group_required" },
@@ -78,7 +79,8 @@ const VoitureCreate = ({
                 newErrors[key] = t(`car.errors.${message}`);
             }
         });
-
+        console.log(newErrors);
+        
         return newErrors;
     };
     const parseJsonField = (field) => {
@@ -271,7 +273,7 @@ const VoitureCreate = ({
                             disabled={privilege_id !== 1}
                         />
                         {errors.prix_vente && (
-                            <div className="invalid-feedback">
+                            <div className="error">
                                 {errors.prix_vente}
                             </div>
                         )}
@@ -292,7 +294,9 @@ const VoitureCreate = ({
                             }}
                         />
                         {errors.couleur && (
-                            <span className="error">{errors.couleur}</span>
+                            <div className="error">
+                                {errors.couleur}
+                                </div>
                         )}
                     </div>
 
@@ -459,7 +463,8 @@ const VoitureCreate = ({
                             id="nombre_portes"
                             value={data.nombre_portes}
                             onChange={(e) =>
-                                setData("nombre_portes", e.target.value)
+                                setData("nombre_portes",
+                                     e.target.value)
                             }
                         />
                         {errors.nombre_portes && (
@@ -547,25 +552,6 @@ const VoitureCreate = ({
                         )}
                     </div>
 
-                    <div className="form-group">
-                        <label htmlFor="commandes_id_commande">
-                            {t("car.order_id")}
-                        </label>
-                        <input
-                            type="text"
-                            name="commandes_id_commande"
-                            id="commandes_id_commande"
-                            value={data.commandes_id_commande}
-                            onChange={(e) =>
-                                setData("commandes_id_commande", e.target.value)
-                            }
-                        />
-                        {errors.commandes_id_commande && (
-                            <span className="error">
-                                {errors.commandes_id_commande}
-                            </span>
-                        )}
-                    </div>
 
                     <button type="submit" disabled={processing}>
                         {t("car.submit_button")}

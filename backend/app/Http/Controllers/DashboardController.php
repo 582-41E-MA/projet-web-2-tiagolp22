@@ -19,6 +19,7 @@ use App\Models\Ville;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Photo;
+
 class DashboardController extends Controller
 {
     public function index()
@@ -34,13 +35,9 @@ class DashboardController extends Controller
             'groupeMotopropulseur',
             'typeCarburant',
             'carrosserie',
+            'photos',
         ])->get();
-         // Add photo URL to each voiture
-    foreach ($voitures as $voiture) {
-        $photo = Photo::where('voitures_id_voiture', $voiture->id_voiture)->first();
-        $voiture->photo_url = $photo ? asset(Storage::url($photo->photos)) : null;
-    }
-    
+
         $provinces = Province::with('pays')->get();
         $taxes = Taxe::with('province')->get(); 
         $villes = Ville::with('province')->get();
@@ -66,6 +63,9 @@ class DashboardController extends Controller
             'privilege_id' => $privilege_id,
             'taxes' => $taxes,
             'villes' => $villes,
+            'photos' => $voitures->flatMap(function ($voiture) {
+                return $voiture->photos;
+            }),
         ]);
     }
 }

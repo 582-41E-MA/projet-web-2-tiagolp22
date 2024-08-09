@@ -38,8 +38,10 @@ import GroupeMotopropulseurEdit from '../GroupeMotopropulseur/GroupeMotopropulse
 import './Dashboard.css';
 
 const Dashboard = ({
-    constructeurs, pays, villes, provinces, modeles, transmissions, groupesMotopropulseur, typesCarburant, carrosseries, privilege_id, taxes, voitures
+    constructeurs, pays, villes, provinces, modeles, transmissions, groupesMotopropulseur, typesCarburant, carrosseries, privilege_id, taxes, voitures, photos
 }) => {
+    
+    
     const [currentForm, setCurrentForm] = useState(null);
     const [openMenu, setOpenMenu] = useState(null);
     const [editingId, setEditingId] = useState(null);
@@ -250,15 +252,16 @@ const Dashboard = ({
                     )}
                     {currentForm === 'voitureIndex' && <VoitureIndex voitures={voitures} onEdit={(id) => handleNavigationClick('voitureEdit', id)} />}
                     {currentForm === 'voitureEdit' && (
-                        <VoitureEdit
-                            id={editingId}
-                            typesCarburant={typesCarburant}
-                            modeles={modeles}
-                            transmissions={transmissions}
-                            groupesMotopropulseur={groupesMotopropulseur}
-                            carrosseries={carrosseries}
-                            privilege_id={privilege_id}
-                        />
+                     <VoitureEdit
+                     voiture={voitures.find(v => v.id_voiture === editingId)}
+                     typesCarburant={typesCarburant}
+                     modeles={modeles}
+                     transmissions={transmissions}
+                     groupesMotopropulseur={groupesMotopropulseur}
+                     carrosseries={carrosseries}
+                     privilege_id={privilege_id}
+                     
+                 />
                     )}
 
                     {currentForm === 'taxeCreate' && <TaxeCreate provinces={provinces} />}
