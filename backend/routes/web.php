@@ -173,6 +173,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
 });
 
 // Routes publiques
+
+Route::get('/404', function () {
+    return Inertia::render('Error/Error', ['status' => 404]);
+})->name('404');
+
+Route::fallback(function () {
+    return Inertia::render('Error/Error', ['status' => 404]);
+});
 Route::get('/', [HomeController::class, 'index'])->name('Accueil');
 Route::get('/about', function () {
     return inertia('About');

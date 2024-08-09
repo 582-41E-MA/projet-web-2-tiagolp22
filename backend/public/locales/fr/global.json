@@ -92,6 +92,9 @@
     "add_photos": "Ajouter des photos",
     "photo_selected": "photos selectionnées",
     "errors": {
+      "title": "Erreur {{status}}",
+      "message": "Désolé, une erreur s'est produite.",
+      "back_to_home": "Retour à l'accueil",
       "model_required": "Le modèle est requis.",
       "year_invalid": "Année invalide. Veuillez saisir une année valide entre 1900 et l'année en cours.",
       "arrival_date_required": "La date d'arrivée est requise.",
@@ -332,5 +335,10 @@
     "mode_expedition": "Mode Expédition",
     "commentaires": "Commentaires",
     "details": "Détails"
+  },
+  "error": {
+    "title": "Erreur {{status}}",
+    "message": "Désolé, une erreur s'est produite.",
+    "back_to_home": "Retour à l'accueil"
   }
 }

@@ -321,8 +321,7 @@
     },
     "cta": "For more information or to schedule a visit, contact us today!",
     "cta_button": "Contact Us"
-  },
-  "commande_list": {
+  },"commande_list": {
     "title": "Completed Orders",
     "id": "ID",
     "date_commande": "Order Date",
@@ -334,5 +333,10 @@
     "mode_expedition": "Shipping Method",
     "commentaires": "Comments",
     "details": "Details"
+  },
+  "error": {
+    "title": "Error {{status}}",
+    "message": "Sorry, an error has occurred.",
+    "back_to_home": "Back to Home"
   }
 }
