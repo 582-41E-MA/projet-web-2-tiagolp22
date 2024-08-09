@@ -241,8 +241,16 @@
     "processing": "Traitement en cours...",
     "car_show.add_to_cart": "Ajouter au panier"
   },
-  "contact": {
-    "title": "Contactez-nous"
+ "contact": {
+    "title": "Contact Us",
+    "welcome": "Welcome to Quebecar!",
+    "welcomeMessage": "We are here to help you with any questions or concerns. Please don't hesitate to reach out.",
+    "hours": {
+      "weekday": "Monday - Friday",
+      "saturday": "Saturday",
+      "sunday": "Sunday"
+    },
+    "followUs": "Follow Us on Social Media"
   },
   "typeCarburant": {
     "edit_title": "Modifier le Type de Carburant",
